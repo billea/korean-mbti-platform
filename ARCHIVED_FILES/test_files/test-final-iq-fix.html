@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final IQ Translation Fix Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; }
+        .question { font-weight: bold; color: #495057; margin: 10px 0; }
+        .options { margin-left: 20px; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Final IQ Translation Fix Test</h1>
+    
+    <div class="test">
+        <h2>Enhanced IQ Question Translation Test</h2>
+        <p>Testing the enhanced getQuestions() method with direct access and multiple fallbacks:</p>
+        
+        <button onclick="testLanguage('en')">🇺🇸 Test English</button>
+        <button onclick="testLanguage('es')">🇪🇸 Test Spanish</button>
+        <button onclick="simulateIQTest('en')">🧠 Simulate IQ Test (English)</button>
+        <button onclick="simulateIQTest('es')">🧠 Simulate IQ Test (Spanish)</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function testLanguage(lang) {
+            console.log(`\n🔍 TESTING ENHANCED IQ TRANSLATION FOR ${lang.toUpperCase()}`);
+            
+            // Change language
+            if (typeof changeLanguage === 'function') {
+                changeLanguage(lang);
+            } else {
+                currentLanguage = lang;
+            }
+            
+            // Wait a moment for language change to process
+            setTimeout(() => {
+                // Test the getQuestions method
+                const iqTest = tests && tests.iq;
+                let questions = [];
+                
+                if (iqTest && iqTest.getQuestions) {
+                    questions = iqTest.getQuestions();
+                    console.log('Questions returned:', questions ? questions.length : 'null');
+                    if (questions && questions[0]) {
+                        console.log('First question:', questions[0].text);
+                    }
+                }
+                
+                // Display results
+                displayResults(lang, questions);
+            }, 100);
+        }
+        
+        function simulateIQTest(lang) {
+            console.log(`\n🧠 SIMULATING IQ TEST FOR ${lang.toUpperCase()}`);
+            
+            // Change language first
+            if (typeof changeLanguage === 'function') {
+                changeLanguage(lang);
+            } else {
+                currentLanguage = lang;
+            }
+            
+            // Wait for language change, then simulate the test loading process
+            setTimeout(() => {
+                // Simulate what happens when you start an IQ test
+                const testType = 'iq';
+                const testData = tests[testType];
+                
+                console.log('Test data loaded:', !!testData);
+                
+                // Simulate the question loading process from startTestNew
+                if (testType === 'iq' && testData.getQuestions) {
+                    testData.questions = testData.getQuestions();
+                    console.log('🧠 IQ test questions loaded:', testData.questions.length);
+                    console.log('🌍 Current language:', currentLanguage);
+                    console.log('📝 First question text:', testData.questions[0] ? testData.questions[0].text : 'No questions');
+                    
+                    displaySimulationResults(lang, testData.questions);
+                }
+            }, 100);
+        }
+        
+        function displayResults(lang, questions) {
+            const resultsDiv = document.getElementById('results');
+            const isWorking = questions && questions.length > 0;
+            const sampleQuestion = questions && questions[0] ? questions[0].text : 'No question found';
+            const sampleOptions = questions && questions[0] && questions[0].options ? questions[0].options : [];
+            
+            resultsDiv.innerHTML = `
+                <div class="test ${isWorking ? 'success' : 'error'}">
+                    <h3>${isWorking ? '✅' : '❌'} ${lang.toUpperCase()} Translation Test</h3>
+                    <pre>
+Status: ${isWorking ? 'WORKING' : 'FAILED'}
+Language: ${currentLanguage}
+Questions Found: ${questions ? questions.length : 0}
+                    </pre>
+                    ${isWorking ? `
+                        <div class="question">Sample Question: ${sampleQuestion}</div>
+                        ${sampleOptions.length > 0 ? `
+                            <div class="options">
+                                A) ${sampleOptions[0]}<br>
+                                B) ${sampleOptions[1]}<br>
+                                C) ${sampleOptions[2]}<br>
+                                D) ${sampleOptions[3]}
+                            </div>
+                        ` : ''}
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        function displaySimulationResults(lang, questions) {
+            const resultsDiv = document.getElementById('results');
+            const isWorking = questions && questions.length > 0;
+            const sampleQuestion = questions && questions[0] ? questions[0].text : 'No question found';
+            
+            resultsDiv.innerHTML += `
+                <div class="test ${isWorking ? 'success' : 'error'}">
+                    <h3>🧠 ${isWorking ? '✅' : '❌'} IQ Test Simulation (${lang.toUpperCase()})</h3>
+                    <pre>
+Simulation Status: ${isWorking ? 'SUCCESS' : 'FAILED'}
+Questions Loaded: ${questions ? questions.length : 0}
+Current Language: ${currentLanguage}
+First Question: ${sampleQuestion}
+                    </pre>
+                </div>
+            `;
+        }
+        
+        // Auto-run English test on load
+        setTimeout(() => testLanguage('en'), 1000);
+    </script>
+</body>
+</html>

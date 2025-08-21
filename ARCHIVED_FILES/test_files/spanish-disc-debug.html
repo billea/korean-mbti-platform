@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish DISC Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; font-size: 11px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Spanish DISC Specific Debug</h1>
+    
+    <button onclick="debugSpanishDISC()">🧪 Debug Spanish DISC Loading</button>
+    
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>
+        function debugSpanishDISC() {
+            console.clear();
+            console.log('=== SPANISH DISC DEBUG ===');
+            
+            let results = 'Spanish DISC Loading Debug\n\n';
+            
+            // Force Spanish
+            currentLanguage = 'es';
+            results += `Language: ${currentLanguage}\n\n`;
+            
+            // Check both sources
+            results += '=== CHECKING SOURCES ===\n';
+            
+            // 1. testDefinitions
+            const hasTestDefs = !!(testDefinitions && testDefinitions.disc && testDefinitions.disc.es);
+            results += `testDefinitions.disc.es exists: ${hasTestDefs}\n`;
+            if (hasTestDefs) {
+                const count = testDefinitions.disc.es.questions.length;
+                const first = testDefinitions.disc.es.questions[0].text;
+                results += `  Questions: ${count}\n`;
+                results += `  First: "${first}"\n`;
+                results += `  Source: testDefinitions (newer)\n`;
+            }
+            
+            // 2. Individual translations
+            const hasIndividual = !!(translations && translations.es && translations.es.tests && 
+                translations.es.tests.disc && translations.es.tests.disc.questions);
+            results += `\ntranslations.es.tests.disc exists: ${hasIndividual}\n`;
+            if (hasIndividual) {
+                const count = translations.es.tests.disc.questions.length;
+                const first = translations.es.tests.disc.questions[0].text;
+                results += `  Questions: ${count}\n`;
+                results += `  First: "${first}"\n`;
+                results += `  Source: individual object (older)\n`;
+            }
+            
+            results += '\n=== SIMULATING LOADING LOGIC ===\n';
+            
+            // Simulate the exact loading logic
+            const testType = 'disc';
+            let testData = null;
+            
+            // Step 1: Try testDefinitions (should work)
+            if (testDefinitions[testType] && testDefinitions[testType][currentLanguage]) {
+                results += `✅ STEP 1: testDefinitions[${testType}][${currentLanguage}] found\n`;
+                testData = {
+                    ...tests[testType], // Keep metadata
+                    title: testDefinitions[testType][currentLanguage].title,
+                    questions: testDefinitions[testType][currentLanguage].questions
+                };
+                results += `✅ Loaded from testDefinitions: ${testData.questions.length} questions\n`;
+                results += `✅ Title: "${testData.title}"\n`;
+                results += `✅ First question: "${testData.questions[0].text}"\n`;
+            } else {
+                results += `❌ STEP 1: testDefinitions not found\n`;
+                
+                // Step 2: Try legacy
+                results += `🔄 STEP 2: Trying legacy loading...\n`;
+                testData = tests[testType];
+                
+                // Step 3: Try bridge
+                if (currentLanguage !== 'en' && translations && translations[currentLanguage]) {
+                    const langTranslations = translations[currentLanguage];
+                    
+                    if (langTranslations.tests && langTranslations.tests[testType] && langTranslations.tests[testType].questions) {
+                        results += `🌉 STEP 3: Bridge system activated\n`;
+                        testData = {
+                            ...testData,
+                            title: langTranslations.tests[testType].title || testData.title,
+                            questions: langTranslations.tests[testType].questions
+                        };
+                        results += `🌉 Bridge loaded: ${testData.questions.length} questions\n`;
+                        results += `🌉 First question: "${testData.questions[0].text}"\n`;
+                    } else {
+                        results += `❌ STEP 3: Bridge failed\n`;
+                    }
+                }
+            }
+            
+            results += '\n=== FINAL RESULT ===\n';
+            if (testData && testData.questions) {
+                const firstQ = testData.questions[0].text;
+                const isSpanish = firstQ.includes('equipos') || firstQ.includes('reuniones') || /[ñáéíóú]/.test(firstQ);
+                results += `Questions loaded: ${testData.questions.length}\n`;
+                results += `First question: "${firstQ}"\n`;
+                results += `Language detected: ${isSpanish ? '🇪🇸 SPANISH' : '🇺🇸 ENGLISH'}\n`;
+                results += `Title: "${testData.title}"\n`;
+                
+                if (isSpanish) {
+                    results += '\n✅ SUCCESS: Spanish DISC should work!\n';
+                } else {
+                    results += '\n❌ PROBLEM: Still loading English!\n';
+                }
+            } else {
+                results += '❌ CRITICAL: No questions loaded!\n';
+            }
+            
+            // Check what tests object has
+            results += '\n=== ENGLISH FALLBACK CHECK ===\n';
+            if (tests && tests.disc) {
+                results += `tests.disc exists: ${!!tests.disc}\n`;
+                if (tests.disc.questions) {
+                    results += `English questions: ${tests.disc.questions.length}\n`;
+                    results += `English first: "${tests.disc.questions[0].text.substring(0, 50)}..."\n`;
+                } else {
+                    results += 'No English questions in tests.disc\n';
+                }
+            } else {
+                results += 'tests.disc does not exist\n';
+            }
+            
+            document.getElementById('results').innerHTML = `<pre>${results}</pre>`;
+        }
+        
+        // Auto-run
+        setTimeout(() => debugSpanishDISC(), 500);
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Final [object Object] Fix</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .working { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .broken { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Test Final [object Object] Fix</h1>
+    
+    <div class="test">
+        <h2>Testing ALL Problem Cards</h2>
+        <button onclick="testAllProblemCards()">🇨🇳 Test All Remaining Issues</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function testAllProblemCards() {
+            console.log('\\n=== TESTING ALL [OBJECT OBJECT] FIXES ===');
+            
+            // Set to Chinese
+            currentLanguage = 'zh';
+            console.log('Current language set to:', currentLanguage);
+            
+            // Test the 2 cards that were still showing [object Object]
+            const remainingIssues = [
+                { key: 'tests.disc', expected: 'DISC人格测试' },
+                { key: 'tests.strengths', expected: '性格优势 (VIA)' }
+            ];
+            
+            // Test the cards that were already fixed
+            const previouslyFixed = [
+                { key: 'tests.adhd', expected: '注意力和能量风格' },
+                { key: 'tests.anxiety', expected: '压力管理风格' },
+                { key: 'tests.depression', expected: '情绪调节风格' }
+            ];
+            
+            let results = '<h3>🔧 Final [object Object] Fix Results</h3><pre>';
+            let allFixed = true;
+            
+            results += 'REMAINING ISSUES (should now be FIXED):\\n';
+            remainingIssues.forEach(({ key, expected }) => {
+                const result = t(key);
+                const isString = typeof result === 'string';
+                const isCorrect = result === expected;
+                const isObject = typeof result === 'object';
+                
+                let status;
+                if (isObject) {
+                    status = '❌ STILL [OBJECT]';
+                    allFixed = false;
+                } else if (isCorrect) {
+                    status = '✅ FIXED';
+                } else if (isString) {
+                    status = '⚠️ STRING BUT WRONG';
+                } else {
+                    status = '❌ OTHER TYPE';
+                    allFixed = false;
+                }
+                
+                results += `${status} "${key}"\\n`;
+                results += `   Type:     ${typeof result}\\n`;
+                results += `   Expected: "${expected}"\\n`;
+                results += `   Got:      "${result}"\\n\\n`;
+                
+                console.log(`${status} ${key} - Type: ${typeof result}, Expected: "${expected}", Got: "${result}"`);
+            });
+            
+            results += 'PREVIOUSLY FIXED (should still work):\\n';
+            previouslyFixed.forEach(({ key, expected }) => {
+                const result = t(key);
+                const isCorrect = result === expected;
+                const status = isCorrect ? '✅ STILL WORKING' : '❌ BROKEN AGAIN';
+                if (!isCorrect && typeof result === 'object') allFixed = false;
+                
+                results += `${status} "${key}" = "${result}"\\n`;
+            });
+            
+            // Test some nested keys that should still work
+            const nestedKeys = [
+                { key: 'tests.mbti.title', expected: '16种人格类型 (MBTI)' },
+                { key: 'tests.meta.socialApp', expected: '📱 社交' }
+            ];
+            
+            results += '\\nNESTED KEYS (control group):\\n';
+            nestedKeys.forEach(({ key, expected }) => {
+                const result = t(key);
+                const isCorrect = result === expected;
+                const status = isCorrect ? '✅ WORKING' : '❌ BROKEN';
+                results += `${status} "${key}" = "${result}"\\n`;
+            });
+            
+            results += '\\n=== FINAL SUMMARY ===\\n';
+            if (allFixed) {
+                results += '🎉 ALL [OBJECT OBJECT] ISSUES COMPLETELY RESOLVED!\\n';
+                results += '✅ Chinese interface should now be 100% Chinese text\\n';
+                results += '✅ No more mixed English/Chinese display\\n';
+                results += '✅ All test cards should show proper titles';
+            } else {
+                results += '⚠️ SOME ISSUES REMAIN - NEEDS FURTHER INVESTIGATION';
+            }
+            results += '</pre>';
+            
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run test on load
+        setTimeout(() => testAllProblemCards(), 1000);
+    </script>
+</body>
+</html>

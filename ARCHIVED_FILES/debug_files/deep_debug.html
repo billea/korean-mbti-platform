@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deep Debug Spanish</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Deep Debug Spanish Translation System</h1>
+    
+    <button onclick="deepDebug()">Deep Debug</button>
+    <button onclick="manualSpanish()">Manual Spanish</button>
+    
+    <div id="test-elements">
+        <p data-translate="tests.askfriends.heroTitle">See Who Knows Me Best 🧩</p>
+        <p data-translate="tests.askfriends.viralBadge">💭 CURIOSITY GAME</p>
+        <p data-translate="tests.askfriends.categories.musicTitle">Music & Entertainment</p>
+    </div>
+    
+    <div id="output" style="background: #f0f0f0; padding: 1rem; margin: 1rem 0;">
+        <h2>Debug Output:</h2>
+        <pre id="log"></pre>
+    </div>
+
+    <script>
+        function log(msg) {
+            document.getElementById('log').textContent += msg + '\n';
+            console.log(msg);
+        }
+        
+        function deepDebug() {
+            log('=== DEEP DEBUG ===');
+            
+            // Check forceFixTestDescriptions function internals
+            if (typeof forceFixTestDescriptions === 'function') {
+                log('✅ forceFixTestDescriptions exists');
+                
+                // Check if it has Spanish data
+                const funcStr = forceFixTestDescriptions.toString();
+                if (funcStr.includes("'es': {")) {
+                    log('✅ Spanish section found in function');
+                    if (funcStr.includes('tests.askfriends.heroTitle')) {
+                        log('✅ askfriends.heroTitle found in Spanish section');
+                    } else {
+                        log('❌ askfriends.heroTitle NOT found in Spanish section');
+                    }
+                } else {
+                    log('❌ Spanish section NOT found in function');
+                }
+                
+                // Try calling it and see what happens
+                log('Calling forceFixTestDescriptions("es")...');
+                forceFixTestDescriptions('es');
+                
+                // Check element immediately after
+                const heroElement = document.querySelector('[data-translate="tests.askfriends.heroTitle"]');
+                log('Element after force-fix: ' + (heroElement ? heroElement.textContent : 'NOT FOUND'));
+                
+            } else {
+                log('❌ forceFixTestDescriptions does not exist');
+            }
+            
+            // Check main translations object
+            log('\n=== MAIN TRANSLATIONS DEBUG ===');
+            if (typeof translations !== 'undefined') {
+                log('✅ Main translations exists');
+                if (translations.es) {
+                    log('✅ translations.es exists');
+                    
+                    // Check nested structure
+                    if (translations.es.askfriends) {
+                        log('✅ translations.es.askfriends exists');
+                        if (translations.es.askfriends.heroTitle) {
+                            log('✅ Nested heroTitle: ' + translations.es.askfriends.heroTitle);
+                        } else {
+                            log('❌ Nested heroTitle not found');
+                        }
+                    } else {
+                        log('❌ translations.es.askfriends does not exist');
+                    }
+                    
+                    // Check flat structure
+                    if (translations.es['tests.askfriends.heroTitle']) {
+                        log('✅ Flat heroTitle: ' + translations.es['tests.askfriends.heroTitle']);
+                    } else {
+                        log('❌ Flat heroTitle not found');
+                    }
+                    
+                } else {
+                    log('❌ translations.es does not exist');
+                }
+            } else {
+                log('❌ Main translations does not exist');
+            }
+        }
+        
+        function manualSpanish() {
+            log('=== MANUAL SPANISH TEST ===');
+            
+            // Set language preference
+            localStorage.setItem('preferredLanguage', 'es');
+            window.currentLanguage = 'es';
+            
+            // Try all translation methods
+            if (typeof changeLanguage === 'function') {
+                log('Calling changeLanguage(es)...');
+                changeLanguage('es');
+            }
+            
+            setTimeout(() => {
+                log('After changeLanguage:');
+                const hero = document.querySelector('[data-translate="tests.askfriends.heroTitle"]');
+                log('Hero element: ' + (hero ? hero.textContent : 'NOT FOUND'));
+                
+                // Force fix again
+                if (typeof forceFixTestDescriptions === 'function') {
+                    log('Force-fixing again...');
+                    forceFixTestDescriptions('es');
+                    
+                    setTimeout(() => {
+                        const hero2 = document.querySelector('[data-translate="tests.askfriends.heroTitle"]');
+                        log('After force-fix: ' + (hero2 ? hero2.textContent : 'NOT FOUND'));
+                    }, 100);
+                }
+            }, 500);
+        }
+        
+        // Auto-debug on load
+        setTimeout(deepDebug, 1000);
+    </script>
+</body>
+</html>

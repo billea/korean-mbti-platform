@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Dropdown Translation Test</title>
+</head>
+<body>
+    <h1>Dropdown Translation Test</h1>
+    
+    <!-- Test dropdown elements -->
+    <ul>
+        <li><a data-translate="tests.mbti">MBTI Test</a></li>
+        <li><a data-translate="tests.bigfive">Big Five Test</a></li>
+        <li><a data-translate="tests.eq">Emotional Intelligence</a></li>
+        <li><a data-translate="tests.iq">Brain Teaser Challenge</a></li>
+        <li><a data-translate="tests.disc">DISC Personality</a></li>
+        <li><a data-translate="tests.conflict">Conflict Style</a></li>
+        <li><a data-translate="tests.strengths">Character Strengths</a></li>
+        <li><a data-translate="tests.adhd">Focus & Energy Style</a></li>
+        <li><a data-translate="tests.anxiety">Stress Management</a></li>
+        <li><a data-translate="tests.depression">Emotional Regulation</a></li>
+        <li><a data-translate="tests.love">Love Language Test</a></li>
+        <li><a data-translate="tests.pet">Pet Personality Match</a></li>
+        <li><a data-translate="tests.career">Career Path Test</a></li>
+        <li><a data-translate="tests.relationship">Relationship Style</a></li>
+    </ul>
+
+    <script>
+        // Global variables
+        let translations = {};
+        let currentLanguage = 'ko';
+
+        // Copy the exact translation functions from script.js
+        function getNestedTranslation(obj, key) {
+            // First try nested access (e.g., tests.new -> obj.tests.new)
+            const nestedValue = key.split('.').reduce((current, k) => current?.[k], obj);
+            if (nestedValue !== undefined && nestedValue !== null) {
+                // If we got an object but expected a string, try to get its .title property
+                if (typeof nestedValue === 'object' && nestedValue.title) {
+                    return nestedValue.title;
+                }
+                return nestedValue;
+            }
+            
+            // Fallback to flat key access (e.g., "tests.new" as a single key)
+            return obj[key];
+        }
+
+        function getTranslatedText(key) {
+            if (!currentLanguage || !translations[currentLanguage]) {
+                return null;
+            }
+            return getNestedTranslation(translations[currentLanguage], key);
+        }
+
+        function translateElement(element) {
+            const key = element.getAttribute('data-translate');
+            if (!key) return;
+
+            const translatedText = getTranslatedText(key);
+            if (translatedText && typeof translatedText === 'string') {
+                console.log(`✅ ${key}: "${translatedText}"`);
+                element.textContent = translatedText;
+            } else {
+                console.log(`❌ ${key}: ${typeof translatedText} (${translatedText})`);
+                element.style.backgroundColor = 'red';
+                element.style.color = 'white';
+                element.textContent = `[FAILED: ${key}]`;
+            }
+        }
+
+        function applyTranslations() {
+            console.log('🔄 Starting translation application...');
+            const elements = document.querySelectorAll('[data-translate]');
+            console.log(`Found ${elements.length} elements to translate`);
+            
+            elements.forEach(translateElement);
+            console.log('✅ Translation application complete');
+        }
+
+        // Load Korean translations
+        async function loadTranslations() {
+            try {
+                console.log('📥 Loading Korean translations...');
+                const response = await fetch('translations/ko.json');
+                const data = await response.json();
+                translations['ko'] = data;
+                console.log('✅ Korean translations loaded successfully');
+                console.log('Sample tests object:', JSON.stringify(data.tests.mbti, null, 2));
+                
+                // Apply translations immediately
+                applyTranslations();
+                
+            } catch (error) {
+                console.error('❌ Failed to load translations:', error);
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 DOM loaded, initializing translation test...');
+            loadTranslations();
+        });
+    </script>
+</body>
+</html>

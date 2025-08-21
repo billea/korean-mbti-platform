@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Script Loading</title>
+</head>
+<body>
+    <h1>Script Loading Test</h1>
+    <div id="status">Testing...</div>
+    
+    <script>
+        console.log('Inline script loaded');
+        document.getElementById('status').textContent = 'Inline script working';
+    </script>
+    
+    <script src="script.js"></script>
+    
+    <script>
+        console.log('After script.js load attempt');
+        
+        setTimeout(() => {
+            const status = document.getElementById('status');
+            
+            if (typeof translations !== 'undefined') {
+                status.textContent = 'SUCCESS: script.js loaded, translations available';
+                status.style.color = 'green';
+                console.log('translations object exists:', typeof translations);
+                console.log('Spanish MBTI questions available:', !!(translations.es && translations.es.tests && translations.es.tests.mbti));
+            } else {
+                status.textContent = 'FAILED: script.js did not load properly - translations undefined';
+                status.style.color = 'red';
+                console.log('translations object missing');
+            }
+            
+            if (typeof tests !== 'undefined') {
+                console.log('tests object exists:', typeof tests);
+            } else {
+                console.log('tests object missing');
+            }
+            
+            if (typeof currentLanguage !== 'undefined') {
+                console.log('currentLanguage exists:', currentLanguage);
+            } else {
+                console.log('currentLanguage missing');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

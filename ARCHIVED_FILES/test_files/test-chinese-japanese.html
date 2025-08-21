@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese & Japanese Badge Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; }
+        .error { background: #f8d7da; }
+        button { padding: 10px 20px; margin: 5px; border: none; border-radius: 5px; cursor: pointer; background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Chinese & Japanese Badge Test</h1>
+    
+    <button onclick="testChinese()">Test Chinese Direct Load</button>
+    <button onclick="testJapanese()">Test Japanese Direct Load</button>
+    
+    <div id="results"></div>
+
+    <script>
+        async function testChinese() {
+            const results = document.getElementById('results');
+            try {
+                const timestamp = new Date().getTime();
+                const response = await fetch(`./translations/zh.json?v=${timestamp}`);
+                const data = await response.json();
+                
+                const newBadge = data.tests?.new;
+                const trendingBadge = data.tests?.trending;
+                const popularBadge = data.tests?.popular;
+                
+                results.innerHTML = `
+                    <div class="result ${newBadge ? 'success' : 'error'}">
+                        <h3>🇨🇳 Chinese Direct Load Results:</h3>
+                        <p><strong>tests.new:</strong> "${newBadge || 'MISSING'}"</p>
+                        <p><strong>tests.trending:</strong> "${trendingBadge || 'MISSING'}"</p>
+                        <p><strong>tests.popular:</strong> "${popularBadge || 'MISSING'}"</p>
+                        <p><strong>Expected:</strong> "🔥 最新", "🔥 热门", "✨ 受欢迎"</p>
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testJapanese() {
+            const results = document.getElementById('results');
+            try {
+                const timestamp = new Date().getTime();
+                const response = await fetch(`./translations/ja.json?v=${timestamp}`);
+                const data = await response.json();
+                
+                const newBadge = data.tests?.new;
+                const trendingBadge = data.tests?.trending;
+                const popularBadge = data.tests?.popular;
+                
+                results.innerHTML = `
+                    <div class="result ${newBadge ? 'success' : 'error'}">
+                        <h3>🇯🇵 Japanese Direct Load Results:</h3>
+                        <p><strong>tests.new:</strong> "${newBadge || 'MISSING'}"</p>
+                        <p><strong>tests.trending:</strong> "${trendingBadge || 'MISSING'}"</p>
+                        <p><strong>tests.popular:</strong> "${popularBadge || 'MISSING'}"</p>
+                        <p><strong>Expected:</strong> "🔥 新着", "🔥 トレンド", "✨ 人気"</p>
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

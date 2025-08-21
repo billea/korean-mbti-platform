@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Translation Fix Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        button { padding: 10px 15px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Translation Fix Test</h1>
+    
+    <div>
+        <button onclick="testSpanish()">Test Spanish Translation</button>
+        <button onclick="testFrench()">Test French Translation</button>
+        <button onclick="testGerman()">Test German Translation</button>
+    </div>
+    
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>
+        function testTranslation(lang, expectedText) {
+            try {
+                // Set up test environment
+                currentLanguage = lang;
+                currentTest = 'mbti';
+                currentQuestionIndex = 0;
+                testData = tests['mbti'];
+                
+                console.log(`Testing ${lang} translation...`);
+                console.log('Current language:', currentLanguage);
+                console.log('Has translation?', !!translations[currentLanguage]);
+                console.log('Has test translation?', !!(translations[currentLanguage] && translations[currentLanguage].tests && translations[currentLanguage].tests.mbti));
+                
+                // Check if translation exists
+                if (translations[currentLanguage] && 
+                    translations[currentLanguage].tests && 
+                    translations[currentLanguage].tests.mbti && 
+                    translations[currentLanguage].tests.mbti.questions &&
+                    translations[currentLanguage].tests.mbti.questions[0]) {
+                    
+                    const translatedQuestion = translations[currentLanguage].tests.mbti.questions[0];
+                    const questionText = translatedQuestion.text;
+                    
+                    console.log('Question text:', questionText);
+                    
+                    const isCorrect = questionText.includes(expectedText);
+                    
+                    return {
+                        success: isCorrect,
+                        text: questionText,
+                        expected: expectedText
+                    };
+                } else {
+                    return {
+                        success: false,
+                        text: 'Translation structure not found',
+                        expected: expectedText
+                    };
+                }
+            } catch (error) {
+                return {
+                    success: false,
+                    text: 'Error: ' + error.message,
+                    expected: expectedText
+                };
+            }
+        }
+        
+        function displayResult(lang, result) {
+            const resultsDiv = document.getElementById('results');
+            const className = result.success ? 'success' : 'error';
+            const status = result.success ? '✅ SUCCESS' : '❌ FAILED';
+            
+            resultsDiv.innerHTML += `
+                <div class="test-result ${className}">
+                    <strong>${lang.toUpperCase()} ${status}</strong><br>
+                    <strong>Question:</strong> ${result.text}<br>
+                    <strong>Expected to contain:</strong> ${result.expected}
+                </div>
+            `;
+        }
+        
+        function testSpanish() {
+            const result = testTranslation('es', 'reuniones de equipo');
+            displayResult('Spanish', result);
+        }
+        
+        function testFrench() {
+            const result = testTranslation('fr', 'réunions d\\'équipe');
+            displayResult('French', result);
+        }
+        
+        function testGerman() {
+            const result = testTranslation('de', 'Teambesprechungen');
+            displayResult('German', result);
+        }
+    </script>
+</body>
+</html>

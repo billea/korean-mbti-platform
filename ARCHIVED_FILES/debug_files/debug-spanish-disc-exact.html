@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Spanish DISC - Exact User Flow</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-size: 12px; }
+        .console { background: #000; color: #00ff00; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Spanish DISC - Exact User Flow</h1>
+    
+    <button onclick="debugExactUserFlow()">🧪 Debug Exact User Experience</button>
+    
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>
+        function debugExactUserFlow() {
+            console.clear();
+            console.log('=== DEBUG: Exact User Flow for Spanish DISC ===');
+            
+            let log = 'DEBUG: Exact User Flow for Spanish DISC\n\n';
+            
+            // Step 1: User clicks Spanish language button
+            log += '1. User clicks Spanish language button\n';
+            console.log('1. User clicks Spanish language button');
+            
+            // Simulate what updateLanguage('es') does
+            log += '   updateLanguage("es") called\n';
+            currentLanguage = 'es';
+            localStorage.setItem('selectedLanguage', 'es');
+            log += `   currentLanguage set to: ${currentLanguage}\n`;
+            console.log(`   currentLanguage set to: ${currentLanguage}`);
+            
+            // Step 2: Check what testDefinitions has for disc in Spanish
+            log += '\n2. Checking testDefinitions availability\n';
+            const hasDiscES = !!(testDefinitions && testDefinitions.disc && testDefinitions.disc.es);
+            log += `   testDefinitions.disc.es exists: ${hasDiscES}\n`;
+            console.log(`   testDefinitions.disc.es exists: ${hasDiscES}`);
+            
+            if (hasDiscES) {
+                const questionCount = testDefinitions.disc.es.questions.length;
+                const firstQ = testDefinitions.disc.es.questions[0].text;
+                log += `   Questions: ${questionCount}\n`;
+                log += `   First Q: "${firstQ}"\n`;
+                console.log(`   Questions: ${questionCount}`);
+                console.log(`   First Q: "${firstQ}"`);
+            }
+            
+            // Step 3: Check individual translations backup
+            log += '\n3. Checking individual translations backup\n';
+            const hasIndividualES = !!(translations && translations.es && translations.es.tests && translations.es.tests.disc && translations.es.tests.disc.questions);
+            log += `   translations.es.tests.disc.questions exists: ${hasIndividualES}\n`;
+            console.log(`   translations.es.tests.disc.questions exists: ${hasIndividualES}`);
+            
+            if (hasIndividualES) {
+                const questionCount = translations.es.tests.disc.questions.length;
+                const firstQ = translations.es.tests.disc.questions[0].text;
+                log += `   Questions: ${questionCount}\n`;
+                log += `   First Q: "${firstQ}"\n`;
+                console.log(`   Questions: ${questionCount}`);
+                console.log(`   First Q: "${firstQ}"`);
+            }
+            
+            // Step 4: Simulate user clicking "Take Test" button for DISC
+            log += '\n4. User clicks "Take Test" for DISC\n';
+            console.log('4. User clicks "Take Test" for DISC');
+            
+            try {
+                // This should be exactly what happens when user clicks the test
+                log += '   Calling startTest("disc")\n';
+                console.log('   Calling startTest("disc")');
+                
+                // Simulate startTest function call
+                const testType = 'disc';
+                currentTest = testType;
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                
+                let testData = null;
+                
+                // Load test data from new multilingual structure if available
+                if (testDefinitions[testType] && testDefinitions[testType][currentLanguage]) {
+                    log += `   ✅ Loading ${testType} from multilingual definitions for language: ${currentLanguage}\n`;
+                    console.log(`   ✅ Loading ${testType} from multilingual definitions for language: ${currentLanguage}`);
+                    testData = {
+                        ...tests[testType], // Keep metadata like reliability_score, scientific_basis
+                        title: testDefinitions[testType][currentLanguage].title,
+                        questions: testDefinitions[testType][currentLanguage].questions
+                    };
+                    log += `   ✅ Multilingual questions loaded: ${testData.questions.length}\n`;
+                    log += `   ✅ First question text: "${testData.questions[0] ? testData.questions[0].text : 'No questions'}"\n`;
+                    console.log(`   ✅ Multilingual questions loaded: ${testData.questions.length}`);
+                    console.log(`   ✅ First question text: "${testData.questions[0] ? testData.questions[0].text : 'No questions'}"`);
+                } else {
+                    log += `   ⚠️ Loading ${testType} from legacy tests object\n`;
+                    console.log(`   ⚠️ Loading ${testType} from legacy tests object`);
+                    testData = tests[testType];
+                    
+                    // Special handling for IQ test (if needed)
+                    if (testType === 'iq' && translations && translations[currentLanguage] && translations[currentLanguage].iq && translations[currentLanguage].iq.questions) {
+                        log += `   🧠 IQ test questions loaded from translations: ${testData.questions.length}\n`;
+                        console.log(`   🧠 IQ test questions loaded from translations: ${testData.questions.length}`);
+                        testData.questions = translations[currentLanguage].iq.questions;
+                    }
+                    
+                    // 🔄 HYBRID BRIDGE: Try to load from individual language objects
+                    // This bridges the gap until all translations are migrated to testDefinitions
+                    if (currentLanguage !== 'en' && translations && translations[currentLanguage]) {
+                        const langTranslations = translations[currentLanguage];
+                        
+                        // Check if questions exist in the old individual language structure
+                        if (langTranslations.tests && langTranslations.tests[testType] && langTranslations.tests[testType].questions) {
+                            log += `   🌉 BRIDGE: Loading ${testType} questions from individual ${currentLanguage} translations\n`;
+                            console.log(`   🌉 BRIDGE: Loading ${testType} questions from individual ${currentLanguage} translations`);
+                            testData = {
+                                ...testData, // Keep metadata from tests object
+                                title: langTranslations.tests[testType].title || testData.title,
+                                questions: langTranslations.tests[testType].questions
+                            };
+                            log += `   🌉 Bridge questions loaded: ${testData.questions.length}\n`;
+                            log += `   🌉 First question text: "${testData.questions[0] ? testData.questions[0].text : 'No questions'}"\n`;
+                            console.log(`   🌉 Bridge questions loaded: ${testData.questions.length}`);
+                            console.log(`   🌉 First question text: "${testData.questions[0] ? testData.questions[0].text : 'No questions'}"`);
+                        } else {
+                            log += `   ❌ No ${currentLanguage} questions found for ${testType}, using English fallback\n`;
+                            console.log(`   ❌ No ${currentLanguage} questions found for ${testType}, using English fallback`);
+                        }
+                    }
+                }
+                
+                // Step 5: Final result check
+                log += '\n5. FINAL RESULT:\n';
+                if (testData && testData.questions && testData.questions.length > 0) {
+                    const firstQ = testData.questions[0].text;
+                    const isSpanish = firstQ.includes('equipos') || firstQ.includes('prefiero') || /[ñáéíóúü]/.test(firstQ);
+                    log += `   Questions loaded: ${testData.questions.length}\n`;
+                    log += `   Title: "${testData.title}"\n`;
+                    log += `   First question: "${firstQ}"\n`;
+                    log += `   Is Spanish: ${isSpanish ? '✅ YES' : '❌ NO - STILL ENGLISH!'}\n`;
+                    
+                    if (!isSpanish) {
+                        log += '\n❌ PROBLEM IDENTIFIED: Questions are loading but still in English!\n';
+                    } else {
+                        log += '\n✅ SUCCESS: Spanish questions loaded correctly!\n';
+                    }
+                } else {
+                    log += '   ❌ NO QUESTIONS LOADED AT ALL!\n';
+                }
+                
+            } catch (error) {
+                log += `   ❌ ERROR: ${error.message}\n`;
+                console.error('   ❌ ERROR:', error);
+            }
+            
+            // Display results
+            document.getElementById('results').innerHTML = `<pre class="console">${log}</pre>`;
+        }
+        
+        // Auto-run on load
+        setTimeout(() => debugExactUserFlow(), 500);
+    </script>
+</body>
+</html>

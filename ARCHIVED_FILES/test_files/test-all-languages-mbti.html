@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Languages MBTI Test Verification</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .test-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .language-selector {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        select {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            font-size: 16px;
+            background: white;
+        }
+        .language-result {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .question-preview {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        .success {
+            background: #dcfce7;
+            color: #16a34a;
+            border: 2px solid #22c55e;
+        }
+        .error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 2px solid #ef4444;
+        }
+        .info {
+            background: #eff6ff;
+            color: #2563eb;
+            border: 2px solid #3b82f6;
+        }
+        .summary {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .summary h3 {
+            margin-top: 0;
+            color: #0369a1;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🌍 All Languages MBTI Questions Verification</h1>
+        
+        <div class="language-selector">
+            <label for="testModeSelect">Test Mode:</label>
+            <select id="testModeSelect" onchange="runTest(this.value)">
+                <option value="">Select Test Mode</option>
+                <option value="individual">Test Individual Language</option>
+                <option value="all">Test All Languages</option>
+            </select>
+            
+            <div id="individualSelector" style="display:none; margin-top: 15px;">
+                <label for="languageSelect">Select Language:</label>
+                <select id="languageSelect" onchange="testLanguage(this.value)">
+                    <option value="">Choose Language</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="es">🇪🇸 Spanish</option>
+                    <option value="fr">🇫🇷 French</option>
+                    <option value="de">🇩🇪 German</option>
+                    <option value="it">🇮🇹 Italian</option>
+                    <option value="pt">🇵🇹 Portuguese</option>
+                    <option value="ja">🇯🇵 Japanese</option>
+                    <option value="ko">🇰🇷 Korean</option>
+                    <option value="zh">🇨🇳 Chinese</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const supportedLanguages = {
+            en: {name: "English", flag: "🇺🇸"},
+            es: {name: "Spanish", flag: "🇪🇸"},
+            fr: {name: "French", flag: "🇫🇷"},
+            de: {name: "German", flag: "🇩🇪"},
+            it: {name: "Italian", flag: "🇮🇹"},
+            pt: {name: "Portuguese", flag: "🇵🇹"},
+            ja: {name: "Japanese", flag: "🇯🇵"},
+            ko: {name: "Korean", flag: "🇰🇷"},
+            zh: {name: "Chinese", flag: "🇨🇳"}
+        };
+
+        function runTest(mode) {
+            const individualSelector = document.getElementById('individualSelector');
+            const results = document.getElementById('results');
+            
+            if (mode === 'individual') {
+                individualSelector.style.display = 'block';
+                results.innerHTML = '<div class="status info">Select a language to test individual MBTI questions</div>';
+            } else if (mode === 'all') {
+                individualSelector.style.display = 'none';
+                testAllLanguages();
+            } else {
+                individualSelector.style.display = 'none';
+                results.innerHTML = '';
+            }
+        }
+
+        function testLanguage(lang) {
+            if (!lang) return;
+            
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="status info">Testing ' + supportedLanguages[lang].flag + ' ' + supportedLanguages[lang].name + '...</div>';
+            
+            setTimeout(() => {
+                const result = testSingleLanguage(lang);
+                displaySingleResult(lang, result);
+            }, 100);
+        }
+
+        function testAllLanguages() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="status info">Testing all languages for MBTI questions...</div>';
+            
+            setTimeout(() => {
+                let allResults = {};
+                let passCount = 0;
+                let totalCount = Object.keys(supportedLanguages).length;
+                
+                for (let lang in supportedLanguages) {
+                    const result = testSingleLanguage(lang);
+                    allResults[lang] = result;
+                    if (result.success) passCount++;
+                }
+                
+                displayAllResults(allResults, passCount, totalCount);
+            }, 500);
+        }
+
+        function testSingleLanguage(lang) {
+            try {
+                // Check if translations exist for this language
+                if (!translations[lang]) {
+                    return {
+                        success: false,
+                        error: "Language translations not found",
+                        questions: 0
+                    };
+                }
+                
+                // Check if tests section exists
+                if (!translations[lang].tests) {
+                    return {
+                        success: false,
+                        error: "Tests section not found",
+                        questions: 0
+                    };
+                }
+                
+                // Check if MBTI section exists
+                if (!translations[lang].tests.mbti) {
+                    return {
+                        success: false,
+                        error: "MBTI section not found",
+                        questions: 0
+                    };
+                }
+                
+                // Check if MBTI questions exist
+                if (!translations[lang].tests.mbti.questions) {
+                    return {
+                        success: false,
+                        error: "MBTI questions array not found",
+                        questions: 0
+                    };
+                }
+                
+                const questions = translations[lang].tests.mbti.questions;
+                
+                if (!Array.isArray(questions) || questions.length === 0) {
+                    return {
+                        success: false,
+                        error: "MBTI questions array is empty or invalid",
+                        questions: 0
+                    };
+                }
+                
+                // Validate question structure
+                let validQuestions = 0;
+                let invalidQuestions = [];
+                
+                questions.forEach((q, index) => {
+                    if (q.text && q.options && Array.isArray(q.options) && q.options.length >= 2 && q.dimension && q.trait) {
+                        validQuestions++;
+                    } else {
+                        invalidQuestions.push(index + 1);
+                    }
+                });
+                
+                return {
+                    success: validQuestions > 0 && invalidQuestions.length === 0,
+                    questions: questions.length,
+                    validQuestions: validQuestions,
+                    invalidQuestions: invalidQuestions,
+                    sampleQuestion: questions[0] ? questions[0].text : null
+                };
+                
+            } catch (error) {
+                return {
+                    success: false,
+                    error: error.message,
+                    questions: 0
+                };
+            }
+        }
+
+        function displaySingleResult(lang, result) {
+            const results = document.getElementById('results');
+            const langInfo = supportedLanguages[lang];
+            
+            let html = `<div class="language-result">
+                <h3>${langInfo.flag} ${langInfo.name} (${lang})</h3>`;
+            
+            if (result.success) {
+                html += `<div class="status success">✅ PASS - Found ${result.questions} valid MBTI questions</div>`;
+                if (result.sampleQuestion) {
+                    html += `<div class="question-preview"><strong>Sample Question:</strong> ${result.sampleQuestion}</div>`;
+                }
+            } else {
+                html += `<div class="status error">❌ FAIL - ${result.error}</div>`;
+                if (result.questions > 0) {
+                    html += `<div class="status error">Found ${result.questions} questions but ${result.invalidQuestions?.length || 0} are invalid</div>`;
+                }
+            }
+            
+            html += `</div>`;
+            results.innerHTML = html;
+        }
+
+        function displayAllResults(allResults, passCount, totalCount) {
+            const results = document.getElementById('results');
+            
+            let html = `<div class="summary">
+                <h3>Overall Results</h3>
+                <p><strong>${passCount}/${totalCount} languages passed</strong> (${Math.round(passCount/totalCount*100)}% success rate)</p>
+            </div>`;
+            
+            for (let lang in supportedLanguages) {
+                const result = allResults[lang];
+                const langInfo = supportedLanguages[lang];
+                
+                html += `<div class="language-result">
+                    <h4>${langInfo.flag} ${langInfo.name} (${lang})</h4>`;
+                
+                if (result.success) {
+                    html += `<div class="status success">✅ PASS - ${result.questions} valid MBTI questions</div>`;
+                } else {
+                    html += `<div class="status error">❌ FAIL - ${result.error}</div>`;
+                    if (result.questions > 0) {
+                        html += `<div class="status error">Found ${result.questions} questions but ${result.invalidQuestions?.length || 0} are invalid</div>`;
+                    }
+                }
+                
+                html += `</div>`;
+            }
+            
+            results.innerHTML = html;
+        }
+
+        // Auto-run test on load
+        window.onload = function() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="status info">Ready to test MBTI questions across all languages. Select a test mode above.</div>';
+        };
+    </script>
+</body>
+</html>

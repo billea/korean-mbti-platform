@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠💝 MBTI & EQ Questions Test - All Languages</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        .language-section {
+            margin: 25px 0;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        .language-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+        }
+        .test-type {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .question-sample {
+            margin: 8px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 8px;
+        }
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        button {
+            padding: 12px 25px;
+            margin: 5px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .summary {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .flag {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .dimensions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .dimension {
+            padding: 8px;
+            background: #e3f2fd;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠💝 MBTI & EQ Questions Comprehensive Test</h1>
+            <p>Testing all 9 languages with 16 MBTI + 16 EQ questions each</p>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">9</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">32</span>
+                    <span class="stat-label">Questions/Language</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">288</span>
+                    <span class="stat-label">Total Questions</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Coverage</span>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="testAllLanguages()">🚀 Test All Languages</button>
+        <button onclick="testSpecificLanguage('en')">🇺🇸 Test English</button>
+        <button onclick="testSpecificLanguage('ko')">🇰🇷 Test Korean</button>
+        <button onclick="testSpecificLanguage('es')">🇪🇸 Test Spanish</button>
+        <button onclick="testSpecificLanguage('fr')">🇫🇷 Test French</button>
+        <button onclick="testSpecificLanguage('zh')">🇨🇳 Test Chinese</button>
+        <button onclick="testSpecificLanguage('ja')">🇯🇵 Test Japanese</button>
+        <button onclick="testSpecificLanguage('de')">🇩🇪 Test German</button>
+        <button onclick="testSpecificLanguage('it')">🇮🇹 Test Italian</button>
+        <button onclick="testSpecificLanguage('pt')">🇵🇹 Test Portuguese</button>
+
+        <div id="results"></div>
+
+        <div class="summary">
+            <h2>🎯 Implementation Summary</h2>
+            <p><strong>MBTI Questions:</strong> 16 questions covering E/I, S/N, T/F, J/P dimensions with binary choices</p>
+            <p><strong>EQ Questions:</strong> 16 questions covering self-awareness, self-regulation, empathy, social-skills with 5-point scales</p>
+            <p><strong>All languages include culturally adapted translations while maintaining psychological validity</strong></p>
+        </div>
+    </div>
+
+    <script>
+        const languages = {
+            'en': { name: 'English', flag: '🇺🇸' },
+            'ko': { name: '한국어', flag: '🇰🇷' },
+            'es': { name: 'Español', flag: '🇪🇸' },
+            'fr': { name: 'Français', flag: '🇫🇷' },
+            'zh': { name: '中文', flag: '🇨🇳' },
+            'ja': { name: '日本語', flag: '🇯🇵' },
+            'de': { name: 'Deutsch', flag: '🇩🇪' },
+            'it': { name: 'Italiano', flag: '🇮🇹' },
+            'pt': { name: 'Português', flag: '🇵🇹' }
+        };
+
+        const mbtiDimensions = ['E/I', 'S/N', 'T/F', 'J/P'];
+        const eqDimensions = ['self-awareness', 'self-regulation', 'empathy', 'social-skills'];
+
+        async function testAllLanguages() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h2>🧪 Testing All Languages...</h2>';
+            
+            let allResults = '';
+            let totalPassed = 0;
+            
+            for (const [langCode, langInfo] of Object.entries(languages)) {
+                const result = await testSpecificLanguage(langCode, false);
+                allResults += result.html;
+                if (result.passed) totalPassed++;
+            }
+            
+            results.innerHTML = `
+                <div class="summary">
+                    <h2>📊 Overall Test Results</h2>
+                    <p><strong>${totalPassed}/${Object.keys(languages).length} languages passed</strong></p>
+                    <p>Success Rate: ${Math.round((totalPassed / Object.keys(languages).length) * 100)}%</p>
+                </div>
+                ${allResults}
+            `;
+        }
+
+        async function testSpecificLanguage(langCode, updateResults = true) {
+            try {
+                const timestamp = new Date().getTime();
+                const response = await fetch(`./translations/${langCode}.json?v=${timestamp}`);
+                const data = await response.json();
+                
+                const langInfo = languages[langCode];
+                
+                // Test MBTI questions
+                const mbtiQuestions = data.mbtiQuestions || [];
+                const mbtiValid = validateMBTIQuestions(mbtiQuestions);
+                
+                // Test EQ questions  
+                const eqQuestions = data.eqQuestions || [];
+                const eqValid = validateEQQuestions(eqQuestions);
+                
+                const allPassed = mbtiValid.passed && eqValid.passed;
+                
+                const resultHTML = `
+                    <div class="language-section">
+                        <div class="language-header">
+                            <h3>${langInfo.flag} ${langInfo.name} (${langCode})</h3>
+                            <span class="status ${allPassed ? 'success' : 'error'}">
+                                ${allPassed ? '✅ PASS' : '❌ FAIL'}
+                            </span>
+                        </div>
+                        
+                        <div class="test-type">
+                            <h4>🧠 MBTI Questions Test</h4>
+                            <div class="stats">
+                                <div class="stat">
+                                    <span class="stat-number">${mbtiQuestions.length}</span>
+                                    <span class="stat-label">Questions Found</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">${mbtiValid.dimensionCoverage.length}/4</span>
+                                    <span class="stat-label">Dimensions</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">${mbtiValid.passed ? '100%' : '0%'}</span>
+                                    <span class="stat-label">Valid</span>
+                                </div>
+                            </div>
+                            <div class="dimensions">
+                                ${mbtiDimensions.map(dim => `
+                                    <div class="dimension" style="background: ${mbtiValid.dimensionCoverage.includes(dim) ? '#c8e6c9' : '#ffcdd2'}">
+                                        ${dim}: ${mbtiValid.dimensionCoverage.includes(dim) ? '✅' : '❌'}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${mbtiQuestions.length > 0 ? `
+                                <div class="question-sample">
+                                    <strong>Sample:</strong> ${mbtiQuestions[0].text}
+                                    <br><strong>Options:</strong> ${mbtiQuestions[0].options.join(' / ')}
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="test-type">
+                            <h4>💝 EQ Questions Test</h4>
+                            <div class="stats">
+                                <div class="stat">
+                                    <span class="stat-number">${eqQuestions.length}</span>
+                                    <span class="stat-label">Questions Found</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">${eqValid.dimensionCoverage.length}/4</span>
+                                    <span class="stat-label">Dimensions</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">${eqValid.passed ? '100%' : '0%'}</span>
+                                    <span class="stat-label">Valid</span>
+                                </div>
+                            </div>
+                            <div class="dimensions">
+                                ${eqDimensions.map(dim => `
+                                    <div class="dimension" style="background: ${eqValid.dimensionCoverage.includes(dim) ? '#c8e6c9' : '#ffcdd2'}">
+                                        ${dim}: ${eqValid.dimensionCoverage.includes(dim) ? '✅' : '❌'}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${eqQuestions.length > 0 ? `
+                                <div class="question-sample">
+                                    <strong>Sample:</strong> ${eqQuestions[0].text}
+                                    <br><strong>Options:</strong> ${eqQuestions[0].options.join(' / ')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                if (updateResults) {
+                    document.getElementById('results').innerHTML = resultHTML;
+                }
+                
+                return { html: resultHTML, passed: allPassed };
+                
+            } catch (error) {
+                const errorHTML = `
+                    <div class="language-section">
+                        <div class="language-header">
+                            <h3>${languages[langCode].flag} ${languages[langCode].name}</h3>
+                            <span class="status error">❌ ERROR</span>
+                        </div>
+                        <div class="question-sample">Error: ${error.message}</div>
+                    </div>
+                `;
+                
+                if (updateResults) {
+                    document.getElementById('results').innerHTML = errorHTML;
+                }
+                
+                return { html: errorHTML, passed: false };
+            }
+        }
+
+        function validateMBTIQuestions(questions) {
+            if (!Array.isArray(questions) || questions.length !== 16) {
+                return { passed: false, dimensionCoverage: [] };
+            }
+            
+            const dimensionCoverage = new Set();
+            let valid = true;
+            
+            for (const q of questions) {
+                if (!q.text || !Array.isArray(q.options) || q.options.length !== 2 || 
+                    !q.dimension || !Array.isArray(q.trait) || q.trait.length !== 2) {
+                    valid = false;
+                    break;
+                }
+                dimensionCoverage.add(q.dimension);
+            }
+            
+            return { 
+                passed: valid && dimensionCoverage.size === 4,
+                dimensionCoverage: Array.from(dimensionCoverage)
+            };
+        }
+
+        function validateEQQuestions(questions) {
+            if (!Array.isArray(questions) || questions.length !== 16) {
+                return { passed: false, dimensionCoverage: [] };
+            }
+            
+            const dimensionCoverage = new Set();
+            let valid = true;
+            
+            for (const q of questions) {
+                if (!q.text || !Array.isArray(q.options) || q.options.length !== 5 ||
+                    !q.dimension || !Array.isArray(q.scores) || q.scores.length !== 5) {
+                    valid = false;
+                    break;
+                }
+                dimensionCoverage.add(q.dimension);
+            }
+            
+            return { 
+                passed: valid && dimensionCoverage.size === 4,
+                dimensionCoverage: Array.from(dimensionCoverage)
+            };
+        }
+
+        // Auto-run test on page load
+        window.onload = () => {
+            testAllLanguages();
+        };
+    </script>
+</body>
+</html>

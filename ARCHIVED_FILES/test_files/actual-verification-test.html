@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACTUAL Translation Verification</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .failure { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-size: 11px; }
+        .english { color: red; font-weight: bold; }
+        .translated { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🔍 ACTUAL Translation Verification Test</h1>
+    <p>Testing what actually loads when switching languages...</p>
+    
+    <div class="test">
+        <h2>Reality Check</h2>
+        <button onclick="testRealSpanish()">🇪🇸 Test Real Spanish Loading</button>
+        <button onclick="testRealChinese()">🇨🇳 Test Real Chinese Loading</button>
+        <button onclick="simulateRealUserExperience()">👤 Simulate User Experience</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function testRealSpanish() {
+            console.log('\n=== TESTING REAL SPANISH EXPERIENCE ===');
+            
+            // Actually switch language like user would
+            currentLanguage = 'es';
+            updateLanguage('es');
+            
+            let results = '<h3>🇪🇸 REAL Spanish Test Results</h3><pre>';
+            
+            // Test each test type by actually calling the same functions the UI uses
+            const tests = [
+                { id: 'mbti', name: 'MBTI' },
+                { id: 'disc', name: 'DISC' },
+                { id: 'lovelanguage', name: 'Love Language' },
+                { id: 'adhd', name: 'ADHD' },
+                { id: 'anxiety', name: 'Anxiety' },
+                { id: 'depression', name: 'Depression' },
+                { id: 'bigfive', name: 'Big Five' }
+            ];
+            
+            tests.forEach(test => {
+                try {
+                    // Use the actual function that loads test data
+                    const testData = loadTestQuestions(test.id);
+                    
+                    if (testData && testData.questions && testData.questions.length > 0) {
+                        const firstQ = testData.questions[0].text;
+                        const isEnglish = /^[A-Za-z\s\?\.\!,:'"()]+$/.test(firstQ) && !firstQ.includes('¿') && !firstQ.includes('ñ');
+                        
+                        if (isEnglish) {
+                            results += `❌ ${test.name}: <span class="english">STILL ENGLISH</span>\n`;
+                            results += `   "${firstQ.substring(0, 80)}..."\n\n`;
+                        } else {
+                            results += `✅ ${test.name}: <span class="translated">TRANSLATED</span>\n`;
+                            results += `   "${firstQ.substring(0, 80)}..."\n\n`;
+                        }
+                    } else {
+                        results += `❌ ${test.name}: NO QUESTIONS LOADED\n\n`;
+                    }
+                } catch (error) {
+                    results += `❌ ${test.name}: ERROR - ${error.message}\n\n`;
+                }
+            });
+            
+            results += '</pre>';
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        function testRealChinese() {
+            console.log('\n=== TESTING REAL CHINESE EXPERIENCE ===');
+            
+            // Actually switch language like user would
+            currentLanguage = 'zh';
+            updateLanguage('zh');
+            
+            let results = '<h3>🇨🇳 REAL Chinese Test Results</h3><pre>';
+            
+            const tests = [
+                { id: 'mbti', name: 'MBTI' },
+                { id: 'disc', name: 'DISC' },
+                { id: 'lovelanguage', name: 'Love Language' },
+                { id: 'adhd', name: 'ADHD' },
+                { id: 'anxiety', name: 'Anxiety' },
+                { id: 'depression', name: 'Depression' }
+            ];
+            
+            tests.forEach(test => {
+                try {
+                    const testData = loadTestQuestions(test.id);
+                    
+                    if (testData && testData.questions && testData.questions.length > 0) {
+                        const firstQ = testData.questions[0].text;
+                        const hasChinese = /[\u4e00-\u9fa5]/.test(firstQ);
+                        const isEnglish = /^[A-Za-z\s\?\.\!,:'"()]+$/.test(firstQ);
+                        
+                        if (hasChinese) {
+                            results += `✅ ${test.name}: <span class="translated">CHINESE</span>\n`;
+                            results += `   "${firstQ.substring(0, 40)}..."\n\n`;
+                        } else if (isEnglish) {
+                            results += `❌ ${test.name}: <span class="english">STILL ENGLISH</span>\n`;
+                            results += `   "${firstQ.substring(0, 80)}..."\n\n`;
+                        } else {
+                            results += `⚠️ ${test.name}: UNKNOWN - "${firstQ.substring(0, 40)}..."\n\n`;
+                        }
+                    } else {
+                        results += `❌ ${test.name}: NO QUESTIONS LOADED\n\n`;
+                    }
+                } catch (error) {
+                    results += `❌ ${test.name}: ERROR - ${error.message}\n\n`;
+                }
+            });
+            
+            results += '</pre>';
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        function simulateRealUserExperience() {
+            console.log('\n=== SIMULATING REAL USER EXPERIENCE ===');
+            
+            let results = '<h3>👤 Real User Experience Simulation</h3><pre>';
+            
+            // Test what happens when user clicks language buttons
+            const languages = [
+                { code: 'es', name: 'Spanish', flag: '🇪🇸' },
+                { code: 'zh', name: 'Chinese', flag: '🇨🇳' },
+                { code: 'fr', name: 'French', flag: '🇫🇷' }
+            ];
+            
+            languages.forEach(lang => {
+                results += `${lang.flag} TESTING ${lang.name.toUpperCase()}:\n`;
+                
+                // Switch language like user clicking button
+                currentLanguage = lang.code;
+                updateLanguage(lang.code);
+                
+                // Test common tests user would try
+                const commonTests = ['mbti', 'disc', 'lovelanguage'];
+                let translatedCount = 0;
+                
+                commonTests.forEach(testId => {
+                    try {
+                        const testData = loadTestQuestions(testId);
+                        if (testData && testData.questions && testData.questions.length > 0) {
+                            const firstQ = testData.questions[0].text;
+                            const isEnglish = /^[A-Za-z\s\?\.\!,:'"()]+$/.test(firstQ);
+                            
+                            if (!isEnglish) {
+                                translatedCount++;
+                                results += `  ✅ ${testId}: TRANSLATED\n`;
+                            } else {
+                                results += `  ❌ ${testId}: ENGLISH\n`;
+                            }
+                        } else {
+                            results += `  ❌ ${testId}: NO LOAD\n`;
+                        }
+                    } catch (error) {
+                        results += `  ❌ ${testId}: ERROR\n`;
+                    }
+                });
+                
+                const successRate = Math.round((translatedCount / commonTests.length) * 100);
+                results += `  RESULT: ${translatedCount}/${commonTests.length} working (${successRate}%)\n\n`;
+            });
+            
+            results += '</pre>';
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run Spanish test
+        setTimeout(() => testRealSpanish(), 500);
+    </script>
+</body>
+</html>

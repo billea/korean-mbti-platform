@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Korean Translation Test</title>
+</head>
+<body>
+    <h1>Korean Translation Test for Ask Friends</h1>
+    
+    <div style="padding: 20px; border: 1px solid #ccc; margin: 20px 0;">
+        <h2>Test Elements:</h2>
+        <div data-translate="tests.askfriends.viralBadge">💭 CURIOSITY GAME</div>
+        <h1 data-translate="tests.askfriends.heroTitle">See Who Knows Me Best 🧩</h1>
+        <div data-translate="tests.askfriends.categories.musicTitle">Music & Entertainment</div>
+    </div>
+    
+    <div style="padding: 20px; border: 1px solid #ccc; margin: 20px 0;">
+        <h2>Debug Info:</h2>
+        <div id="debug-info">
+            <p>Loading debug information...</p>
+        </div>
+    </div>
+
+    <!-- Load translation system -->
+    <script src="translation-loader.js"></script>
+    
+    <script>
+        console.log('🚀 Simple Korean test starting...');
+        
+        // Set Korean as preferred language
+        localStorage.setItem('preferredLanguage', 'ko');
+        
+        async function testTranslations() {
+            try {
+                console.log('🔄 Initializing translation loader...');
+                const loader = new TranslationLoader();
+                
+                console.log('📥 Loading Korean translations...');
+                const koTranslations = await loader.loadLanguage('ko');
+                console.log('✅ Korean translations loaded:', koTranslations);
+                
+                // Check specific paths
+                console.log('🔍 Checking tests object:', koTranslations.tests);
+                console.log('🔍 Checking askfriends object:', koTranslations.tests?.askfriends);
+                console.log('🔍 Checking heroTitle:', koTranslations.tests?.askfriends?.heroTitle);
+                
+                // Apply translations
+                document.querySelectorAll('[data-translate]').forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    console.log(`🔍 Processing element: ${key}`);
+                    
+                    const keyParts = key.split('.');
+                    let value = koTranslations;
+                    
+                    for (const part of keyParts) {
+                        if (value && value[part]) {
+                            value = value[part];
+                        } else {
+                            console.log(`❌ Path broken at: ${part}`);
+                            value = null;
+                            break;
+                        }
+                    }
+                    
+                    if (value && typeof value === 'string') {
+                        console.log(`✅ Found translation: ${key} = ${value}`);
+                        element.textContent = value;
+                        element.style.color = 'green';
+                    } else {
+                        console.log(`❌ No translation found for: ${key}`);
+                        element.style.color = 'red';
+                    }
+                });
+                
+                // Update debug info
+                document.getElementById('debug-info').innerHTML = `
+                    <p><strong>Saved Language:</strong> ${localStorage.getItem('preferredLanguage')}</p>
+                    <p><strong>Translation Object Keys:</strong> ${Object.keys(koTranslations).join(', ')}</p>
+                    <p><strong>Tests Object Keys:</strong> ${koTranslations.tests ? Object.keys(koTranslations.tests).join(', ') : 'Not found'}</p>
+                    <p><strong>AskFriends Object Keys:</strong> ${koTranslations.tests?.askfriends ? Object.keys(koTranslations.tests.askfriends).join(', ') : 'Not found'}</p>
+                    <p><strong>Hero Title Value:</strong> ${koTranslations.tests?.askfriends?.heroTitle || 'Not found'}</p>
+                `;
+                
+            } catch (error) {
+                console.error('❌ Test failed:', error);
+                document.getElementById('debug-info').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        // Run test when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', testTranslations);
+        } else {
+            testTranslations();
+        }
+    </script>
+</body>
+</html>

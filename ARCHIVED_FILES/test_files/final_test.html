@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Final Test</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Final Spanish Test</h1>
+    
+    <button onclick="finalTest()">Test Now</button>
+    
+    <div id="test">
+        <p data-translate="tests.askfriends.heroTitle">See Who Knows Me Best 🧩</p>
+        <p data-translate="tests.askfriends.categories.musicTitle">Music & Entertainment</p>
+    </div>
+    
+    <pre id="log" style="background: #f0f0f0; padding: 1rem; margin: 1rem 0;"></pre>
+
+    <script>
+        function log(msg) {
+            document.getElementById('log').textContent += msg + '\n';
+            console.log(msg);
+        }
+        
+        function finalTest() {
+            log('=== FINAL TEST ===');
+            
+            // Set Spanish
+            localStorage.setItem('preferredLanguage', 'es');
+            window.currentLanguage = 'es';
+            
+            // Check nested structure
+            log('Checking translations.es.tests.askfriends...');
+            if (translations.es && translations.es.tests && translations.es.tests.askfriends) {
+                log('✅ Nested structure exists');
+                log('heroTitle: ' + translations.es.tests.askfriends.heroTitle);
+            } else {
+                log('❌ Nested structure missing');
+                if (translations.es) {
+                    log('es exists, keys: ' + Object.keys(translations.es).join(', '));
+                    if (translations.es.tests) {
+                        log('tests exists, keys: ' + Object.keys(translations.es.tests).join(', '));
+                    } else {
+                        log('tests does NOT exist');
+                    }
+                } else {
+                    log('es does NOT exist');
+                }
+            }
+            
+            // Test getNestedTranslation function
+            const testKey = 'tests.askfriends.heroTitle';
+            const result = getNestedTranslation(translations.es, testKey);
+            log('getNestedTranslation result: ' + result);
+            
+            // Try changeLanguage
+            log('Calling changeLanguage(es)...');
+            changeLanguage('es');
+            
+            setTimeout(() => {
+                const hero = document.querySelector('[data-translate="tests.askfriends.heroTitle"]');
+                log('After changeLanguage: ' + (hero ? hero.textContent : 'NOT FOUND'));
+            }, 1000);
+        }
+        
+        setTimeout(finalTest, 1000);
+    </script>
+</body>
+</html>

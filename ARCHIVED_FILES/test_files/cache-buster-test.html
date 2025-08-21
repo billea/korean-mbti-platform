@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cache Buster Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; }
+        .error { background: #f8d7da; }
+        button { padding: 10px 20px; margin: 5px; border: none; border-radius: 5px; cursor: pointer; background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Cache Buster Test</h1>
+    <p>This will bypass browser cache and force reload translations</p>
+    
+    <button onclick="testDirectLoad()">Test Direct Korean Load</button>
+    <button onclick="testWithEngine()">Test With TranslationEngine</button>
+    <button onclick="clearAndReload()">Clear Cache & Reload</button>
+    
+    <div id="results"></div>
+
+    <script>
+        async function testDirectLoad() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<p>Loading Korean translations directly...</p>';
+            
+            try {
+                // Force cache bust with timestamp
+                const timestamp = new Date().getTime();
+                const response = await fetch(`./translations/ko.json?v=${timestamp}`);
+                const data = await response.json();
+                
+                const newBadge = data.tests?.new;
+                const trendingBadge = data.tests?.trending;
+                const popularBadge = data.tests?.popular;
+                
+                results.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ Direct Load Results:</h3>
+                        <p><strong>tests.new:</strong> "${newBadge || 'MISSING'}"</p>
+                        <p><strong>tests.trending:</strong> "${trendingBadge || 'MISSING'}"</p>
+                        <p><strong>tests.popular:</strong> "${popularBadge || 'MISSING'}"</p>
+                        <p><strong>Cache busting URL:</strong> ./translations/ko.json?v=${timestamp}</p>
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ Error loading Korean file:</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function testWithEngine() {
+            const results = document.getElementById('results');
+            
+            if (!window.i18n) {
+                results.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ TranslationEngine not loaded</h3>
+                        <p>Load translation-engine.js first</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            await window.i18n.setLanguage('ko');
+            
+            const newBadge = window.i18n.t('tests.new');
+            const trendingBadge = window.i18n.t('tests.trending');
+            const popularBadge = window.i18n.t('tests.popular');
+            
+            results.innerHTML = `
+                <div class="result ${newBadge.includes('새로운') ? 'success' : 'error'}">
+                    <h3>🔄 TranslationEngine Results:</h3>
+                    <p><strong>tests.new:</strong> "${newBadge}"</p>
+                    <p><strong>tests.trending:</strong> "${trendingBadge}"</p>  
+                    <p><strong>tests.popular:</strong> "${popularBadge}"</p>
+                    <p><strong>Current Language:</strong> ${window.i18n.currentLanguage}</p>
+                    <p><strong>Loaded Languages:</strong> [${Object.keys(window.i18n.translations).join(', ')}]</p>
+                </div>
+            `;
+        }
+        
+        function clearAndReload() {
+            // Clear all caches and reload
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    for (let name of names) {
+                        caches.delete(name);
+                    }
+                });
+            }
+            
+            // Clear localStorage
+            localStorage.clear();
+            
+            // Hard reload
+            location.reload(true);
+        }
+    </script>
+    
+    <!-- Load TranslationEngine for comparison -->
+    <script src="./translation-engine.js"></script>
+</body>
+</html>

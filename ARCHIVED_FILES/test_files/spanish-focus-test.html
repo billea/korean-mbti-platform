@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish Focus Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-size: 11px; }
+        .working { color: green; font-weight: bold; }
+        .broken { color: red; font-weight: bold; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🇪🇸 Spanish Translation Focus Test</h1>
+    
+    <button onclick="testSpanishTranslations()">🧪 Test Spanish Translations</button>
+    <button onclick="testActualStartTest()">🚀 Test Actual startTest Function</button>
+    
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>
+        function testSpanishTranslations() {
+            console.clear();
+            console.log('=== SPANISH TRANSLATION FOCUS TEST ===');
+            
+            let results = '<div class="section"><h3>🇪🇸 Spanish Translation Analysis</h3><pre>';
+            
+            // Force Spanish
+            currentLanguage = 'es';
+            
+            // Test each common test type
+            const tests = [
+                { id: 'mbti', name: 'MBTI (should work from testDefinitions)' },
+                { id: 'disc', name: 'DISC (should work from testDefinitions + Spanish)' },
+                { id: 'lovelanguage', name: 'Love Language (should work from testDefinitions + Spanish)' },
+                { id: 'adhd', name: 'ADHD (should work from individual Spanish object)' },
+                { id: 'anxiety', name: 'Anxiety (should work from individual Spanish object)' },
+                { id: 'depression', name: 'Depression (should work from individual Spanish object)' },
+                { id: 'bigfive', name: 'Big Five (unknown status)' }
+            ];
+            
+            tests.forEach(test => {
+                results += `\\n=== ${test.name} ===\\n`;
+                
+                // Check testDefinitions first
+                const inTestDefs = !!(testDefinitions && testDefinitions[test.id] && testDefinitions[test.id].es);
+                results += `testDefinitions[${test.id}].es: ${inTestDefs ? '✅' : '❌'}\\n`;
+                
+                if (inTestDefs) {
+                    const count = testDefinitions[test.id].es.questions.length;
+                    const first = testDefinitions[test.id].es.questions[0].text.substring(0, 50);
+                    results += `  Questions: ${count}\\n`;
+                    results += `  First: "${first}..."\\n`;
+                }
+                
+                // Check individual translations
+                const inIndividual = !!(translations && translations.es && translations.es.tests && 
+                    translations.es.tests[test.id] && translations.es.tests[test.id].questions);
+                results += `translations.es.tests[${test.id}]: ${inIndividual ? '✅' : '❌'}\\n`;
+                
+                if (inIndividual) {
+                    const count = translations.es.tests[test.id].questions.length;
+                    const first = translations.es.tests[test.id].questions[0].text.substring(0, 50);
+                    results += `  Questions: ${count}\\n`;
+                    results += `  First: "${first}..."\\n`;
+                }
+                
+                // Predict what should happen
+                if (inTestDefs) {
+                    results += `  SHOULD LOAD: Spanish from testDefinitions\\n`;
+                } else if (inIndividual) {
+                    results += `  SHOULD LOAD: Spanish from bridge system\\n`;
+                } else {
+                    results += `  SHOULD LOAD: English fallback\\n`;
+                }
+            });
+            
+            results += '</pre></div>';
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        function testActualStartTest() {
+            console.clear();
+            console.log('=== TESTING ACTUAL startTest FUNCTION ===');
+            
+            let results = '<div class="section"><h3>🚀 Actual startTest Function Test</h3><pre>';
+            
+            // Force Spanish
+            currentLanguage = 'es';
+            results += `Language set to: ${currentLanguage}\\n\\n`;
+            
+            // Test DISC (should work from testDefinitions)
+            results += '=== TESTING DISC ===\\n';
+            try {
+                // Reset test state
+                currentTest = null;
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                
+                results += 'Calling startTestNew("disc")...\\n';
+                
+                // Manually execute the startTestNew logic
+                const testType = 'disc';
+                currentTest = testType;
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                
+                let testData = null;
+                
+                // Load test data from new multilingual structure if available
+                if (testDefinitions[testType] && testDefinitions[testType][currentLanguage]) {
+                    results += `✅ Found testDefinitions[${testType}][${currentLanguage}]\\n`;
+                    testData = {
+                        ...tests[testType], // Keep metadata like reliability_score, scientific_basis
+                        title: testDefinitions[testType][currentLanguage].title,
+                        questions: testDefinitions[testType][currentLanguage].questions
+                    };
+                    results += `✅ Loaded ${testData.questions.length} questions\\n`;
+                    results += `✅ Title: "${testData.title}"\\n`;
+                    results += `✅ First Q: "${testData.questions[0].text}"\\n`;
+                    
+                    const isSpanish = testData.questions[0].text.includes('equipos') || /[ñáéíóú]/.test(testData.questions[0].text);
+                    results += `✅ Is Spanish: ${isSpanish ? 'YES' : 'NO'}\\n`;
+                } else {
+                    results += `❌ testDefinitions[${testType}][${currentLanguage}] not found\\n`;
+                    results += 'Trying legacy loading...\\n';
+                    
+                    testData = tests[testType];
+                    results += `Legacy testData loaded: ${!!testData}\\n`;
+                    
+                    // Try bridge system
+                    if (currentLanguage !== 'en' && translations && translations[currentLanguage]) {
+                        const langTranslations = translations[currentLanguage];
+                        
+                        if (langTranslations.tests && langTranslations.tests[testType] && langTranslations.tests[testType].questions) {
+                            results += `🌉 BRIDGE: Found Spanish questions in individual object\\n`;
+                            testData = {
+                                ...testData,
+                                title: langTranslations.tests[testType].title || testData.title,
+                                questions: langTranslations.tests[testType].questions
+                            };
+                            results += `🌉 Bridge loaded ${testData.questions.length} questions\\n`;
+                            results += `🌉 First Q: "${testData.questions[0].text}"\\n`;
+                        } else {
+                            results += `❌ Bridge system failed - no Spanish questions found\\n`;
+                        }
+                    }
+                }
+                
+                // Final result
+                if (testData && testData.questions && testData.questions.length > 0) {
+                    const firstQ = testData.questions[0].text;
+                    const isSpanish = firstQ.includes('equipos') || firstQ.includes('prefiero') || /[ñáéíóú]/.test(firstQ);
+                    
+                    results += `\\n🎯 FINAL RESULT:\\n`;
+                    results += `Questions: ${testData.questions.length}\\n`;
+                    results += `Language: ${isSpanish ? '🇪🇸 SPANISH' : '🇺🇸 ENGLISH'}\\n`;
+                    results += `First Question: "${firstQ}"\\n`;
+                    
+                    if (isSpanish) {
+                        results += `\\n✅ SUCCESS: DISC loads in Spanish!\\n`;
+                    } else {
+                        results += `\\n❌ PROBLEM: DISC still loads in English!\\n`;
+                    }
+                } else {
+                    results += `\\n❌ CRITICAL ERROR: No questions loaded at all!\\n`;
+                }
+                
+            } catch (error) {
+                results += `\\n❌ JAVASCRIPT ERROR: ${error.message}\\n`;
+                console.error('Error testing DISC:', error);
+            }
+            
+            results += '</pre></div>';
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run Spanish test
+        setTimeout(() => testSpanishTranslations(), 500);
+    </script>
+</body>
+</html>

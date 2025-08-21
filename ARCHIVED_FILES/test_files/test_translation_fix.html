@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Translation Fix Test</title>
+</head>
+<body>
+    <h1>Translation Fix Test</h1>
+    
+    <div>
+        <h2>Step 1: Switch to Spanish on main page</h2>
+        <button onclick="simulateSpanishSwitch()">Switch to Spanish</button>
+        <p>Current language: <span id="current-lang">loading...</span></p>
+        <p>Saved language: <span id="saved-lang">loading...</span></p>
+    </div>
+    
+    <div>
+        <h2>Step 2: Test Ask Friends elements</h2>
+        <div data-translate="tests.askfriends.heroTitle">See Who Knows Me Best 🧩</div>
+        <div data-translate="tests.askfriends.viralBadge">💭 CURIOSITY GAME</div>
+        <div data-translate="tests.askfriends.categories.musicTitle">Music & Entertainment</div>
+        <div data-translate="tests.askfriends.categories.musicDesc">Songs, movies, shows you love</div>
+    </div>
+    
+    <div>
+        <h2>Step 3: Navigate to Ask Friends</h2>
+        <a href="ask-friends.html" target="_blank">Open Ask Friends Page</a>
+        <p><em>This should now load in Spanish if you switched above</em></p>
+    </div>
+    
+    <div>
+        <h2>Debug Info</h2>
+        <button onclick="debugTranslations()">Debug Translations</button>
+        <pre id="debug-output"></pre>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function log(message) {
+            document.getElementById('debug-output').textContent += message + '\n';
+            console.log(message);
+        }
+        
+        function updateInfo() {
+            document.getElementById('current-lang').textContent = currentLanguage || 'undefined';
+            document.getElementById('saved-lang').textContent = localStorage.getItem('preferredLanguage') || 'none';
+        }
+        
+        function simulateSpanishSwitch() {
+            console.log('🔄 Switching to Spanish...');
+            if (typeof changeLanguage === 'function') {
+                changeLanguage('es');
+            }
+            updateInfo();
+        }
+        
+        function debugTranslations() {
+            log('=== Debug Info ===');
+            log('Current language: ' + currentLanguage);
+            log('LocalStorage preferredLanguage: ' + localStorage.getItem('preferredLanguage'));
+            log('Translations object exists: ' + (typeof translations !== 'undefined'));
+            
+            if (typeof translations !== 'undefined' && translations.es) {
+                log('Spanish translations exist: true');
+                log('Has askfriends: ' + !!translations.es.askfriends);
+                
+                if (translations.es.askfriends) {
+                    log('askfriends.heroTitle: ' + translations.es.askfriends.heroTitle);
+                    log('askfriends.viralBadge: ' + translations.es.askfriends.viralBadge);
+                    log('Has categories: ' + !!translations.es.askfriends.categories);
+                    
+                    if (translations.es.askfriends.categories) {
+                        log('categories.musicTitle: ' + translations.es.askfriends.categories.musicTitle);
+                    }
+                }
+            } else {
+                log('Spanish translations missing!');
+            }
+        }
+        
+        // Initialize
+        if (typeof initializeLanguage === 'function') {
+            initializeLanguage();
+        }
+        updateInfo();
+    </script>
+</body>
+</html>

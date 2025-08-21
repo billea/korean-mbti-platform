@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Translation Debug Test</title>
+</head>
+<body>
+    <h1>Translation Debug Test</h1>
+    
+    <div>
+        <label>Language: </label>
+        <select id="langSelector">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+        </select>
+    </div>
+    
+    <div>
+        <button onclick="testTranslations()">Test Translations</button>
+    </div>
+    
+    <div id="results">
+        <h2>Results:</h2>
+        <div id="output"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function testTranslations() {
+            const lang = document.getElementById('langSelector').value;
+            const output = document.getElementById('output');
+            
+            console.log('Testing translations for language:', lang);
+            
+            // Set current language
+            currentLanguage = lang;
+            
+            // Set test variables to simulate test environment
+            currentTest = 'mbti';
+            currentQuestionIndex = 0;
+            testData = tests['mbti'];
+            
+            console.log('=== TRANSLATION TEST ===');
+            console.log('currentLanguage:', currentLanguage);
+            console.log('currentTest:', currentTest);
+            console.log('testData exists:', !!testData);
+            console.log('translations[currentLanguage] exists:', !!translations[currentLanguage]);
+            
+            // Check if translations exist for this language and test
+            if (translations[lang] && translations[lang].tests && translations[lang].tests.mbti) {
+                console.log('✅ Translation structure exists');
+                console.log('Questions available:', translations[lang].tests.mbti.questions ? translations[lang].tests.mbti.questions.length : 0);
+                
+                if (translations[lang].tests.mbti.questions && translations[lang].tests.mbti.questions[0]) {
+                    const firstQuestion = translations[lang].tests.mbti.questions[0];
+                    console.log('First question text:', firstQuestion.text);
+                    console.log('First question options:', firstQuestion.options);
+                    
+                    output.innerHTML = `
+                        <p><strong>Language:</strong> ${lang}</p>
+                        <p><strong>Question:</strong> ${firstQuestion.text}</p>
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            ${firstQuestion.options.map(opt => '<li>' + opt + '</li>').join('')}
+                        </ul>
+                    `;
+                } else {
+                    output.innerHTML = '<p style="color: red;">❌ No questions found for this language</p>';
+                }
+            } else {
+                console.log('❌ Translation structure missing');
+                output.innerHTML = '<p style="color: red;">❌ Translation structure missing for ' + lang + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Korean Translation Structure</title>
+</head>
+<body>
+    <h1>Debug Korean Translation Object Structure</h1>
+    <div id="output"></div>
+    
+    <script src="script.js"></script>
+    <script>
+        function log(message) {
+            document.getElementById('output').innerHTML += '<p>' + message + '</p>';
+            console.log(message);
+        }
+        
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                log('🔍 Examining Korean translation object structure...');
+                
+                if (typeof translations !== 'undefined' && translations.ko) {
+                    log('Korean translations object exists: true');
+                    log('typeof translations.ko: ' + typeof translations.ko);
+                    
+                    // Check if it's an object
+                    if (typeof translations.ko === 'object') {
+                        log('Korean translation keys (first 20):');
+                        let count = 0;
+                        for (let key in translations.ko) {
+                            if (count < 20) {
+                                log(`  "${key}": "${translations.ko[key]}"`);
+                                count++;
+                            }
+                        }
+                        
+                        // Specifically look for badge-related keys
+                        log('\n🎯 Looking for badge-related keys:');
+                        const badgeKeys = ['tests.new', 'tests.trending', 'tests.popular'];
+                        badgeKeys.forEach(key => {
+                            const hasKey = key in translations.ko;
+                            const value = translations.ko[key];
+                            log(`  "${key}" exists: ${hasKey}, value: "${value}"`);
+                        });
+                        
+                        // Look for any keys containing "new", "trending", "popular"
+                        log('\n🔍 Searching for keys containing badge terms:');
+                        for (let key in translations.ko) {
+                            if (key.includes('new') || key.includes('trending') || key.includes('popular')) {
+                                log(`  Found: "${key}": "${translations.ko[key]}"`);
+                            }
+                        }
+                        
+                        // Test getNestedTranslation function directly
+                        log('\n🧪 Testing getNestedTranslation function:');
+                        if (typeof getNestedTranslation !== 'undefined') {
+                            badgeKeys.forEach(key => {
+                                const result = getNestedTranslation(translations.ko, key);
+                                log(`  getNestedTranslation(translations.ko, "${key}") = "${result}"`);
+                            });
+                        }
+                        
+                    } else {
+                        log('❌ translations.ko is not an object!');
+                    }
+                } else {
+                    log('❌ Korean translations not found');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korean Language Investigation - How Others See Me Section</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .investigation-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .category-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .category-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+        .test-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .test-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+        .test-card p {
+            margin: 0 0 15px 0;
+            opacity: 0.9;
+        }
+        .log-output {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+        .language-switcher {
+            margin: 15px 0;
+        }
+        .language-switcher button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+        }
+        .language-switcher button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .hidden {
+            display: none;
+        }
+        .findings {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .critical-issue {
+            background: rgba(220, 38, 127, 0.3);
+            border: 2px solid rgba(220, 38, 127, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="investigation-container">
+        <h1>🔍 Korean Language Investigation: "How Others See Me" Section Issue</h1>
+        
+        <div class="test-section">
+            <h2>Language Switching Test</h2>
+            <div class="language-switcher">
+                <button onclick="testLanguageSwitch('en')">🇺🇸 English</button>
+                <button onclick="testLanguageSwitch('es')">🇪🇸 Spanish</button>
+                <button onclick="testLanguageSwitch('fr')">🇫🇷 French</button>
+                <button onclick="testLanguageSwitch('ko')">🇰🇷 Korean</button>
+            </div>
+            <p>Current Language: <span id="currentLang">en</span></p>
+        </div>
+
+        <div class="test-section">
+            <h3>Category Navigation</h3>
+            <button class="category-btn active" onclick="showCategory('all')" data-translate="categories.all">All</button>
+            <button class="category-btn" onclick="showCategory('know-yourself')" data-translate="categories.knowYourselfTitle">🧠 Know Yourself</button>
+            <button class="category-btn" onclick="showCategory('others-see-me')" data-translate="categories.howOthersSeeTitle">👥 How Others See Me</button>
+        </div>
+
+        <!-- Know Yourself Tests -->
+        <div class="category-section" id="knowYourselfSection">
+            <h3 data-translate="categories.knowYourselfTitle">🧠 Know Yourself</h3>
+            <div class="test-card">
+                <h3 data-translate="tests.mbti.title">16 Personalities (MBTI)</h3>
+                <p data-translate="tests.mbti.description">Sample description</p>
+            </div>
+        </div>
+
+        <!-- How Others See Me Tests -->
+        <div class="category-section" id="othersSeeSection">
+            <h3 data-translate="categories.howOthersSeeTitle">👥 How Others See Me</h3>
+            <div class="test-card">
+                <h3 data-translate="tests.askfriends.title">See Who Knows Me Best</h3>
+                <p data-translate="tests.askfriends.description">Create questions about yourself, provide YOUR answers, then see who knows you best!</p>
+            </div>
+            <div class="test-card">
+                <h3 data-translate="tests.360assessment.title">360 Perception About Me</h3>
+                <p data-translate="tests.360assessment.description">Serious, multi-perspective feedback for growth and understanding.</p>
+            </div>
+        </div>
+
+        <div class="findings critical-issue">
+            <h2>🚨 CRITICAL ISSUE FOUND</h2>
+            <h3>Root Cause: Button Text Matching Logic Issue</h3>
+            <p><strong>Problem:</strong> In the showCategory('others-see-me') function, the code looks for buttons containing "How Others See Me" text to activate. However, when the language is switched to Korean, the button text becomes "다른 사람들이 보는 나", but the JavaScript still searches for the English text "How Others See Me".</p>
+            
+            <p><strong>Affected Code (index.html lines 2735-2739):</strong></p>
+            <pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; font-family: monospace;">
+document.querySelectorAll('.category-btn').forEach(btn => {
+    if (btn.textContent.includes('How Others See Me')) {
+        btn.classList.add('active');
+    }
+});
+            </pre>
+
+            <p><strong>This causes:</strong></p>
+            <ul>
+                <li>✅ Korean translation application succeeds</li>
+                <li>❌ Button activation fails (wrong button stays active)</li>
+                <li>❌ User sees content in Korean, but button state is incorrect</li>
+                <li>❌ Visual inconsistency: Korean content with English button state</li>
+            </ul>
+        </div>
+
+        <div class="findings">
+            <h2>✅ Investigation Findings</h2>
+            <h3>Translation System Analysis</h3>
+            <p><strong>Korean Translations ARE Present:</strong></p>
+            <ul>
+                <li>tests.askfriends.title: "누가 나를 가장 잘 아는지 보기"</li>
+                <li>tests.askfriends.description: "나에 대한 질문을 만들고..."</li>
+                <li>tests.360assessment.title: "360도 나에 대한 인식"</li>
+                <li>tests.360assessment.description: "성장과 이해를 위한 진지한..."</li>
+                <li>categories.howOthersSeeTitle: "👥 다른 사람들이 보는 나"</li>
+            </ul>
+            
+            <h3>Translation Application Analysis</h3>
+            <p><strong>forceUpdateAllTranslations() function WORKS correctly:</strong></p>
+            <ul>
+                <li>✅ Finds all [data-translate] elements</li>
+                <li>✅ Applies Korean translations successfully</li>
+                <li>✅ Updates text content properly</li>
+            </ul>
+
+            <h3>Section Display Logic Analysis</h3>
+            <p><strong>showCategory('others-see-me') function has TWO issues:</strong></p>
+            <ol>
+                <li><strong>Button Activation Logic:</strong> Searches for English text "How Others See Me" even when Korean is active</li>
+                <li><strong>Timing Issue:</strong> Translation reapplication happens AFTER button search (line 2743-2748)</li>
+            </ol>
+        </div>
+
+        <div class="findings">
+            <h2>🔧 Solution</h2>
+            <p><strong>Fix the button activation logic to be language-independent:</strong></p>
+            <pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; font-family: monospace;">
+// BEFORE (problematic):
+document.querySelectorAll('.category-btn').forEach(btn => {
+    if (btn.textContent.includes('How Others See Me')) {
+        btn.classList.add('active');
+    }
+});
+
+// AFTER (language-independent):
+document.querySelectorAll('.category-btn').forEach(btn => {
+    if (btn.onclick && btn.onclick.toString().includes("showCategory('others-see-me')")) {
+        btn.classList.add('active');
+    }
+});
+
+// OR use data-category attribute:
+document.querySelector('[onclick*="others-see-me"]').classList.add('active');
+            </pre>
+        </div>
+
+        <div class="log-output" id="debugLog"></div>
+    </div>
+
+    <script>
+        // Simplified translation object for testing
+        const translations = {
+            en: {
+                categories: {
+                    all: "All",
+                    knowYourselfTitle: "🧠 Know Yourself",
+                    howOthersSeeTitle: "👥 How Others See Me"
+                },
+                tests: {
+                    mbti: {
+                        title: "16 Personalities (MBTI)",
+                        description: "Discover your personality type"
+                    },
+                    askfriends: {
+                        title: "See Who Knows Me Best",
+                        description: "Create questions about yourself, provide YOUR answers, then see who knows you best!"
+                    },
+                    "360assessment": {
+                        title: "360 Perception About Me",
+                        description: "Serious, multi-perspective feedback for growth and understanding."
+                    }
+                }
+            },
+            ko: {
+                categories: {
+                    all: "전체",
+                    knowYourselfTitle: "🧠 나를 알아가기",
+                    howOthersSeeTitle: "👥 다른 사람들이 보는 나"
+                },
+                tests: {
+                    mbti: {
+                        title: "16가지 성격 유형",
+                        description: "나를 정말로 알 수 있는 최고의 성격 테스트!"
+                    },
+                    askfriends: {
+                        title: "누가 나를 가장 잘 아는지 보기",
+                        description: "나에 대한 질문을 만들고 내 답을 제공한 후, 누가 나를 가장 잘 아는지 보세요!"
+                    },
+                    "360assessment": {
+                        title: "360도 나에 대한 인식",
+                        description: "성장과 이해를 위한 진지한 다각적 피드백."
+                    }
+                }
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function log(message) {
+            const logDiv = document.getElementById('debugLog');
+            logDiv.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '\n';
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function getNestedTranslation(obj, key) {
+            return key.split('.').reduce((current, k) => current?.[k], obj);
+        }
+
+        function forceUpdateAllTranslations(lang) {
+            log('🔄 Force updating all translations for language: ' + JSON.stringify(lang).substring(0, 50) + '...');
+            const elements = document.querySelectorAll('[data-translate]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (!key) return;
+                
+                const value = getNestedTranslation(lang, key);
+                if (value !== undefined && value !== null) {
+                    const oldText = element.textContent;
+                    element.textContent = value;
+                    log(`✅ Updated ${key}: "${oldText}" → "${value}"`);
+                } else {
+                    log(`❌ Missing translation for key: ${key}`);
+                }
+            });
+        }
+
+        function testLanguageSwitch(langCode) {
+            log(`🌍 ============ TESTING LANGUAGE SWITCH TO: ${langCode} ============`);
+            currentLanguage = langCode;
+            document.getElementById('currentLang').textContent = langCode;
+            
+            if (!translations[langCode]) {
+                log('❌ No translations found for: ' + langCode);
+                return;
+            }
+
+            forceUpdateAllTranslations(translations[langCode]);
+            log(`✅ Language switch to ${langCode} completed`);
+        }
+
+        function showCategory(categoryId) {
+            log(`🎯 ============ SHOWING CATEGORY: ${categoryId} ============`);
+            
+            // Remove active class from all category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                log(`🔄 Removed active class from button: "${btn.textContent}"`);
+            });
+            
+            // Get category sections
+            const knowYourselfSection = document.getElementById('knowYourselfSection');
+            const othersSeeSection = document.getElementById('othersSeeSection');
+            
+            if (categoryId === 'others-see-me') {
+                log('👥 === OTHERS-SEE-ME CATEGORY LOGIC ===');
+                
+                // Show only How Others See Me section
+                if (knowYourselfSection) knowYourselfSection.style.display = 'none';
+                if (othersSeeSection) othersSeeSection.style.display = 'block';
+                log('✅ Section display updated: Know Yourself hidden, Others See Me visible');
+                
+                // PROBLEMATIC LOGIC: Find and activate the "How Others See Me" button
+                log('🔍 Searching for button with text "How Others See Me"...');
+                let buttonFound = false;
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    log(`🔍 Checking button: "${btn.textContent}"`);
+                    if (btn.textContent.includes('How Others See Me')) {
+                        btn.classList.add('active');
+                        log(`✅ FOUND and activated button: "${btn.textContent}"`);
+                        buttonFound = true;
+                    }
+                });
+                
+                if (!buttonFound) {
+                    log('❌ NO BUTTON FOUND with text "How Others See Me"');
+                    log('🔍 Available button texts:');
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        log(`   - "${btn.textContent}"`);
+                    });
+                    
+                    // DEMONSTRATION: Better approach using onclick attribute
+                    log('🔧 USING BETTER APPROACH: onclick attribute matching');
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        if (btn.onclick && btn.onclick.toString().includes("'others-see-me'")) {
+                            btn.classList.add('active');
+                            log(`✅ FIXED: Activated button using onclick: "${btn.textContent}"`);
+                        }
+                    });
+                }
+                
+                // Apply translations AFTER button logic (this works fine)
+                setTimeout(() => {
+                    log('🔄 Reapplying translations after 100ms delay...');
+                    forceUpdateAllTranslations(translations[currentLanguage]);
+                }, 100);
+                
+            } else if (categoryId === 'know-yourself') {
+                if (knowYourselfSection) knowYourselfSection.style.display = 'block';
+                if (othersSeeSection) othersSeeSection.style.display = 'none';
+                
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    if (btn.onclick && btn.onclick.toString().includes("'know-yourself'")) {
+                        btn.classList.add('active');
+                    }
+                });
+            } else {
+                // Show all sections
+                if (knowYourselfSection) knowYourselfSection.style.display = 'block';
+                if (othersSeeSection) othersSeeSection.style.display = 'block';
+                
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    if (btn.onclick && btn.onclick.toString().includes("'all'")) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            log(`🎯 Category ${categoryId} display completed`);
+        }
+
+        // Initialize
+        log('🚀 Korean Language Investigation Tool Initialized');
+        log('📋 Instructions: 1) Switch to Korean, 2) Click "How Others See Me", 3) Observe the issue');
+    </script>
+</body>
+</html>

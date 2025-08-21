@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug IQ Translations</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .debug-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        button { margin: 5px; padding: 10px 15px; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Debug IQ Translations</h1>
+    
+    <div class="debug-section">
+        <h2>Translation System Debug</h2>
+        <button onclick="debugTranslations('en')">Debug English</button>
+        <button onclick="debugTranslations('es')">Debug Spanish</button>
+        
+        <div id="debug-results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function debugTranslations(lang) {
+            console.log(`=== DEBUGGING ${lang.toUpperCase()} ===`);
+            
+            // Set language
+            currentLanguage = lang;
+            console.log('Current language set to:', currentLanguage);
+            
+            // Test direct access to translations
+            console.log('Direct access to translations object:');
+            console.log('- translations exists:', typeof translations !== 'undefined');
+            console.log('- translations[lang] exists:', typeof translations[lang] !== 'undefined');
+            console.log('- translations[lang].results exists:', translations[lang] && typeof translations[lang].results !== 'undefined');
+            console.log('- translations[lang].results.iqQuestions exists:', translations[lang] && translations[lang].results && typeof translations[lang].results.iqQuestions !== 'undefined');
+            
+            // Test t() function
+            console.log('Testing t() function:');
+            console.log('- t function exists:', typeof t === 'function');
+            
+            if (typeof t === 'function') {
+                const testResult = t('results.iqQuestions');
+                console.log('- t("results.iqQuestions") result:', testResult);
+                console.log('- Is array:', Array.isArray(testResult));
+                console.log('- Length:', testResult ? testResult.length : 'N/A');
+                
+                if (testResult && testResult.length > 0) {
+                    console.log('- First question:', testResult[0]);
+                }
+            }
+            
+            // Test IQ test getQuestions method
+            console.log('Testing IQ test getQuestions:');
+            console.log('- tests.iq exists:', typeof tests !== 'undefined' && typeof tests.iq !== 'undefined');
+            
+            if (typeof tests !== 'undefined' && tests.iq) {
+                console.log('- tests.iq.getQuestions exists:', typeof tests.iq.getQuestions === 'function');
+                
+                if (typeof tests.iq.getQuestions === 'function') {
+                    const questions = tests.iq.getQuestions();
+                    console.log('- getQuestions() result:', questions);
+                    console.log('- Questions length:', questions ? questions.length : 'N/A');
+                    
+                    if (questions && questions.length > 0) {
+                        console.log('- First question text:', questions[0].text);
+                    }
+                }
+            }
+            
+            // Display results
+            const resultsDiv = document.getElementById('debug-results');
+            const directQuestions = translations[lang] && translations[lang].results && translations[lang].results.iqQuestions;
+            const tQuestions = typeof t === 'function' ? t('results.iqQuestions') : null;
+            const getQuestionsResult = tests.iq && tests.iq.getQuestions ? tests.iq.getQuestions() : null;
+            
+            resultsDiv.innerHTML = `
+                <h3>Debug Results for ${lang.toUpperCase()}</h3>
+                <pre>
+Current Language: ${currentLanguage}
+Direct Access: ${directQuestions ? directQuestions.length + ' questions' : 'FAILED'}
+t() Function: ${tQuestions ? tQuestions.length + ' questions' : 'FAILED'}  
+getQuestions(): ${getQuestionsResult ? getQuestionsResult.length + ' questions' : 'FAILED'}
+
+${directQuestions && directQuestions[0] ? 'Sample Question (Direct): ' + directQuestions[0].text : ''}
+${tQuestions && tQuestions[0] ? 'Sample Question (t()): ' + tQuestions[0].text : ''}
+${getQuestionsResult && getQuestionsResult[0] ? 'Sample Question (getQuestions): ' + getQuestionsResult[0].text : ''}
+                </pre>
+            `;
+        }
+        
+        // Auto-run debug on load
+        setTimeout(() => debugTranslations('en'), 1000);
+    </script>
+</body>
+</html>

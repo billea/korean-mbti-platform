@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Translation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .question-test { margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        button { margin: 5px; padding: 10px 15px; }
+        .question { font-weight: bold; margin-bottom: 5px; }
+        .options { margin-left: 20px; }
+    </style>
+</head>
+<body>
+    <h1>🧠 IQ Questions Translation Test</h1>
+    
+    <div class="test-section">
+        <h2>Brain Teaser Challenge Translation Test</h2>
+        <p>Testing IQ question translations in different languages:</p>
+        
+        <h3>Language Test</h3>
+        <button onclick="testIQQuestions('en')">English</button>
+        <button onclick="testIQQuestions('es')">Español</button>
+        <button onclick="testIQQuestions('fr')">Français (Fallback)</button>
+        
+        <div id="test-results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function testIQQuestions(lang) {
+            console.log(`Testing IQ questions for language: ${lang}`);
+            
+            // Set language
+            if (typeof setLanguage === 'function') {
+                setLanguage(lang);
+            } else {
+                currentLanguage = lang;
+            }
+            
+            // Get IQ test data
+            const iqTest = tests.iq;
+            let questions = [];
+            
+            // Test the getQuestions method
+            if (iqTest && iqTest.getQuestions) {
+                questions = iqTest.getQuestions();
+                console.log(`Questions loaded for ${lang}:`, questions.length);
+            } else {
+                console.error('IQ test or getQuestions method not found');
+            }
+            
+            const resultsDiv = document.getElementById('test-results');
+            
+            if (questions.length > 0) {
+                resultsDiv.innerHTML = `
+                    <div class="question-test success">
+                        <h4>✅ ${lang.toUpperCase()} - ${questions.length} Questions Loaded</h4>
+                        <div class="question">${questions[0].text}</div>
+                        <div class="options">
+                            A) ${questions[0].options[0]}<br>
+                            B) ${questions[0].options[1]}<br>
+                            C) ${questions[0].options[2]}<br>
+                            D) ${questions[0].options[3]}
+                        </div>
+                        <p><strong>Sample Question 2:</strong></p>
+                        <div class="question">${questions[1].text}</div>
+                        <div class="options">
+                            A) ${questions[1].options[0]}<br>
+                            B) ${questions[1].options[1]}<br>
+                            C) ${questions[1].options[2]}<br>
+                            D) ${questions[1].options[3]}
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultsDiv.innerHTML = `
+                    <div class="question-test error">
+                        <h4>❌ ${lang.toUpperCase()} - No Questions Loaded</h4>
+                        <p>Questions not found for this language. Check translation structure.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Test on page load
+        setTimeout(() => {
+            console.log('Starting IQ translation test...');
+            testIQQuestions('en');
+        }, 1000);
+        
+        // Automated validation
+        setTimeout(() => {
+            const languages = ['en', 'es'];
+            let allTestsPassed = true;
+            
+            languages.forEach(lang => {
+                if (typeof setLanguage === 'function') {
+                    setLanguage(lang);
+                } else {
+                    currentLanguage = lang;
+                }
+                
+                const iqTest = tests.iq;
+                const questions = iqTest && iqTest.getQuestions ? iqTest.getQuestions() : [];
+                
+                if (questions.length === 0) {
+                    allTestsPassed = false;
+                    console.error(`No questions loaded for ${lang}`);
+                }
+            });
+            
+            if (allTestsPassed) {
+                console.log('✅ All IQ question translation tests passed!');
+            } else {
+                console.error('❌ Some IQ question translation tests failed');
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

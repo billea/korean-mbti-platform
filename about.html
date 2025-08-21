@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About PersonaTests - Scientifically-Backed Personality Assessment Platform</title>
+    <meta name="description" content="Learn about PersonaTests, the leading personality testing platform offering scientifically-validated assessments including MBTI, Big Five, and emotional intelligence tests.">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google AdSense Verification Code -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4191191359538611"
+         crossorigin="anonymous"></script>
+    
+    <style>
+        @media (max-width: 768px) {
+            /* FORCE hide desktop language flags */
+            .desktop-language-flags {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                position: absolute !important;
+                left: -9999px !important;
+            }
+            
+            /* Compact mobile header */
+            .header {
+                height: auto !important;
+                min-height: auto !important;
+            }
+            
+            .nav {
+                padding: 0.5rem 0 !important;
+            }
+            
+            .nav-container {
+                min-height: 50px !important;
+                height: 50px !important;
+                padding: 0 1rem !important;
+            }
+            
+            .logo h1 {
+                font-size: 1.2rem !important;
+                line-height: 1 !important;
+            }
+            
+            /* Adjust body padding */
+            body {
+                padding-top: 60px !important;
+                padding-bottom: 80px !important;
+            }
+            
+            /* Mobile language selector at bottom */
+            .mobile-language-selector {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 10000 !important;
+                padding: 1rem !important;
+                backdrop-filter: blur(20px) !important;
+                background: rgba(102, 126, 234, 0.95) !important;
+            }
+            
+            main {
+                padding: 2rem 0 !important;
+                min-height: calc(100vh - 140px) !important;
+            }
+            
+            .container {
+                padding: 1rem !important;
+                max-width: 100% !important;
+            }
+            
+            main h1 {
+                font-size: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            main h2 {
+                font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            main h3 {
+                font-size: 1.2rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+            
+            main p, main li {
+                font-size: 0.9rem !important;
+                line-height: 1.5 !important;
+            }
+            
+            /* About Content Container */
+            main > .container > div {
+                background: rgba(255, 255, 255, 0.95) !important;
+                border-radius: 20px !important;
+                padding: 2rem 1.5rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>✨ PersonaTests</h1>
+                </div>
+                
+                <!-- Mobile Menu Toggle Button (Hidden on Desktop) -->
+                <div class="mobile-menu-toggle" onclick="toggleMobileMenu()" style="display: none;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <ul class="nav-menu" id="mobileMenu">
+                    <li><a href="index.html" data-translate="nav.home">Home</a></li>
+                    <li><a href="index.html#tests" data-translate="nav.tests">Tests</a></li>
+                    <li><a href="about.html" class="active" data-translate="nav.about">About</a></li>
+                    <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+                    <li><a href="faq.html" data-translate="nav.faq">FAQ</a></li>
+                    <li><a href="privacy.html" data-translate="nav.privacy">Privacy</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- Mobile Language Selector (Hidden on Desktop, Outside Nav Container) -->
+        <div class="mobile-language-selector" style="display: none; width: 100%; background: rgba(255, 255, 255, 0.1); border-top: 1px solid rgba(255, 255, 255, 0.2); padding: 1rem;">
+            <div style="text-align: center;">
+                <label style="display: block; color: white; font-size: 14px; margin-bottom: 0.5rem; font-weight: 500;">🌍 Choose Language</label>
+                <select onchange="changeLanguage(this.value)" style="background: rgba(255, 255, 255, 0.9); border: 2px solid rgba(255, 255, 255, 0.4); border-radius: 8px; color: #1e293b; padding: 12px 16px; font-size: 16px; font-weight: 500; cursor: pointer; outline: none; width: 100%; max-width: 300px;">
+                    <option value="en" style="background: white; color: #1e293b;">🇺🇸 English</option>
+                    <option value="es" style="background: white; color: #1e293b;">🇪🇸 Español</option>
+                    <option value="fr" style="background: white; color: #1e293b;">🇫🇷 Français</option>
+                    <option value="de" style="background: white; color: #1e293b;">🇩🇪 Deutsch</option>
+                    <option value="it" style="background: white; color: #1e293b;">🇮🇹 Italiano</option>
+                    <option value="pt" style="background: white; color: #1e293b;">🇵🇹 Português</option>
+                    <option value="ja" style="background: white; color: #1e293b;">🇯🇵 日本語</option>
+                    <option value="ko" style="background: white; color: #1e293b;">🇰🇷 한국어</option>
+                    <option value="zh" style="background: white; color: #1e293b;">🇨🇳 中文</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding: 4rem 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); min-height: 100vh;">
+        <div class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+            
+            <!-- Hero Section -->
+            <div style="text-align: center; margin-bottom: 4rem; color: white;">
+                <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: bold;" data-translate="about.hero.title">About PersonaTests ✨</h1>
+                <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto;" data-translate="about.hero.subtitle">Discover the story behind the world's most engaging personality testing platform</p>
+            </div>
+
+            <!-- Main Content -->
+            <div style="background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 3rem; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1); margin-bottom: 2rem;">
+                
+                <!-- Our Mission -->
+                <section style="margin-bottom: 3rem;">
+                    <h2 style="color: #4f46e5; font-size: 2rem; margin-bottom: 1.5rem;" data-translate="about.mission.title">Our Mission 🎯</h2>
+                    <p style="color: #1e293b; line-height: 1.7; font-size: 1.1rem; margin-bottom: 1.5rem;" data-translate="about.mission.paragraph1">
+                        At PersonaTests, we believe that understanding your personality is the key to unlocking your potential. Our mission is to make scientifically-backed personality assessments accessible, engaging, and genuinely helpful for people worldwide.
+                    </p>
+                    <p style="color: #1e293b; line-height: 1.7; font-size: 1.1rem;" data-translate="about.mission.paragraph2">
+                        We've taken the complex world of psychological research and transformed it into fun, interactive experiences that provide real insights into who you are, how you think, and what makes you unique.
+                    </p>
+                </section>
+
+                <!-- What Makes Us Different -->
+                <section style="margin-bottom: 3rem;">
+                    <h2 style="color: #4f46e5; font-size: 2rem; margin-bottom: 1.5rem;" data-translate="about.different.title">What Makes Us Different 🌟</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                        <div style="padding: 1.5rem; border-left: 4px solid #4f46e5; background: #f8fafc;">
+                            <h3 style="color: #1e293b; margin-bottom: 1rem;" data-translate="about.different.scientific.title">🔬 Scientific Foundation</h3>
+                            <p style="color: #64748b; line-height: 1.6;" data-translate="about.different.scientific.description">Our tests are built on decades of psychological research, including validated frameworks like the Big Five model, Myers-Briggs Type Indicator principles, and emotional intelligence theories.</p>
+                        </div>
+                        
+                        <div style="padding: 1.5rem; border-left: 4px solid #10b981; background: #f0fdf4;">
+                            <h3 style="color: #1e293b; margin-bottom: 1rem;" data-translate="about.different.modern.title">⚡ Modern Experience</h3>
+                            <p style="color: #64748b; line-height: 1.6;" data-translate="about.different.modern.description">We've reimagined personality testing for the digital age with engaging interfaces, instant results, and social sharing capabilities that make self-discovery fun.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                        <div style="padding: 1.5rem; border-left: 4px solid #f59e0b; background: #fffbeb;">
+                            <h3 style="color: #1e293b; margin-bottom: 1rem;" data-translate="about.different.privacy.title">🔒 Privacy First</h3>
+                            <p style="color: #64748b; line-height: 1.6;" data-translate="about.different.privacy.description">Your personality data belongs to you. We never sell your information, and our tests can be taken anonymously with results shared only at your discretion.</p>
+                        </div>
+                        
+                        <div style="padding: 1.5rem; border-left: 4px solid #ef4444; background: #fef2f2;">
+                            <h3 style="color: #1e293b; margin-bottom: 1rem;" data-translate="about.different.global.title">🌍 Global Accessibility</h3>
+                            <p style="color: #64748b; line-height: 1.6;" data-translate="about.different.global.description">Available in 9+ languages with cultural adaptations, our tests work across devices and are designed to be inclusive and accessible to everyone.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Our Tests -->
+                <section style="margin-bottom: 3rem;">
+                    <h2 style="color: #4f46e5; font-size: 2rem; margin-bottom: 1.5rem;" data-translate="about.tests.title">Our Test Collection 📚</h2>
+                    <p style="color: #1e293b; line-height: 1.7; font-size: 1.1rem; margin-bottom: 2rem;" data-translate="about.tests.description">
+                        We offer a comprehensive suite of personality assessments, each designed to reveal different aspects of your psychological profile:
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 1.5rem; border-radius: 12px;">
+                            <h4 style="margin-bottom: 0.5rem;" data-translate="about.tests.types.title">16 Personality Types</h4>
+                            <p style="opacity: 0.9; font-size: 0.9rem;" data-translate="about.tests.types.description">Based on Carl Jung's psychological types and the Myers-Briggs framework</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white; padding: 1.5rem; border-radius: 12px;">
+                            <h4 style="margin-bottom: 0.5rem;" data-translate="about.tests.bigfive.title">Big Five Personality</h4>
+                            <p style="opacity: 0.9; font-size: 0.9rem;" data-translate="about.tests.bigfive.description">The gold standard in personality psychology with decades of research validation</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; padding: 1.5rem; border-radius: 12px;">
+                            <h4 style="margin-bottom: 0.5rem;" data-translate="about.tests.emotional.title">Emotional Intelligence</h4>
+                            <p style="opacity: 0.9; font-size: 0.9rem;" data-translate="about.tests.emotional.description">Measure your ability to understand and manage emotions effectively</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #43e97b, #38f9d7); color: white; padding: 1.5rem; border-radius: 12px;">
+                            <h4 style="margin-bottom: 0.5rem;" data-translate="about.tests.specialized.title">Specialized Assessments</h4>
+                            <p style="opacity: 0.9; font-size: 0.9rem;" data-translate="about.tests.specialized.description">DISC, conflict styles, strengths assessment, and relationship compatibility</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quality & Accuracy -->
+                <section style="margin-bottom: 3rem;">
+                    <h2 style="color: #4f46e5; font-size: 2rem; margin-bottom: 1.5rem;" data-translate="about.quality.title">Quality & Accuracy 🎯</h2>
+                    <div style="background: #f1f5f9; padding: 2rem; border-radius: 12px; border-left: 5px solid #4f46e5;">
+                        <h3 style="color: #1e293b; margin-bottom: 1rem;" data-translate="about.quality.commitment">Our Commitment to Scientific Rigor</h3>
+                        <ul style="color: #64748b; line-height: 1.8; padding-left: 1.5rem;">
+                            <li data-translate="about.quality.frameworks"><strong>Validated Frameworks:</strong> All our tests are based on peer-reviewed psychological research and established personality models</li>
+                            <li data-translate="about.quality.improvement"><strong>Continuous Improvement:</strong> We regularly update our assessments based on the latest findings in personality psychology</li>
+                            <li data-translate="about.quality.reliability"><strong>Statistical Reliability:</strong> Our tests undergo rigorous statistical analysis to ensure consistent and meaningful results</li>
+                            <li data-translate="about.quality.cultural"><strong>Cultural Adaptation:</strong> Questions and interpretations are adapted for different cultural contexts and languages</li>
+                            <li data-translate="about.quality.ethical"><strong>Ethical Standards:</strong> We follow APA guidelines for psychological testing and maintain strict ethical standards</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Team & Values -->
+                <section style="margin-bottom: 3rem;">
+                    <h2 style="color: #4f46e5; font-size: 2rem; margin-bottom: 1.5rem;" data-translate="about.values.title">Our Values 💎</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div style="text-align: center; padding: 1.5rem;">
+                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔬</div>
+                            <h4 style="color: #1e293b; margin-bottom: 0.5rem;" data-translate="about.values.scientific.title">Scientific Integrity</h4>
+                            <p style="color: #64748b; font-size: 0.9rem;" data-translate="about.values.scientific.description">Evidence-based approaches backed by research</p>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 1.5rem;">
+                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎨</div>
+                            <h4 style="color: #1e293b; margin-bottom: 0.5rem;" data-translate="about.values.experience.title">User Experience</h4>
+                            <p style="color: #64748b; font-size: 0.9rem;" data-translate="about.values.experience.description">Making psychology accessible and engaging</p>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 1.5rem;">
+                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🛡️</div>
+                            <h4 style="color: #1e293b; margin-bottom: 0.5rem;" data-translate="about.values.privacy.title">Privacy Protection</h4>
+                            <p style="color: #64748b; font-size: 0.9rem;" data-translate="about.values.privacy.description">Your data security is our top priority</p>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 1.5rem;">
+                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🌍</div>
+                            <h4 style="color: #1e293b; margin-bottom: 0.5rem;" data-translate="about.values.inclusion.title">Global Inclusion</h4>
+                            <p style="color: #64748b; font-size: 0.9rem;" data-translate="about.values.inclusion.description">Accessible across cultures and languages</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact & Community -->
+                <section>
+                    <h2 style="color: #4f46e5; font-size: 2rem; margin-bottom: 1.5rem;" data-translate="about.community.title">Join Our Community 🤝</h2>
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 2rem; border-radius: 12px; text-align: center;">
+                        <h3 style="margin-bottom: 1rem;" data-translate="about.community.question">Ready to Discover Your Personality?</h3>
+                        <p style="margin-bottom: 2rem; opacity: 0.9;" data-translate="about.community.description">Join millions of people who have already discovered their unique personality insights with PersonaTests.</p>
+                        <a href="index.html#tests" style="background: white; color: #4f46e5; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'" data-translate="hero.startJourney">Start Your Journey</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer style="background: #1e293b; color: white; padding: 2rem 0;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; text-align: center;">
+            <p data-translate="about.footer.copyright">&copy; 2025 PersonaTests. All rights reserved. Made with ✨ for discovering your true personality.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize translations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('About page loaded, initializing translations...');
+            
+            // Get stored language preference
+            const preferredLanguage = localStorage.getItem('preferredLanguage') || 'en';
+            console.log('Preferred language:', preferredLanguage);
+            
+            // Set page language attribute
+            document.documentElement.lang = preferredLanguage;
+            
+            // Load and apply translations if translation system is available
+            if (typeof window.changeLanguage === 'function') {
+                console.log('Translation system found, applying language:', preferredLanguage);
+                window.changeLanguage(preferredLanguage);
+            } else {
+                console.log('Translation system not available, will try again in 500ms');
+                // Translation system might not be loaded yet, try again
+                setTimeout(() => {
+                    if (typeof window.changeLanguage === 'function') {
+                        console.log('Translation system loaded, applying language:', preferredLanguage);
+                        window.changeLanguage(preferredLanguage);
+                    }
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

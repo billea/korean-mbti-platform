@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chinese Translation Fix</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .working { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .broken { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Test Chinese Translation Fix</h1>
+    
+    <div class="test">
+        <h2>Testing Fixed Chinese Translation Structure</h2>
+        <button onclick="testChineseFixedStructure()">🇨🇳 Test Fixed Chinese Structure</button>
+        <button onclick="testMixedCards()">🧩 Test Problem Cards</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function testChineseFixedStructure() {
+            console.log('\\n=== TESTING FIXED CHINESE STRUCTURE ===');
+            
+            // Set to Chinese
+            currentLanguage = 'zh';
+            console.log('Current language set to:', currentLanguage);
+            
+            const problematicKeys = [
+                'tests.mbti.title',
+                'tests.bigfive.title', 
+                'tests.lovelanguage.title',
+                'tests.iq.title',
+                'tests.ei.title',
+                'tests.careerpath.title',
+                'tests.relationshipstyle.title',
+                'tests.askfriends.title',
+                'tests.360assessment.title'
+            ];
+            
+            const workingKeys = [
+                'tests.adhd',
+                'tests.anxiety', 
+                'tests.depression',
+                'tests.strengths',
+                'tests.disc'
+            ];
+            
+            let results = '<h3>🔧 Fixed Chinese Translation Results</h3><pre>';
+            
+            results += 'PROBLEMATIC KEYS (should now work):\\n';
+            problematicKeys.forEach(key => {
+                const result = t(key);
+                const isWorking = result && result !== key && !result.includes('undefined') && result.length > key.length;
+                const status = isWorking ? '✅ FIXED' : '❌ STILL BROKEN';
+                results += `${status} "${key}" = "${result}"\\n`;
+                console.log(`${status} "${key}" =`, result);
+            });
+            
+            results += '\\nWORKING KEYS (control group):\\n';
+            workingKeys.forEach(key => {
+                const result = t(key);
+                const isWorking = result && result !== key && !result.includes('undefined') && result.length > key.length;
+                const status = isWorking ? '✅ WORKING' : '❌ BROKEN';
+                results += `${status} "${key}" = "${result}"\\n`;
+                console.log(`${status} "${key}" =`, result);
+            });
+            
+            results += '</pre>';
+            
+            // Test direct access to verify structure fix
+            results += '<h3>🔍 Direct Structure Check</h3><pre>';
+            const zhTests = translations.zh && translations.zh.tests;
+            if (zhTests) {
+                results += `✅ Chinese tests object exists\\n`;
+                results += `✅ Has mbti: ${!!zhTests.mbti}\\n`;
+                results += `✅ Has meta: ${!!zhTests.meta}\\n`;
+                results += `✅ Meta has socialApp: ${!!(zhTests.meta && zhTests.meta.socialApp)}\\n`;
+                results += `✅ MBTI title: "${zhTests.mbti ? zhTests.mbti.title : 'MISSING'}"\\n`;
+            } else {
+                results += `❌ Chinese tests object is MISSING\\n`;
+            }
+            results += '</pre>';
+            
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        function testMixedCards() {
+            console.log('\\n=== TESTING MIXED LANGUAGE DISPLAY FIX ===');
+            
+            // Test the specific cards that were showing mixed languages
+            currentLanguage = 'zh';
+            
+            const mixedCards = [
+                { key: 'tests.mbti.title', expected: '16种人格类型 (MBTI)' },
+                { key: 'tests.bigfive.title', expected: '大五人格测试' },
+                { key: 'tests.lovelanguage.title', expected: '爱的语言测试' },
+                { key: 'tests.meta.socialApp', expected: '📱 社交' },
+                { key: 'tests.meta.socialPeople', expected: '👥 社交' }
+            ];
+            
+            let results = '<h3>🧩 Mixed Language Cards Test</h3><pre>';
+            
+            mixedCards.forEach(({ key, expected }) => {
+                const result = t(key);
+                const isCorrect = result === expected;
+                const status = isCorrect ? '✅ CORRECT' : '❌ WRONG';
+                results += `${status} "${key}"\\n`;
+                results += `   Expected: "${expected}"\\n`;
+                results += `   Got:      "${result}"\\n\\n`;
+                console.log(`${status} ${key} - Expected: "${expected}", Got: "${result}"`);
+            });
+            
+            results += '</pre>';
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run test on load
+        setTimeout(() => testChineseFixedStructure(), 1000);
+    </script>
+</body>
+</html>

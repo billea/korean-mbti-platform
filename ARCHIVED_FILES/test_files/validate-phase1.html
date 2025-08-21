@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 1 Validation Testing</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .warning { background-color: #fff3cd; border-color: #ffeaa7; color: #856404; }
+        button { margin: 5px; padding: 10px 15px; cursor: pointer; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .lang-test { padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        #overall-status { font-size: 18px; font-weight: bold; padding: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Phase 1 Validation Testing</h1>
+    
+    <div id="overall-status" class="warning">Testing in progress...</div>
+    
+    <div class="test-section">
+        <h2>🌍 Language Switching Test</h2>
+        <p>Testing all 8 languages for critical UI elements:</p>
+        <div>
+            <button onclick="testLanguage('en')">English</button>
+            <button onclick="testLanguage('es')">Español</button>
+            <button onclick="testLanguage('fr')">Français</button>
+            <button onclick="testLanguage('de')">Deutsch</button>
+            <button onclick="testLanguage('it')">Italiano</button>
+            <button onclick="testLanguage('pt')">Português</button>
+            <button onclick="testLanguage('ja')">日本語</button>
+            <button onclick="testLanguage('ko')">한국어</button>
+            <button onclick="testLanguage('zh')">中文</button>
+        </div>
+        <div id="current-lang-display">Current Language: <span id="current-lang">en</span></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🎯 Critical UI Elements Test</h2>
+        <div class="test-grid" id="ui-elements-test">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Progress Indicators Test</h2>
+        <div id="progress-test">
+            <div>Progress Text: <span id="progress-demo" data-translate="ui.progress">Progress</span></div>
+            <div>Question Format: <span id="question-demo"></span></div>
+            <div>Page Title: <span id="title-demo"></span></div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔄 Modal Dialog Simulation</h2>
+        <button onclick="testModalTranslations()">Test Modal Translations</button>
+        <div id="modal-test-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧩 Korean/Japanese Fix Verification</h2>
+        <button onclick="testKoreanJapaneseFixes()">Verify Korean/Japanese Fixes</button>
+        <div id="korean-japanese-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Test Results Summary</h2>
+        <div id="test-summary">
+            <div>Total Tests: <span id="total-tests">0</span></div>
+            <div>Passed: <span id="passed-tests">0</span></div>
+            <div>Failed: <span id="failed-tests">0</span></div>
+            <div>Success Rate: <span id="success-rate">0%</span></div>
+        </div>
+    </div>
+
+    <!-- Load the main script -->
+    <script src="script.js"></script>
+    
+    <script>
+        let testResults = {
+            total: 0,
+            passed: 0,
+            failed: 0,
+            details: []
+        };
+
+        function logTest(testName, passed, details = '') {
+            testResults.total++;
+            if (passed) {
+                testResults.passed++;
+            } else {
+                testResults.failed++;
+            }
+            testResults.details.push({
+                name: testName,
+                passed: passed,
+                details: details
+            });
+            updateTestSummary();
+        }
+
+        function updateTestSummary() {
+            document.getElementById('total-tests').textContent = testResults.total;
+            document.getElementById('passed-tests').textContent = testResults.passed;
+            document.getElementById('failed-tests').textContent = testResults.failed;
+            const successRate = testResults.total > 0 ? Math.round((testResults.passed / testResults.total) * 100) : 0;
+            document.getElementById('success-rate').textContent = successRate + '%';
+            
+            // Update overall status
+            const overallStatus = document.getElementById('overall-status');
+            if (testResults.total === 0) {
+                overallStatus.textContent = 'Testing in progress...';
+                overallStatus.className = 'warning';
+            } else if (successRate === 100) {
+                overallStatus.textContent = '✅ All tests passed! Phase 1 validation successful.';
+                overallStatus.className = 'success';
+            } else if (successRate >= 90) {
+                overallStatus.textContent = `⚠️ ${successRate}% tests passed. Minor issues detected.`;
+                overallStatus.className = 'warning';
+            } else {
+                overallStatus.textContent = `❌ ${successRate}% tests passed. Significant issues detected.`;
+                overallStatus.className = 'error';
+            }
+        }
+
+        function testLanguage(langCode) {
+            console.log('🧪 Testing language:', langCode);
+            
+            // Change language using the main script function
+            if (typeof changeLanguage === 'function') {
+                changeLanguage(langCode);
+                
+                // Update UI
+                document.getElementById('current-lang').textContent = langCode;
+                
+                // Test critical UI elements after language change
+                setTimeout(() => {
+                    testCriticalUIElements(langCode);
+                    testProgressIndicators(langCode);
+                    testPageTitle(langCode);
+                }, 300);
+                
+                logTest(`Language Switch to ${langCode}`, true, 'Language switching function works');
+            } else {
+                logTest(`Language Switch to ${langCode}`, false, 'changeLanguage function not found');
+            }
+        }
+
+        function testCriticalUIElements(langCode) {
+            const criticalElements = [
+                { key: 'ui.pageTitle', expected: 'PersonaTests' },
+                { key: 'ui.siteTitle', expected: '✨ PersonaTests' },
+                { key: 'ui.home', expected: '🏠' },
+                { key: 'ui.previous', expected: true },
+                { key: 'ui.next', expected: true },
+                { key: 'ui.question', expected: true },
+                { key: 'ui.progress', expected: true },
+                { key: 'ui.loading', expected: true },
+                { key: 'ui.error', expected: true },
+                { key: 'ui.success', expected: true },
+                { key: 'ui.confirm', expected: true },
+                { key: 'ui.cancel', expected: true }
+            ];
+
+            const testGrid = document.getElementById('ui-elements-test');
+            testGrid.innerHTML = '';
+
+            criticalElements.forEach(element => {
+                const translation = t ? t(element.key) : 'FUNCTION_NOT_FOUND';
+                const isValid = translation && translation !== element.key && !translation.includes('FUNCTION_NOT_FOUND');
+                
+                const testDiv = document.createElement('div');
+                testDiv.className = `lang-test ${isValid ? 'success' : 'error'}`;
+                testDiv.innerHTML = `
+                    <strong>${element.key}</strong><br>
+                    Translation: "${translation}"<br>
+                    Status: ${isValid ? '✅ Valid' : '❌ Invalid'}
+                `;
+                testGrid.appendChild(testDiv);
+
+                logTest(`${langCode} - ${element.key}`, isValid, translation);
+            });
+        }
+
+        function testProgressIndicators(langCode) {
+            if (typeof t === 'function') {
+                // Test progress text
+                const progressText = t('ui.progress');
+                const questionText = t('ui.question');
+                const ofText = t('ui.of');
+
+                document.getElementById('progress-demo').textContent = progressText;
+                
+                // Simulate question format
+                const questionFormat = `${questionText} 5 ${ofText} 70`;
+                document.getElementById('question-demo').textContent = questionFormat;
+
+                const progressValid = progressText && progressText !== 'ui.progress';
+                const questionValid = questionText && questionText !== 'ui.question';
+
+                logTest(`${langCode} - Progress Indicators`, progressValid && questionValid, 
+                    `Progress: "${progressText}", Question format: "${questionFormat}"`);
+            } else {
+                logTest(`${langCode} - Progress Indicators`, false, 't() function not available');
+            }
+        }
+
+        function testPageTitle(langCode) {
+            if (typeof t === 'function') {
+                const titleTranslation = t('ui.pageTitle');
+                const titleValid = titleTranslation && titleTranslation !== 'ui.pageTitle' && titleTranslation.includes('PersonaTests');
+                
+                document.getElementById('title-demo').textContent = titleTranslation;
+                
+                logTest(`${langCode} - Page Title`, titleValid, `Title: "${titleTranslation}"`);
+            } else {
+                logTest(`${langCode} - Page Title`, false, 't() function not available');
+            }
+        }
+
+        function testModalTranslations() {
+            const modalResults = document.getElementById('modal-test-results');
+            modalResults.innerHTML = '';
+
+            const modalKeys = [
+                'ui.resumeTest',
+                'ui.resumeTestDescription',
+                'ui.resumeTestButton',
+                'ui.startOver',
+                'ui.cancel'
+            ];
+
+            modalKeys.forEach(key => {
+                if (typeof t === 'function') {
+                    const translation = t(key, { testName: 'Test', current: 5, total: 70 });
+                    const isValid = translation && translation !== key;
+                    
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = `result ${isValid ? 'success' : 'error'}`;
+                    resultDiv.innerHTML = `<strong>${key}:</strong> "${translation}" ${isValid ? '✅' : '❌'}`;
+                    modalResults.appendChild(resultDiv);
+
+                    logTest(`Modal Translation - ${key}`, isValid, translation);
+                } else {
+                    logTest(`Modal Translation - ${key}`, false, 't() function not available');
+                }
+            });
+        }
+
+        function testKoreanJapaneseFixes() {
+            const results = document.getElementById('korean-japanese-results');
+            results.innerHTML = '';
+
+            // Test Korean translations
+            if (typeof changeLanguage === 'function') {
+                changeLanguage('ko');
+                setTimeout(() => {
+                    const koreanTest = t ? t('tests.mbti.description') : 'FUNCTION_NOT_FOUND';
+                    const koreanValid = koreanTest && koreanTest.includes('나를 정말로 알 수 있는');
+                    
+                    const koreanDiv = document.createElement('div');
+                    koreanDiv.className = `result ${koreanValid ? 'success' : 'error'}`;
+                    koreanDiv.innerHTML = `<strong>Korean MBTI Description:</strong><br>"${koreanTest}"<br>${koreanValid ? '✅ Contains expected Korean text' : '❌ Does not contain expected Korean text'}`;
+                    results.appendChild(koreanDiv);
+
+                    logTest('Korean MBTI Description Fix', koreanValid, koreanTest);
+
+                    // Test Japanese translations
+                    changeLanguage('ja');
+                    setTimeout(() => {
+                        const japaneseTest = t ? t('tests.mbti.description') : 'FUNCTION_NOT_FOUND';
+                        const japaneseValid = japaneseTest && (japaneseTest.includes('究極の性格テスト') || japaneseTest.includes('定番の性格テスト'));
+                        
+                        const japaneseDiv = document.createElement('div');
+                        japaneseDiv.className = `result ${japaneseValid ? 'success' : 'error'}`;
+                        japaneseDiv.innerHTML = `<strong>Japanese MBTI Description:</strong><br>"${japaneseTest}"<br>${japaneseValid ? '✅ Contains expected Japanese text' : '❌ Does not contain expected Japanese text'}`;
+                        results.appendChild(japaneseDiv);
+
+                        logTest('Japanese MBTI Description Fix', japaneseValid, japaneseTest);
+
+                        // Switch back to English
+                        changeLanguage('en');
+                    }, 300);
+                }, 300);
+            } else {
+                logTest('Korean/Japanese Fix Test', false, 'changeLanguage function not available');
+            }
+        }
+
+        // Initialize testing
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Phase 1 Validation Testing initialized');
+            
+            // Start with basic function availability tests
+            logTest('Translation function (t) available', typeof t === 'function', typeof t);
+            logTest('Language change function available', typeof changeLanguage === 'function', typeof changeLanguage);
+            logTest('Apply translations function available', typeof applyTranslations === 'function', typeof applyTranslations);
+            
+            // Test initial state
+            setTimeout(() => {
+                testCriticalUIElements('en');
+                testProgressIndicators('en');
+                testPageTitle('en');
+            }, 100);
+        });
+
+        // Auto-run comprehensive test
+        setTimeout(() => {
+            console.log('🚀 Starting comprehensive language testing...');
+            const languages = ['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'ko', 'zh'];
+            let langIndex = 0;
+            
+            function testNextLanguage() {
+                if (langIndex < languages.length) {
+                    const lang = languages[langIndex];
+                    console.log(`Testing language: ${lang}`);
+                    testLanguage(lang);
+                    langIndex++;
+                    setTimeout(testNextLanguage, 1000); // Wait 1 second between tests
+                } else {
+                    console.log('✅ All language tests completed');
+                    testModalTranslations();
+                    setTimeout(testKoreanJapaneseFixes, 500);
+                }
+            }
+            
+            testNextLanguage();
+        }, 2000);
+    </script>
+</body>
+</html>

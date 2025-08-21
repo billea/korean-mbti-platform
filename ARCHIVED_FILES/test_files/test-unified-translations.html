@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Translation System Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { margin: 5px; padding: 10px 15px; cursor: pointer; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; }
+        .modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; min-width: 400px; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Unified Translation System Test</h1>
+    
+    <div class="test-section">
+        <h2>🌍 Language Switcher</h2>
+        <button onclick="testLanguage('en')">English</button>
+        <button onclick="testLanguage('es')">Español</button>
+        <button onclick="testLanguage('fr')">Français</button>
+        <button onclick="testLanguage('de')">Deutsch</button>
+        <button onclick="testLanguage('it')">Italiano</button>
+        <button onclick="testLanguage('pt')">Português</button>
+        <button onclick="testLanguage('ja')">日本語</button>
+        <button onclick="testLanguage('ko')">한국어</button>
+        <button onclick="testLanguage('zh')">中文</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Progress Indicator Test</h2>
+        <div id="progress-test">
+            <div data-translate="ui.question"></div> <span id="current">5</span> <span data-translate="ui.of"></span> <span id="total">70</span>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🏠 Navigation Test</h2>
+        <div data-translate="ui.home">🏠 Home</div>
+        <div data-translate="ui.close">×</div>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 Modal Dialog Test</h2>
+        <button onclick="showTestModal()">Show Resume Test Modal</button>
+        
+        <div id="test-modal" class="modal">
+            <div class="modal-content">
+                <h3 data-translate="ui.resumeTest">Resume Test?</h3>
+                <p data-translate="ui.resumeTestDescription" data-params='{"testName":"Big Five Personality Test"}'>You have an unfinished test.</p>
+                <p data-translate="ui.resumeTestProgress" data-params='{"current":15, "total":70}'>Progress: Question 15 of 70</p>
+                <p data-translate="ui.resumeTestQuestion">Would you like to continue?</p>
+                
+                <div style="margin-top: 20px;">
+                    <button data-translate="ui.resumeTestButton">Resume Test</button>
+                    <button data-translate="ui.startOver">Start Over</button>
+                    <button data-translate="ui.cancel" onclick="closeTestModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Translation Function Test</h2>
+        <p>Current Language: <span id="current-lang">en</span></p>
+        <div id="function-test">
+            <div>Direct call: <span id="direct-test"></span></div>
+            <div>With params: <span id="params-test"></span></div>
+            <div>Fallback test: <span id="fallback-test"></span></div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Test Results</h2>
+        <div id="test-results">
+            <div id="test-status">Ready to test...</div>
+        </div>
+    </div>
+
+    <!-- Load the main script -->
+    <script src="script.js"></script>
+    
+    <script>
+        // Test functions
+        function testLanguage(langCode) {
+            console.log('🧪 Testing language:', langCode);
+            
+            // Change language using the main script function
+            if (typeof changeLanguage === 'function') {
+                changeLanguage(langCode);
+                
+                // Update UI
+                document.getElementById('current-lang').textContent = langCode;
+                
+                // Test direct translation function calls
+                setTimeout(() => {
+                    testTranslationFunctions();
+                    updateTestStatus('success', `Language changed to ${langCode} successfully!`);
+                }, 200);
+            } else {
+                updateTestStatus('error', 'changeLanguage function not found!');
+            }
+        }
+        
+        function testTranslationFunctions() {
+            // Test direct function calls
+            if (typeof t === 'function') {
+                document.getElementById('direct-test').textContent = t('ui.question');
+                document.getElementById('params-test').textContent = t('ui.resumeTestProgress', {current: 25, total: 70});
+                
+                // Test fallback for non-existent key
+                const fallbackResult = t('ui.nonexistent.key');
+                document.getElementById('fallback-test').textContent = fallbackResult;
+            } else {
+                updateTestStatus('error', 'Translation function t() not found!');
+            }
+        }
+        
+        function showTestModal() {
+            document.getElementById('test-modal').style.display = 'block';
+        }
+        
+        function closeTestModal() {
+            document.getElementById('test-modal').style.display = 'none';
+        }
+        
+        function updateTestStatus(type, message) {
+            const statusElement = document.getElementById('test-status');
+            statusElement.textContent = message;
+            statusElement.className = type;
+        }
+        
+        // Initialize test
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTestStatus('info', 'Test page loaded. Try switching languages!');
+            
+            // Test initial translation function
+            setTimeout(() => {
+                testTranslationFunctions();
+            }, 100);
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('test-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeTestModal();
+            }
+        });
+    </script>
+</body>
+</html>

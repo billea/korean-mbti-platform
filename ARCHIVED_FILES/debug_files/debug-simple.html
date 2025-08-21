@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Debug</title>
+</head>
+<body>
+    <h1>Translation Debug Test</h1>
+    
+    <label for="language-select">Language:</label>
+    <select id="language-select" onchange="changeLanguage()">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+    </select>
+    
+    <div id="debug-info"></div>
+    
+    <script src="script.js"></script>
+    <script>
+        function changeLanguage() {
+            const select = document.getElementById('language-select');
+            currentLanguage = select.value;
+            console.log('Language changed to:', currentLanguage);
+            debugTranslations();
+        }
+        
+        function debugTranslations() {
+            const debugDiv = document.getElementById('debug-info');
+            
+            // Set up test scenario
+            currentTest = 'mbti';
+            const testType = 'mbti';
+            
+            let debugHtml = `
+                <h2>Debug Information</h2>
+                <p><strong>Current Language:</strong> ${currentLanguage}</p>
+                <p><strong>Current Test:</strong> ${currentTest}</p>
+            `;
+            
+            // Check if translations exist
+            if (translations[currentLanguage]) {
+                debugHtml += `<p><strong>Translations for ${currentLanguage}:</strong> ✅ EXISTS</p>`;
+                
+                if (translations[currentLanguage].tests) {
+                    debugHtml += `<p><strong>tests object:</strong> ✅ EXISTS</p>`;
+                    
+                    // Show what's available in tests
+                    const availableTests = Object.keys(translations[currentLanguage].tests);
+                    debugHtml += `<p><strong>Available tests:</strong> ${availableTests.join(', ')}</p>`;
+                    
+                    // Check the problematic path from showQuestion
+                    const problemPath = translations[currentLanguage].tests[currentTest];
+                    debugHtml += `<p><strong>translations[${currentLanguage}].tests[${currentTest}]:</strong> ${problemPath ? '✅ EXISTS' : '❌ MISSING'}</p>`;
+                    
+                    // Check the correct path
+                    const correctPath = translations[currentLanguage].tests.mbti;
+                    debugHtml += `<p><strong>translations[${currentLanguage}].tests.mbti:</strong> ${correctPath ? '✅ EXISTS' : '❌ MISSING'}</p>`;
+                    
+                    // Show questions if they exist
+                    if (correctPath && correctPath.questions) {
+                        debugHtml += `<p><strong>MBTI Questions Count:</strong> ${correctPath.questions.length}</p>`;
+                        debugHtml += `<p><strong>First Question:</strong> "${correctPath.questions[0].text}"</p>`;
+                    }
+                } else {
+                    debugHtml += `<p><strong>tests object:</strong> ❌ MISSING</p>`;
+                }
+            } else {
+                debugHtml += `<p><strong>Translations for ${currentLanguage}:</strong> ❌ MISSING</p>`;
+            }
+            
+            debugDiv.innerHTML = debugHtml;
+        }
+        
+        // Initialize debug on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            debugTranslations();
+        });
+    </script>
+</body>
+</html>

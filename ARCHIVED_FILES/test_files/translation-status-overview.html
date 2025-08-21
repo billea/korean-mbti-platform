@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Translation Status Overview - All Tests & Languages</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            margin: 0;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        .language-selector {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .lang-btn {
+            padding: 12px 20px;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            background: white;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .lang-btn:hover, .lang-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .test-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .test-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .available { background: #d4edda; color: #155724; }
+        .missing { background: #f8d7da; color: #721c24; }
+        .partial { background: #fff3cd; color: #856404; }
+        .test-details {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        .question-count {
+            background: #e3f2fd;
+            padding: 8px;
+            border-radius: 8px;
+            margin: 8px 0;
+            text-align: center;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        .stat-box {
+            text-align: center;
+            padding: 15px;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            display: block;
+        }
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Translation Status Overview</h1>
+            <p>Complete status of all personality tests across 9 languages</p>
+        </div>
+
+        <div class="language-selector">
+            <button class="lang-btn active" onclick="selectLanguage('all')" data-lang="all">🌍 All Languages</button>
+            <button class="lang-btn" onclick="selectLanguage('en')" data-lang="en">🇺🇸 English</button>
+            <button class="lang-btn" onclick="selectLanguage('ko')" data-lang="ko">🇰🇷 Korean</button>
+            <button class="lang-btn" onclick="selectLanguage('es')" data-lang="es">🇪🇸 Spanish</button>
+            <button class="lang-btn" onclick="selectLanguage('fr')" data-lang="fr">🇫🇷 French</button>
+            <button class="lang-btn" onclick="selectLanguage('zh')" data-lang="zh">🇨🇳 Chinese</button>
+            <button class="lang-btn" onclick="selectLanguage('ja')" data-lang="ja">🇯🇵 Japanese</button>
+            <button class="lang-btn" onclick="selectLanguage('de')" data-lang="de">🇩🇪 German</button>
+            <button class="lang-btn" onclick="selectLanguage('it')" data-lang="it">🇮🇹 Italian</button>
+            <button class="lang-btn" onclick="selectLanguage('pt')" data-lang="pt">🇵🇹 Portuguese</button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot available"></div>
+                <span>Fully Available</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot partial"></div>
+                <span>Partially Available</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot missing"></div>
+                <span>Not Available</span>
+            </div>
+        </div>
+
+        <div id="summary-stats" class="summary-stats"></div>
+        <div id="test-results" class="test-grid"></div>
+
+        <button onclick="runFullAudit()" style="
+            padding: 15px 30px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            border: none; 
+            border-radius: 25px; 
+            font-weight: bold; 
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        ">🔍 Run Full Translation Audit</button>
+    </div>
+
+    <script>
+        const languages = {
+            'en': { name: 'English', flag: '🇺🇸' },
+            'ko': { name: '한국어', flag: '🇰🇷' },
+            'es': { name: 'Español', flag: '🇪🇸' },
+            'fr': { name: 'Français', flag: '🇫🇷' },
+            'zh': { name: '中文', flag: '🇨🇳' },
+            'ja': { name: '日本語', flag: '🇯🇵' },
+            'de': { name: 'Deutsch', flag: '🇩🇪' },
+            'it': { name: 'Italiano', flag: '🇮🇹' },
+            'pt': { name: 'Português', flag: '🇵🇹' }
+        };
+
+        const testTypes = {
+            'mbtiQuestions': {
+                name: '🧠 MBTI (16 Personalities)',
+                expectedCount: 16,
+                description: 'Myers-Briggs Type Indicator with 4 dimensions (E/I, S/N, T/F, J/P)',
+                validation: validateMBTI
+            },
+            'eqQuestions': {
+                name: '💝 EQ (Emotional Intelligence)', 
+                expectedCount: 16,
+                description: 'Emotional Intelligence with 4 dimensions (self-awareness, self-regulation, empathy, social-skills)',
+                validation: validateEQ
+            },
+            'bigFiveQuestions': {
+                name: '🌟 Big Five Personality',
+                expectedCount: 10,
+                description: 'Five-factor model of personality (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism)',
+                validation: validateBigFive
+            },
+            'iqQuestions': {
+                name: '🧩 Brain Challenge (IQ-style)',
+                expectedCount: 30,
+                description: 'Logic puzzles and brain teasers (entertainment purposes)',
+                validation: validateIQ
+            }
+        };
+
+        let currentLanguage = 'all';
+        let translationData = {};
+
+        async function loadTranslationData() {
+            const results = {};
+            
+            for (const langCode of Object.keys(languages)) {
+                try {
+                    const timestamp = new Date().getTime();
+                    const response = await fetch(`./translations/${langCode}.json?v=${timestamp}`);
+                    results[langCode] = await response.json();
+                } catch (error) {
+                    console.error(`Failed to load ${langCode}:`, error);
+                    results[langCode] = null;
+                }
+            }
+            
+            return results;
+        }
+
+        function validateMBTI(questions) {
+            if (!Array.isArray(questions) || questions.length !== 16) return false;
+            const dimensions = new Set();
+            for (const q of questions) {
+                if (!q.text || !Array.isArray(q.options) || q.options.length !== 2 || !q.dimension) return false;
+                dimensions.add(q.dimension);
+            }
+            return dimensions.size === 4;
+        }
+
+        function validateEQ(questions) {
+            if (!Array.isArray(questions) || questions.length !== 16) return false;
+            const dimensions = new Set();
+            for (const q of questions) {
+                if (!q.text || !Array.isArray(q.options) || q.options.length !== 5 || !q.dimension) return false;
+                dimensions.add(q.dimension);
+            }
+            return dimensions.size === 4;
+        }
+
+        function validateBigFive(questions) {
+            if (!Array.isArray(questions) || questions.length < 10) return false;
+            const dimensions = new Set();
+            for (const q of questions) {
+                if (!q.text || !Array.isArray(q.options) || !q.dimension) return false;
+                dimensions.add(q.dimension);
+            }
+            return dimensions.size === 5;
+        }
+
+        function validateIQ(questions) {
+            if (!Array.isArray(questions) || questions.length < 20) return false;
+            for (const q of questions) {
+                if (!q.text || !Array.isArray(q.options) || typeof q.correct !== 'number') return false;
+            }
+            return true;
+        }
+
+        function analyzeTranslationStatus() {
+            const results = {};
+            
+            for (const [langCode, data] of Object.entries(translationData)) {
+                if (!data) {
+                    results[langCode] = { error: 'Failed to load translation file' };
+                    continue;
+                }
+                
+                const langResults = {};
+                
+                for (const [testKey, testConfig] of Object.entries(testTypes)) {
+                    const questions = data[testKey];
+                    let status = 'missing';
+                    let count = 0;
+                    let isValid = false;
+                    
+                    if (questions && Array.isArray(questions)) {
+                        count = questions.length;
+                        isValid = testConfig.validation(questions);
+                        
+                        if (isValid && count >= testConfig.expectedCount) {
+                            status = 'available';
+                        } else if (count > 0) {
+                            status = 'partial';
+                        }
+                    }
+                    
+                    langResults[testKey] = {
+                        status,
+                        count,
+                        expected: testConfig.expectedCount,
+                        isValid,
+                        questions: questions || []
+                    };
+                }
+                
+                results[langCode] = langResults;
+            }
+            
+            return results;
+        }
+
+        function displayResults(langCode = 'all') {
+            const analysis = analyzeTranslationStatus();
+            const testResults = document.getElementById('test-results');
+            const summaryStats = document.getElementById('summary-stats');
+            
+            // Calculate summary statistics
+            let totalTests = 0;
+            let availableTests = 0;
+            let partialTests = 0;
+            let totalQuestions = 0;
+            
+            if (langCode === 'all') {
+                // Show overview for all languages
+                const overviewHTML = Object.entries(analysis).map(([lang, tests]) => {
+                    if (tests.error) return '';
+                    
+                    const langInfo = languages[lang];
+                    const testCards = Object.entries(testTypes).map(([testKey, testConfig]) => {
+                        const testData = tests[testKey];
+                        totalTests++;
+                        
+                        if (testData.status === 'available') availableTests++;
+                        if (testData.status === 'partial') partialTests++;
+                        totalQuestions += testData.count;
+                        
+                        return `
+                            <div class="test-card">
+                                <div class="test-header">
+                                    <div class="test-title">${testConfig.name}</div>
+                                    <div class="status-badge ${testData.status}">${getStatusText(testData.status)}</div>
+                                </div>
+                                <div class="test-details">
+                                    <div class="question-count">
+                                        <strong>${testData.count}/${testData.expected}</strong> questions
+                                        ${testData.isValid ? '✅ Valid' : (testData.count > 0 ? '⚠️ Issues' : '❌ Missing')}
+                                    </div>
+                                    <p>${testConfig.description}</p>
+                                    ${testData.count > 0 && testData.questions[0] ? `
+                                        <div style="background: #f0f0f0; padding: 8px; border-radius: 4px; margin-top: 8px; font-size: 12px;">
+                                            <strong>Sample:</strong> ${testData.questions[0].text?.substring(0, 80)}${testData.questions[0].text?.length > 80 ? '...' : ''}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    return `
+                        <div style="margin: 30px 0;">
+                            <h2>${langInfo.flag} ${langInfo.name} (${lang})</h2>
+                            <div class="test-grid">
+                                ${testCards}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                testResults.innerHTML = overviewHTML;
+                
+            } else {
+                // Show detailed view for specific language
+                const tests = analysis[langCode];
+                if (!tests) {
+                    testResults.innerHTML = '<p>Language data not available</p>';
+                    return;
+                }
+                
+                if (tests.error) {
+                    testResults.innerHTML = `<p>Error: ${tests.error}</p>`;
+                    return;
+                }
+                
+                const testCards = Object.entries(testTypes).map(([testKey, testConfig]) => {
+                    const testData = tests[testKey];
+                    totalTests++;
+                    
+                    if (testData.status === 'available') availableTests++;
+                    if (testData.status === 'partial') partialTests++;
+                    totalQuestions += testData.count;
+                    
+                    return `
+                        <div class="test-card">
+                            <div class="test-header">
+                                <div class="test-title">${testConfig.name}</div>
+                                <div class="status-badge ${testData.status}">${getStatusText(testData.status)}</div>
+                            </div>
+                            <div class="test-details">
+                                <div class="question-count">
+                                    <strong>${testData.count}/${testData.expected}</strong> questions
+                                    ${testData.isValid ? '✅ Valid Structure' : (testData.count > 0 ? '⚠️ Structure Issues' : '❌ Missing')}
+                                </div>
+                                <p>${testConfig.description}</p>
+                                ${testData.count > 0 && testData.questions[0] ? `
+                                    <div style="background: #f0f0f0; padding: 10px; border-radius: 6px; margin-top: 10px; font-size: 13px;">
+                                        <strong>Sample Question:</strong><br>
+                                        ${testData.questions[0].text}
+                                        <br><br>
+                                        <strong>Options:</strong> ${testData.questions[0].options ? testData.questions[0].options.slice(0, 2).join(', ') + (testData.questions[0].options.length > 2 ? '...' : '') : 'N/A'}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                testResults.innerHTML = `
+                    <h2>${languages[langCode].flag} ${languages[langCode].name} - Detailed View</h2>
+                    <div class="test-grid">${testCards}</div>
+                `;
+            }
+            
+            // Update summary stats
+            const completionRate = totalTests > 0 ? Math.round((availableTests / totalTests) * 100) : 0;
+            summaryStats.innerHTML = `
+                <div class="stat-box">
+                    <span class="stat-number">${availableTests}</span>
+                    <span class="stat-label">Fully Available</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">${partialTests}</span>
+                    <span class="stat-label">Partial</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">${totalQuestions}</span>
+                    <span class="stat-label">Total Questions</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">${completionRate}%</span>
+                    <span class="stat-label">Completion Rate</span>
+                </div>
+            `;
+        }
+
+        function getStatusText(status) {
+            switch(status) {
+                case 'available': return '✅ Available';
+                case 'partial': return '⚠️ Partial';
+                case 'missing': return '❌ Missing';
+                default: return '❓ Unknown';
+            }
+        }
+
+        function selectLanguage(langCode) {
+            currentLanguage = langCode;
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${langCode}"]`).classList.add('active');
+            
+            displayResults(langCode);
+        }
+
+        async function runFullAudit() {
+            document.getElementById('test-results').innerHTML = '<h2>🔍 Running Full Translation Audit...</h2><p>Loading all translation files...</p>';
+            
+            translationData = await loadTranslationData();
+            displayResults(currentLanguage);
+        }
+
+        // Initialize on page load
+        window.onload = runFullAudit;
+    </script>
+</body>
+</html>

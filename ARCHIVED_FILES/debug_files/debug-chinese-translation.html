@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Chinese Translation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .working { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .broken { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Debug Chinese Translation Keys</h1>
+    
+    <div class="test">
+        <h2>Translation Key Testing</h2>
+        <button onclick="testChineseTranslations()">Test Chinese Translation Keys</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function testChineseTranslations() {
+            console.log('\\n=== TESTING CHINESE TRANSLATION KEYS ===');
+            
+            // Set to Chinese
+            currentLanguage = 'zh';
+            console.log('Current language set to:', currentLanguage);
+            
+            const testKeys = [
+                'tests.mbti.title',
+                'tests.bigfive.title', 
+                'tests.lovelanguage.title',
+                'tests.iq.title',
+                'tests.ei.title',
+                'tests.careerpath.title',
+                'tests.relationshipstyle.title',
+                // Working ones for comparison
+                'tests.adhd',
+                'tests.anxiety', 
+                'tests.depression',
+                'tests.strengths',
+                'tests.disc'
+            ];
+            
+            let results = '<h3>Translation Test Results (Chinese)</h3><pre>';
+            
+            testKeys.forEach(key => {
+                const result = t(key);
+                const isWorking = result && result !== key && !result.includes('undefined');
+                const status = isWorking ? '✅ WORKING' : '❌ BROKEN';
+                results += `${status} "${key}" = "${result}"\\n`;
+                console.log(`${status} "${key}" =`, result);
+            });
+            
+            results += '</pre>';
+            
+            // Test direct access
+            results += '<h3>Direct Access Test</h3><pre>';
+            results += `Chinese mbti object: ${JSON.stringify(translations.zh.tests.mbti, null, 2)}\\n`;
+            results += `Chinese ei object: ${JSON.stringify(translations.zh.tests.ei, null, 2)}\\n`;
+            results += '</pre>';
+            
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run test on load
+        setTimeout(() => testChineseTranslations(), 1000);
+    </script>
+</body>
+</html>

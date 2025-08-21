@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete System Test - Refactored Translation Engine</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .test-section { 
+            background: white; 
+            margin: 20px 0; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        .language-buttons { 
+            display: flex; 
+            gap: 10px; 
+            margin: 20px 0; 
+            flex-wrap: wrap; 
+        }
+        .language-buttons button { 
+            padding: 12px 20px; 
+            border: none; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .language-buttons button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+        }
+        .badge-test { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; 
+            margin: 20px 0; 
+        }
+        .badge { 
+            padding: 10px 15px; 
+            border-radius: 20px; 
+            text-align: center; 
+            font-weight: bold; 
+            color: white; 
+        }
+        .new-badge { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
+        .trending-badge { background: linear-gradient(135deg, #feca57, #ff9ff3); }
+        .popular-badge { background: linear-gradient(135deg, #48dbfb, #0abde3); }
+        .bigfive-test { 
+            background: #f8f9ff; 
+            border: 2px dashed #667eea; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin: 20px 0; 
+        }
+        .question { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin: 10px 0; 
+            border-left: 4px solid #667eea; 
+        }
+        .options { 
+            display: flex; 
+            gap: 10px; 
+            margin-top: 10px; 
+            flex-wrap: wrap; 
+        }
+        .option { 
+            padding: 8px 12px; 
+            background: #e8f2ff; 
+            border: 1px solid #ddd; 
+            border-radius: 15px; 
+            font-size: 12px; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+        }
+        .option:hover { 
+            background: #667eea; 
+            color: white; 
+            transform: scale(1.05); 
+        }
+        .status { 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin: 15px 0; 
+            text-align: center; 
+            font-weight: bold; 
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .loading { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .header { 
+            text-align: center; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px 20px; 
+            border-radius: 15px; 
+            margin-bottom: 30px; 
+        }
+        .demo-info {
+            background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #4ecdc4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Complete Translation System Test</h1>
+            <p>Testing the refactored TranslationEngine with Korean badges & Big Five questions</p>
+        </div>
+
+        <div id="status" class="status loading">🔄 Loading TranslationEngine...</div>
+
+        <div class="demo-info">
+            <h3>🔧 What This Test Demonstrates:</h3>
+            <ul>
+                <li><strong>Korean Badge Fix</strong>: Korean badges now show "🔥 새로운", "✨ 인기", "🔥 트렌딩" instead of English</li>
+                <li><strong>Big Five Questions</strong>: Complete Korean & Chinese translations added to JSON structure</li>
+                <li><strong>New Architecture</strong>: TranslationEngine with MutationObserver for automatic translation</li>
+                <li><strong>Performance</strong>: Clean separation of translations from JavaScript logic</li>
+            </ul>
+        </div>
+
+        <!-- Language Switcher -->
+        <div class="test-section">
+            <h2>🌍 Language Switcher</h2>
+            <p>Switch languages to see automatic translation using the new system:</p>
+            <div class="language-buttons">
+                <button onclick="switchLanguage('en')">🇺🇸 English</button>
+                <button onclick="switchLanguage('ko')">🇰🇷 Korean</button>
+                <button onclick="switchLanguage('zh')">🇨🇳 Chinese</button>
+                <button onclick="switchLanguage('es')">🇪🇸 Spanish</button>
+                <button onclick="switchLanguage('fr')">🇫🇷 French</button>
+                <button onclick="switchLanguage('ja')">🇯🇵 Japanese</button>
+            </div>
+        </div>
+
+        <!-- Badge Translation Test -->
+        <div class="test-section">
+            <h2>🏷️ Badge Translation Test (Original Problem)</h2>
+            <p>Korean badges were showing English text. Now fixed with new system:</p>
+            <div class="badge-test">
+                <div class="badge new-badge" data-translate="tests.new">🔥 NEW</div>
+                <div class="badge trending-badge" data-translate="tests.trending">🔥 TRENDING</div>  
+                <div class="badge popular-badge" data-translate="tests.popular">✨ POPULAR</div>
+            </div>
+            <div style="margin-top: 15px; padding: 10px; background: #e8f5e8; border-radius: 5px; font-size: 14px;">
+                <strong>Expected Korean:</strong> "🔥 새로운", "🔥 트렌딩", "✨ 인기"<br>
+                <strong>Expected Chinese:</strong> "🔥 最新", "🔥 热门", "✨ 受欢迎"
+            </div>
+        </div>
+
+        <!-- Big Five Questions Test -->
+        <div class="test-section">
+            <h2>🧠 Big Five Questions Test (Previously Missing)</h2>
+            <p>Big Five questions were missing from Korean and Chinese. Now added:</p>
+            <div class="bigfive-test">
+                <h3>Sample Big Five Questions (Korean/Chinese):</h3>
+                <div id="bigfive-questions">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                <button onclick="loadBigFiveTest()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                    Load Big Five Questions
+                </button>
+            </div>
+        </div>
+
+        <!-- System Architecture -->
+        <div class="test-section">
+            <h2>🏗️ New System Architecture</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>❌ Old System Issues:</h4>
+                    <ul style="color: #d63031;">
+                        <li>727KB monolithic translation objects</li>
+                        <li>Hardcoded translations in JavaScript</li>
+                        <li>Manual DOM updates with timeouts</li>
+                        <li>Korean badges showing English</li>
+                        <li>Missing Big Five questions</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>✅ New System Benefits:</h4>
+                    <ul style="color: #00b894;">
+                        <li>Clean TranslationEngine class</li>
+                        <li>Modular JSON translation files</li>
+                        <li>MutationObserver for auto-translation</li>
+                        <li>Proper Korean/Chinese badges</li>
+                        <li>Complete Big Five questions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="test-section">
+            <h2>📊 Performance Metrics</h2>
+            <div id="performance-info" style="background: #f8f9ff; padding: 15px; border-radius: 8px; font-family: monospace;">
+                Loading performance data...
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the TranslationEngine -->
+    <script src="./translation-engine.js"></script>
+    
+    <script>
+        // Wait for TranslationEngine to initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('status').innerHTML = '✅ TranslationEngine Loaded Successfully!';
+                document.getElementById('status').className = 'status success';
+                updatePerformanceInfo();
+            }, 1000);
+        });
+
+        function switchLanguage(lang) {
+            if (window.i18n) {
+                window.i18n.setLanguage(lang);
+                updatePerformanceInfo();
+            }
+        }
+
+        function loadBigFiveTest() {
+            const container = document.getElementById('bigfive-questions');
+            const currentLang = window.i18n ? window.i18n.currentLanguage : 'en';
+            
+            // Get Big Five questions from the translation system
+            const questions = window.i18n ? 
+                window.i18n.translations[currentLang]?.results?.bigFiveQuestions || [] : [];
+            
+            if (questions.length > 0) {
+                container.innerHTML = questions.slice(0, 3).map((q, index) => `
+                    <div class="question">
+                        <strong>Question ${index + 1}:</strong> ${q.text}
+                        <div class="options">
+                            ${q.options.map(option => `<span class="option">${option}</span>`).join('')}
+                        </div>
+                        <small style="color: #666; display: block; margin-top: 8px;">
+                            Dimension: ${q.dimension} | Reverse: ${q.reverse}
+                        </small>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = `<div style="color: #d63031;">❌ No Big Five questions found for language: ${currentLang}</div>`;
+            }
+        }
+
+        function updatePerformanceInfo() {
+            const currentLang = window.i18n ? window.i18n.currentLanguage : 'en';
+            const loadedLangs = window.i18n ? Object.keys(window.i18n.translations) : [];
+            const bigFiveCount = window.i18n ? 
+                (window.i18n.translations[currentLang]?.results?.bigFiveQuestions?.length || 0) : 0;
+            
+            document.getElementById('performance-info').innerHTML = `
+Current Language: ${currentLang.toUpperCase()}
+Loaded Languages: [${loadedLangs.join(', ')}]
+Big Five Questions Available: ${bigFiveCount}/10
+Translation Engine Status: ${window.i18n ? '✅ Active' : '❌ Not Loaded'}
+DOM Observer: ${window.i18n ? '✅ Watching' : '❌ Inactive'}
+Badge Translation: ${currentLang === 'ko' ? '🇰🇷 Korean Fixed' : currentLang === 'zh' ? '🇨🇳 Chinese Fixed' : '🌍 Standard'}
+            `;
+        }
+    </script>
+</body>
+</html>

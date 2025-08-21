@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Bridge System</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        pre { background: #f0f0f0; padding: 15px; border-radius: 5px; font-size: 11px; white-space: pre-wrap; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; }
+        .failure { background-color: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Bridge System</h1>
+    <p>Testing why ADHD, Anxiety, Depression don't load Spanish through bridge system</p>
+    
+    <button onclick="debugBridgeSystem()">🧪 Debug Bridge System</button>
+    <button onclick="simulateStartTestNew()">🚀 Simulate startTestNew</button>
+    
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>
+        function debugBridgeSystem() {
+            console.clear();
+            console.log('=== DEBUGGING BRIDGE SYSTEM ===');
+            
+            // Force Spanish
+            currentLanguage = 'es';
+            
+            let results = '<h3>🔍 Bridge System Debug Results</h3>';
+            
+            const mentalHealthTests = ['adhd', 'anxiety', 'depression'];
+            
+            mentalHealthTests.forEach(testId => {
+                results += `<div class="test-section">`;
+                results += `<h4>${testId.toUpperCase()}</h4><pre>`;
+                
+                // Step 1: Check testDefinitions (should be false)
+                const hasTestDefs = !!(testDefinitions && testDefinitions[testId] && testDefinitions[testId].es);
+                results += `testDefinitions[${testId}].es: ${hasTestDefs ? '✅ FOUND' : '❌ NOT FOUND'}\\n`;
+                
+                // Step 2: Check translations object structure
+                results += `\\nBridge System Check:\\n`;
+                results += `translations exists: ${!!translations}\\n`;
+                results += `translations.es exists: ${!!(translations && translations.es)}\\n`;
+                results += `translations.es.tests exists: ${!!(translations && translations.es && translations.es.tests)}\\n`;
+                results += `translations.es.tests.${testId} exists: ${!!(translations && translations.es && translations.es.tests && translations.es.tests[testId])}\\n`;
+                
+                const hasQuestions = !!(translations && translations.es && translations.es.tests && 
+                    translations.es.tests[testId] && translations.es.tests[testId].questions);
+                results += `translations.es.tests.${testId}.questions exists: ${hasQuestions ? '✅ FOUND' : '❌ NOT FOUND'}\\n`;
+                
+                if (hasQuestions) {
+                    const questions = translations.es.tests[testId].questions;
+                    const firstQ = questions[0].text;
+                    const isSpanish = /[ñáéíóúü¿]/.test(firstQ);
+                    
+                    results += `\\nQuestions: ${questions.length}\\n`;
+                    results += `First Q: "${firstQ.substring(0, 60)}..."\\n`;
+                    results += `Is Spanish: ${isSpanish ? '✅ YES' : '❌ NO'}\\n`;
+                    results += `Title: "${translations.es.tests[testId].title || 'No title'}"\\n`;
+                    
+                    // Simulate bridge loading
+                    results += `\\n🌉 BRIDGE SIMULATION:\\n`;
+                    try {
+                        // This mimics the bridge logic in startTestNew
+                        const testData = {
+                            title: translations.es.tests[testId].title || 'No title',
+                            questions: translations.es.tests[testId].questions
+                        };
+                        results += `Bridge would load: ${testData.questions.length} questions\\n`;
+                        results += `Bridge title: "${testData.title}"\\n`;
+                        results += `Bridge first Q: "${testData.questions[0].text.substring(0, 50)}..."\\n`;
+                        results += `RESULT: ${isSpanish ? '✅ SHOULD WORK' : '❌ WOULD FAIL'}\\n`;
+                    } catch (error) {
+                        results += `❌ BRIDGE ERROR: ${error.message}\\n`;
+                    }
+                } else {
+                    results += `\\n❌ NO SPANISH QUESTIONS FOUND\\n`;
+                    results += `RESULT: Would fall back to English\\n`;
+                }
+                
+                results += '</pre></div>';
+            });
+            
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        function simulateStartTestNew() {
+            console.clear();
+            console.log('=== SIMULATING startTestNew FOR ADHD ===');
+            
+            // Force Spanish
+            currentLanguage = 'es';
+            
+            let results = '<div class="test-section"><h3>🚀 Simulating startTestNew("adhd")</h3><pre>';
+            
+            const testType = 'adhd';
+            results += `testType: ${testType}\\n`;
+            results += `currentLanguage: ${currentLanguage}\\n\\n`;
+            
+            let testData = null;
+            
+            // Step 1: Load test data from new multilingual structure if available
+            if (testDefinitions[testType] && testDefinitions[testType][currentLanguage]) {
+                results += `✅ STEP 1: Loading from testDefinitions[${testType}][${currentLanguage}]\\n`;
+                testData = {
+                    ...tests[testType], // Keep metadata
+                    title: testDefinitions[testType][currentLanguage].title,
+                    questions: testDefinitions[testType][currentLanguage].questions
+                };
+                results += `✅ Loaded ${testData.questions.length} questions from testDefinitions\\n`;
+            } else {
+                results += `❌ STEP 1: testDefinitions[${testType}][${currentLanguage}] not found\\n`;
+                results += `📊 STEP 2: Loading from legacy tests object\\n`;
+                
+                // Check if tests[testType] exists
+                if (tests && tests[testType]) {
+                    testData = tests[testType];
+                    results += `✅ Legacy testData loaded: ${!!testData}\\n`;
+                    results += `English questions: ${testData.questions ? testData.questions.length : 'No questions'}\\n`;
+                } else {
+                    results += `❌ tests[${testType}] not found\\n`;
+                    testData = null;
+                }
+                
+                // Step 3: Bridge system
+                results += `\\n🔄 STEP 3: HYBRID BRIDGE SYSTEM\\n`;
+                results += `currentLanguage !== 'en': ${currentLanguage !== 'en'}\\n`;
+                results += `translations exists: ${!!translations}\\n`;
+                results += `translations[currentLanguage] exists: ${!!(translations && translations[currentLanguage])}\\n`;
+                
+                if (currentLanguage !== 'en' && translations && translations[currentLanguage]) {
+                    const langTranslations = translations[currentLanguage];
+                    results += `✅ Found translations for ${currentLanguage}\\n`;
+                    
+                    // Check if questions exist in the old individual language structure
+                    const hasTests = langTranslations.tests && langTranslations.tests[testType] && langTranslations.tests[testType].questions;
+                    results += `langTranslations.tests exists: ${!!langTranslations.tests}\\n`;
+                    results += `langTranslations.tests[${testType}] exists: ${!!(langTranslations.tests && langTranslations.tests[testType])}\\n`;
+                    results += `langTranslations.tests[${testType}].questions exists: ${hasTests}\\n`;
+                    
+                    if (hasTests) {
+                        results += `🌉 BRIDGE: Loading ${testType} questions from individual ${currentLanguage} translations\\n`;
+                        testData = {
+                            ...testData, // Keep metadata from tests object
+                            title: langTranslations.tests[testType].title || testData.title,
+                            questions: langTranslations.tests[testType].questions
+                        };
+                        results += `🌉 Bridge questions loaded: ${testData.questions.length}\\n`;
+                        results += `🌉 First question text: "${testData.questions[0] ? testData.questions[0].text : 'No questions'}"\\n`;
+                        
+                        const firstQ = testData.questions[0].text;
+                        const isSpanish = /[ñáéíóúü¿]/.test(firstQ);
+                        results += `🌉 Is Spanish: ${isSpanish ? '✅ YES' : '❌ NO'}\\n`;
+                    } else {
+                        results += `❌ No ${currentLanguage} questions found for ${testType}, using English fallback\\n`;
+                    }
+                } else {
+                    results += `❌ Bridge conditions not met\\n`;
+                }
+            }
+            
+            // Final result
+            results += `\\n=== FINAL RESULT ===\\n`;
+            if (testData && testData.questions && testData.questions.length > 0) {
+                const firstQ = testData.questions[0].text;
+                const isSpanish = /[ñáéíóúü¿]/.test(firstQ);
+                results += `Questions loaded: ${testData.questions.length}\\n`;
+                results += `Title: "${testData.title}"\\n`;
+                results += `First question: "${firstQ}"\\n`;
+                results += `Language: ${isSpanish ? '🇪🇸 SPANISH' : '🇺🇸 ENGLISH'}\\n`;
+                
+                if (isSpanish) {
+                    results += `\\n✅ SUCCESS: ADHD should load in Spanish!\\n`;
+                } else {
+                    results += `\\n❌ PROBLEM: ADHD still loading in English despite bridge system!\\n`;
+                }
+            } else {
+                results += `❌ NO QUESTIONS LOADED AT ALL\\n`;
+            }
+            
+            results += '</pre></div>';
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run bridge debug
+        setTimeout(() => debugBridgeSystem(), 500);
+    </script>
+</body>
+</html>

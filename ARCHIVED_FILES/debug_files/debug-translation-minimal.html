@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .debug-box { background: #f0f0f0; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .question-box { background: #e8f4fd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>🔍 MBTI Translation Debug</h1>
+    
+    <div class="debug-box">
+        <h3>1. Current State</h3>
+        <p><strong>Current Language:</strong> <span id="currentLang">unknown</span></p>
+        <p><strong>Translations Object:</strong> <span id="translationsExists">unknown</span></p>
+        <p><strong>Tests Object:</strong> <span id="testsExists">unknown</span></p>
+    </div>
+    
+    <div class="debug-box">
+        <h3>2. Language Controls</h3>
+        <button onclick="setLanguage('en')">English</button>
+        <button onclick="setLanguage('es')">Spanish</button>
+        <button onclick="setLanguage('fr')">French</button>
+        <button onclick="setLanguage('de')">German</button>
+    </div>
+    
+    <div class="debug-box">
+        <h3>3. Translation Test</h3>
+        <button onclick="testMBTITranslations()">Test MBTI Translations</button>
+        <div id="translationResults"></div>
+    </div>
+    
+    <div class="debug-box">
+        <h3>4. Start MBTI Test</h3>
+        <button onclick="startActualTest()">Start MBTI Test</button>
+        <div id="testResults"></div>
+    </div>
+    
+    <div class="question-box" id="questionDisplay" style="display: none;">
+        <h3>Current Question:</h3>
+        <p id="questionText"></p>
+        <div id="questionOptions"></div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        // Debug functions
+        function updateStatus() {
+            document.getElementById('currentLang').textContent = window.currentLanguage || 'undefined';
+            document.getElementById('translationsExists').textContent = typeof window.translations !== 'undefined' ? 'EXISTS' : 'MISSING';
+            document.getElementById('testsExists').textContent = typeof window.tests !== 'undefined' ? 'EXISTS' : 'MISSING';
+        }
+        
+        function setLanguage(lang) {
+            window.currentLanguage = lang;
+            updateStatus();
+            console.log(`🔄 Language set to: ${lang}`);
+        }
+        
+        function testMBTITranslations() {
+            const results = document.getElementById('translationResults');
+            let html = '<h4>Translation Test Results:</h4>';
+            
+            const languages = ['en', 'es', 'fr', 'de'];
+            
+            languages.forEach(lang => {
+                html += `<div><strong>${lang.toUpperCase()}:</strong> `;
+                
+                if (lang === 'en') {
+                    // Check English in tests object
+                    if (window.tests && window.tests.mbti && window.tests.mbti.questions) {
+                        const questions = window.tests.mbti.questions;
+                        html += `<span class="success">✅ ${questions.length} questions</span><br>`;
+                        html += `<span class="info">First: "${questions[0].text.slice(0, 50)}..."</span>`;
+                    } else {
+                        html += `<span class="error">❌ No English questions</span>`;
+                    }
+                } else {
+                    // Check translations
+                    if (window.translations && 
+                        window.translations[lang] && 
+                        window.translations[lang].tests && 
+                        window.translations[lang].tests.mbti && 
+                        window.translations[lang].tests.mbti.questions) {
+                        
+                        const questions = window.translations[lang].tests.mbti.questions;
+                        html += `<span class="success">✅ ${questions.length} questions</span><br>`;
+                        html += `<span class="info">First: "${questions[0].text.slice(0, 50)}..."</span>`;
+                    } else {
+                        html += `<span class="error">❌ No ${lang} questions</span>`;
+                    }
+                }
+                html += '</div><br>';
+            });
+            
+            results.innerHTML = html;
+        }
+        
+        function startActualTest() {
+            console.log('🚀 Starting actual MBTI test...');
+            
+            try {
+                // Set up test variables like the real function does
+                window.currentTest = 'mbti';
+                window.currentQuestionIndex = 0;
+                window.userAnswers = [];
+                window.testData = window.tests.mbti;
+                
+                console.log('✅ Test variables set');
+                console.log('Current language:', window.currentLanguage);
+                console.log('Test data exists:', !!window.testData);
+                
+                // Try to show the first question
+                showDebugQuestion();
+                
+            } catch (error) {
+                console.error('❌ Error starting test:', error);
+                document.getElementById('testResults').innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+        
+        function showDebugQuestion() {
+            try {
+                const originalQuestion = window.testData.questions[window.currentQuestionIndex];
+                const totalQuestions = window.testData.questions.length;
+                
+                console.log('📝 Original question:', originalQuestion.text);
+                
+                // Get the question data to display (translated if available)
+                let questionToShow = originalQuestion;
+                
+                // Check if we have translations available (same logic as real showQuestion)
+                if (window.currentLanguage !== 'en' && 
+                    window.translations[window.currentLanguage] && 
+                    window.translations[window.currentLanguage].tests && 
+                    window.translations[window.currentLanguage].tests[window.currentTest] && 
+                    window.translations[window.currentLanguage].tests[window.currentTest].questions &&
+                    window.translations[window.currentLanguage].tests[window.currentTest].questions[window.currentQuestionIndex]) {
+                    
+                    questionToShow = window.translations[window.currentLanguage].tests[window.currentTest].questions[window.currentQuestionIndex];
+                    console.log('✅ Found translated question:', questionToShow.text);
+                } else {
+                    console.log('⚠️ No translation found, using English');
+                    console.log('Debug info:');
+                    console.log('- currentLanguage:', window.currentLanguage);
+                    console.log('- translations exists:', !!window.translations[window.currentLanguage]);
+                    console.log('- tests exists:', !!window.translations[window.currentLanguage]?.tests);
+                    console.log('- mbti exists:', !!window.translations[window.currentLanguage]?.tests?.mbti);
+                    console.log('- questions exists:', !!window.translations[window.currentLanguage]?.tests?.mbti?.questions);
+                    console.log('- question index exists:', !!window.translations[window.currentLanguage]?.tests?.mbti?.questions?.[window.currentQuestionIndex]);
+                }
+                
+                // Display the question
+                const questionDisplay = document.getElementById('questionDisplay');
+                const questionText = document.getElementById('questionText');
+                const questionOptions = document.getElementById('questionOptions');
+                
+                questionDisplay.style.display = 'block';
+                questionText.textContent = questionToShow.text;
+                
+                let optionsHtml = '';
+                questionToShow.options.forEach((option, index) => {
+                    optionsHtml += `<button onclick="selectAnswer(${index})">${String.fromCharCode(65 + index)}) ${option}</button><br>`;
+                });
+                questionOptions.innerHTML = optionsHtml;
+                
+                document.getElementById('testResults').innerHTML = `
+                    <span class="success">✅ Question displayed successfully</span><br>
+                    <span class="info">Language: ${window.currentLanguage}</span><br>
+                    <span class="info">Question ${window.currentQuestionIndex + 1} of ${totalQuestions}</span><br>
+                    <span class="info">Translation used: ${questionToShow === originalQuestion ? 'English (original)' : 'Translated'}</span>
+                `;
+                
+            } catch (error) {
+                console.error('❌ Error showing question:', error);
+                document.getElementById('testResults').innerHTML = `<span class="error">Error showing question: ${error.message}</span>`;
+            }
+        }
+        
+        function selectAnswer(index) {
+            console.log(`Selected answer: ${index}`);
+            // For this debug, just log the selection
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(updateStatus, 1000); // Wait for script.js to load
+        });
+    </script>
+</body>
+</html>

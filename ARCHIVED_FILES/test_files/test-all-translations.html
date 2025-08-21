@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Complete Translation Test Suite</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            margin: 0;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        .test-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        .stat-box {
+            text-align: center;
+            padding: 15px;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            display: block;
+        }
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .language-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .language-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+        .language-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .language-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .overall-status {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .perfect { background: #d4edda; color: #155724; }
+        .good { background: #d1ecf1; color: #0c5460; }
+        .partial { background: #fff3cd; color: #856404; }
+        .missing { background: #f8d7da; color: #721c24; }
+        .test-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .test-name {
+            font-weight: bold;
+        }
+        .test-count {
+            text-align: center;
+            font-family: monospace;
+        }
+        .status-indicator {
+            text-align: center;
+            font-size: 16px;
+        }
+        .validation-result {
+            text-align: center;
+            font-size: 16px;
+        }
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            font-size: 16px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Complete Translation Test Suite</h1>
+            <p>Comprehensive validation of all personality tests across 9 languages</p>
+        </div>
+
+        <div id="test-summary" class="test-summary"></div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot perfect"></div>
+                <span>Perfect (All tests complete)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot good"></div>
+                <span>Good (3-4 tests complete)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot partial"></div>
+                <span>Partial (1-2 tests complete)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot missing"></div>
+                <span>Missing (No tests)</span>
+            </div>
+        </div>
+
+        <button onclick="runCompleteTest()">🚀 Run Complete Test Suite</button>
+        
+        <div id="results" class="language-grid"></div>
+    </div>
+
+    <script>
+        const languages = {
+            'en': { name: 'English', flag: '🇺🇸' },
+            'ko': { name: '한국어', flag: '🇰🇷' },
+            'es': { name: 'Español', flag: '🇪🇸' },
+            'fr': { name: 'Français', flag: '🇫🇷' },
+            'zh': { name: '中文', flag: '🇨🇳' },
+            'ja': { name: '日本語', flag: '🇯🇵' },
+            'de': { name: 'Deutsch', flag: '🇩🇪' },
+            'it': { name: 'Italiano', flag: '🇮🇹' },
+            'pt': { name: 'Português', flag: '🇵🇹' }
+        };
+
+        const testDefinitions = {
+            'mbtiQuestions': {
+                name: '🧠 MBTI',
+                expected: 16,
+                validate: (questions) => {
+                    if (!Array.isArray(questions) || questions.length !== 16) return false;
+                    const dimensions = new Set();
+                    for (const q of questions) {
+                        if (!q.text || !Array.isArray(q.options) || q.options.length !== 2 || !q.dimension) return false;
+                        dimensions.add(q.dimension);
+                    }
+                    return dimensions.size === 4;
+                }
+            },
+            'eqQuestions': {
+                name: '💝 EQ',
+                expected: 16,
+                validate: (questions) => {
+                    if (!Array.isArray(questions) || questions.length !== 16) return false;
+                    const dimensions = new Set();
+                    for (const q of questions) {
+                        if (!q.text || !Array.isArray(q.options) || q.options.length !== 5 || !q.dimension) return false;
+                        dimensions.add(q.dimension);
+                    }
+                    return dimensions.size === 4;
+                }
+            },
+            'bigFiveQuestions': {
+                name: '🌟 Big Five',
+                expected: 10,
+                validate: (questions) => {
+                    if (!Array.isArray(questions) || questions.length !== 10) return false;
+                    const dimensions = new Set();
+                    for (const q of questions) {
+                        if (!q.text || !Array.isArray(q.options) || q.options.length !== 5 || !q.dimension) return false;
+                        dimensions.add(q.dimension);
+                    }
+                    return dimensions.size === 5;
+                }
+            },
+            'iqQuestions': {
+                name: '🧩 Brain Challenge',
+                expected: 30,
+                validate: (questions) => {
+                    if (!Array.isArray(questions) || questions.length < 20) return false;
+                    for (const q of questions) {
+                        if (!q.text || !Array.isArray(q.options) || typeof q.correct !== 'number') return false;
+                    }
+                    return true;
+                }
+            }
+        };
+
+        async function loadAllTranslations() {
+            const results = {};
+            for (const langCode of Object.keys(languages)) {
+                try {
+                    const timestamp = new Date().getTime();
+                    const response = await fetch(`./translations/${langCode}.json?v=${timestamp}`);
+                    results[langCode] = await response.json();
+                } catch (error) {
+                    console.error(`Failed to load ${langCode}:`, error);
+                    results[langCode] = null;
+                }
+            }
+            return results;
+        }
+
+        async function runCompleteTest() {
+            document.getElementById('results').innerHTML = '<h2>🔍 Loading and testing all translations...</h2>';
+            
+            const translationData = await loadAllTranslations();
+            const testResults = {};
+            let totalTests = 0;
+            let passedTests = 0;
+            let totalQuestions = 0;
+            
+            // Test each language
+            for (const [langCode, data] of Object.entries(translationData)) {
+                if (!data) {
+                    testResults[langCode] = { error: 'Failed to load translation file' };
+                    continue;
+                }
+                
+                const langResults = {};
+                let langPassed = 0;
+                let langTotal = 0;
+                let langQuestions = 0;
+                
+                // Test each test type
+                for (const [testKey, testDef] of Object.entries(testDefinitions)) {
+                    const questions = data[testKey];
+                    langTotal++;
+                    totalTests++;
+                    
+                    if (questions && Array.isArray(questions)) {
+                        const isValid = testDef.validate(questions);
+                        langQuestions += questions.length;
+                        totalQuestions += questions.length;
+                        
+                        if (isValid) {
+                            langPassed++;
+                            passedTests++;
+                        }
+                        
+                        langResults[testKey] = {
+                            count: questions.length,
+                            expected: testDef.expected,
+                            valid: isValid,
+                            status: isValid ? 'complete' : 'invalid'
+                        };
+                    } else {
+                        langResults[testKey] = {
+                            count: 0,
+                            expected: testDef.expected,
+                            valid: false,
+                            status: 'missing'
+                        };
+                    }
+                }
+                
+                testResults[langCode] = {
+                    results: langResults,
+                    passed: langPassed,
+                    total: langTotal,
+                    questions: langQuestions,
+                    completionRate: Math.round((langPassed / langTotal) * 100)
+                };
+            }
+            
+            // Update summary
+            updateSummary(totalTests, passedTests, totalQuestions, Object.keys(languages).length);
+            
+            // Display results
+            displayResults(testResults);
+        }
+
+        function updateSummary(totalTests, passedTests, totalQuestions, totalLanguages) {
+            const successRate = Math.round((passedTests / totalTests) * 100);
+            document.getElementById('test-summary').innerHTML = `
+                <div class="stat-box">
+                    <span class="stat-number">${totalLanguages}</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">${passedTests}/${totalTests}</span>
+                    <span class="stat-label">Tests Passed</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">${totalQuestions}</span>
+                    <span class="stat-label">Total Questions</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">${successRate}%</span>
+                    <span class="stat-label">Success Rate</span>
+                </div>
+            `;
+        }
+
+        function displayResults(testResults) {
+            const resultsHTML = Object.entries(testResults).map(([langCode, langData]) => {
+                if (langData.error) {
+                    return `
+                        <div class="language-card">
+                            <div class="language-header">
+                                <div class="language-title">${languages[langCode].flag} ${languages[langCode].name}</div>
+                                <div class="overall-status missing">❌ ERROR</div>
+                            </div>
+                            <p>Error: ${langData.error}</p>
+                        </div>
+                    `;
+                }
+                
+                const overallClass = langData.completionRate >= 100 ? 'perfect' : 
+                                   langData.completionRate >= 75 ? 'good' : 
+                                   langData.completionRate >= 50 ? 'partial' : 'missing';
+                
+                const testRows = Object.entries(testDefinitions).map(([testKey, testDef]) => {
+                    const result = langData.results[testKey];
+                    const statusIcon = result.status === 'complete' ? '✅' : 
+                                      result.status === 'invalid' ? '⚠️' : '❌';
+                    const validationIcon = result.valid ? '✅' : result.count > 0 ? '⚠️' : '❌';
+                    
+                    return `
+                        <div class="test-row">
+                            <div class="test-name">${testDef.name}</div>
+                            <div class="test-count">${result.count}/${result.expected}</div>
+                            <div class="status-indicator">${statusIcon}</div>
+                            <div class="validation-result">${validationIcon}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                return `
+                    <div class="language-card">
+                        <div class="language-header">
+                            <div class="language-title">${languages[langCode].flag} ${languages[langCode].name}</div>
+                            <div class="overall-status ${overallClass}">${langData.completionRate}% Complete</div>
+                        </div>
+                        <div style="margin-bottom: 10px; background: #f0f0f0; padding: 8px; border-radius: 5px; font-size: 12px;">
+                            <strong>Tests:</strong> Grid Headers → Test Name | Count | Status | Valid
+                        </div>
+                        ${testRows}
+                        <div style="margin-top: 15px; text-align: center; font-size: 14px; color: #666;">
+                            <strong>Total Questions: ${langData.questions}</strong>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('results').innerHTML = resultsHTML;
+        }
+
+        // Auto-run on page load
+        window.onload = runCompleteTest;
+    </script>
+</body>
+</html>

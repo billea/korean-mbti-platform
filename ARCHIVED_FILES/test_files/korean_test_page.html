@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korean Translation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .failure { background-color: #f8d7da; border-color: #f5c6cb; }
+        .korean { color: #007bff; font-weight: bold; }
+        .english { color: #dc3545; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #console { background: #f8f9fa; padding: 15px; border-radius: 5px; height: 400px; overflow-y: auto; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>🇰🇷 Korean Translation Test Page</h1>
+    
+    <div>
+        <h2>Test Actions</h2>
+        <button onclick="window.open('index.html', '_blank')">Open Main Website</button>
+        <button onclick="testKoreanTranslations()">Test Korean Translations</button>
+        <button onclick="clearConsole()">Clear Console</button>
+    </div>
+    
+    <div>
+        <h2>Expected Korean Test Card Titles</h2>
+        <ul>
+            <li>16가지 성격 유형 (MBTI Test)</li>
+            <li>빅파이브 성격 검사 (Big Five)</li>
+            <li>사랑의 언어 테스트 (Love Language)</li>
+            <li>두뇌 테스트 (Brain Teaser)</li>
+            <li>감성지능 (Emotional Intelligence)</li>
+            <li>집중력과 에너지 스타일 (ADHD)</li>
+            <li>스트레스 관리 스타일 (Anxiety)</li>
+            <li>감정 조절 스타일 (Depression)</li>
+            <li>캐릭터 강점 (VIA) (Character Strengths)</li>
+            <li>진로 탐색기 (Career Path)</li>
+            <li>연애 스타일 (Relationship Style)</li>
+        </ul>
+    </div>
+    
+    <div>
+        <h2>Test Instructions</h2>
+        <ol>
+            <li>Click "Open Main Website" to open the main site in a new tab</li>
+            <li>Switch to Korean (🇰🇷) by clicking the Korean flag</li>
+            <li>Navigate to "Know Yourself" (나를 알아가기) section</li>
+            <li>Verify test card titles show Korean text from the list above</li>
+            <li>Check browser console for "🎉 SUCCESS: Korean translations are now visible!" message</li>
+        </ol>
+    </div>
+    
+    <div>
+        <h2>Manual Verification Steps</h2>
+        <p><strong>In the main website's browser console, run:</strong></p>
+        <pre style="background: #f8f9fa; padding: 10px; border-radius: 5px;">
+// 1. Switch to Korean
+changeLanguage('ko');
+
+// 2. Navigate to Know Yourself section
+showCategory('know-yourself');
+
+// 3. Verify translations worked
+verifyKoreanTranslations();
+        </pre>
+    </div>
+    
+    <div>
+        <h2>Console Output</h2>
+        <div id="console"></div>
+    </div>
+    
+    <script>
+        function log(message) {
+            const console = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString();
+            console.innerHTML += `[${timestamp}] ${message}\n`;
+            console.scrollTop = console.scrollHeight;
+        }
+        
+        function clearConsole() {
+            document.getElementById('console').innerHTML = '';
+        }
+        
+        function testKoreanTranslations() {
+            log('🔍 Starting Korean Translation Test...');
+            log('==========================================');
+            
+            // Expected Korean translations
+            const expectedKorean = [
+                '16가지 성격 유형',
+                '빅파이브 성격 검사', 
+                '사랑의 언어 테스트',
+                '두뇌 테스트',
+                '감성지능',
+                '집중력과 에너지 스타일',
+                '스트레스 관리 스타일',
+                '감정 조절 스타일',
+                '캐릭터 강점 (VIA)',
+                '진로 탐색기',
+                '연애 스타일'
+            ];
+            
+            log(`📝 Expected ${expectedKorean.length} Korean test card titles`);
+            log('');
+            
+            expectedKorean.forEach((title, index) => {
+                log(`${index + 1}. ${title}`);
+            });
+            
+            log('');
+            log('✅ Test completed! Please manually verify these titles appear on the main website.');
+            log('📋 Steps: 1) Open main site 2) Switch to Korean 3) Go to "Know Yourself" section');
+        }
+        
+        // Initialize
+        log('🇰🇷 Korean Translation Test Page Loaded');
+        log('Click "Test Korean Translations" to see expected titles');
+    </script>
+</body>
+</html>

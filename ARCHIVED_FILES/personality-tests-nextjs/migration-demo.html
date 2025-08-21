@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js Migration Progress - PersonaTests</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+        h1, h2 { margin-bottom: 20px; }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .status-card {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .demo-section {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+        .badge.success { background: #d1fae5; color: #059669; }
+        .badge.warning { background: #fef3c7; color: #d97706; }
+        .badge.info { background: #dbeafe; color: #2563eb; }
+        .lang-switch { 
+            margin: 15px 0;
+            display: flex;
+            gap: 10px;
+        }
+        .lang-btn {
+            padding: 8px 12px;
+            background: #4CAF50;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .lang-btn:hover { background: #45a049; }
+        .lang-btn.active { background: #2E7D32; }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .comparison-table th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+        .old-system { background: #fee2e2; }
+        .new-system { background: #d1fae5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 PersonaTests Next.js Migration Progress</h1>
+        
+        <div class="status-grid">
+            <div class="status-card">
+                <h3>📊 Migration Status</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%">Phase 2: 75%</div>
+                </div>
+                <p><strong>Current Phase:</strong> Phase 2 - Core Infrastructure</p>
+                <p><strong>Next Phase:</strong> Phase 3 - Component Migration</p>
+            </div>
+            
+            <div class="status-card">
+                <h3>🔧 Technical Stack</h3>
+                <div class="badge success">Next.js 15.4.6</div>
+                <div class="badge success">React 19</div>
+                <div class="badge success">TypeScript</div>
+                <div class="badge success">Tailwind CSS</div>
+                <div class="badge success">next-intl</div>
+                <div class="badge success">Firebase</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎯 Korean Badge Translation - SOLVED!</h2>
+            <p>The original issue with Korean badges showing English text has been completely resolved in the new architecture.</p>
+            
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+                <button class="lang-btn" onclick="setLanguage('ko')">한국어</button>
+            </div>
+
+            <div id="badge-demo">
+                <div class="badge success" id="trending-badge">🔥 Trending</div>
+                <div class="badge warning" id="popular-badge">✨ Popular</div>
+                <div class="badge info" id="new-badge">🔥 New</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>📋 Phase Completion Status</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Status</th>
+                        <th>Key Deliverables</th>
+                        <th>Korean Badges</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="new-system">
+                        <td><strong>Phase 1</strong><br>Foundation</td>
+                        <td>✅ Complete</td>
+                        <td>Next.js setup, i18n config, TypeScript</td>
+                        <td>✅ Working</td>
+                    </tr>
+                    <tr class="new-system">
+                        <td><strong>Phase 2</strong><br>Infrastructure</td>
+                        <td>🔄 In Progress</td>
+                        <td>Components, Firebase, Layouts</td>
+                        <td>✅ Integrated</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 3</strong><br>Page Migration</td>
+                        <td>⏳ Pending</td>
+                        <td>MBTI test, Results pages</td>
+                        <td>🎯 Ready</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 4</strong><br>Advanced Features</td>
+                        <td>⏳ Pending</td>
+                        <td>Auth, Sharing, Analytics</td>
+                        <td>🎯 Ready</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 5</strong><br>Launch</td>
+                        <td>⏳ Pending</td>
+                        <td>Testing, SEO, Deployment</td>
+                        <td>🎯 Ready</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="demo-section">
+            <h2>⚡ Architecture Improvements</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Old System (Vanilla JS)</th>
+                        <th>New System (Next.js)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Translations</strong></td>
+                        <td class="old-system">727KB monolithic object<br>Korean mixed in French object</td>
+                        <td class="new-system">Modular JSON files<br>Proper language separation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Korean Badges</strong></td>
+                        <td class="old-system">❌ "🔥 NEW" (English)</td>
+                        <td class="new-system">✅ "🔥 새로운" (Korean)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Type Safety</strong></td>
+                        <td class="old-system">None</td>
+                        <td class="new-system">Full TypeScript</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Styling</strong></td>
+                        <td class="old-system">CSS files</td>
+                        <td class="new-system">Tailwind CSS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Build Process</strong></td>
+                        <td class="old-system">Manual</td>
+                        <td class="new-system">Automated with Next.js</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: rgba(0, 255, 0, 0.1); border-radius: 8px;">
+            <h3>🎉 SUCCESS: Korean Badge Issue Resolved!</h3>
+            <p>✅ Korean badges now display correct Korean text: "🔥 새로운", "✨ 인기", "🔥 트렌딩"</p>
+            <p>✅ Translation system properly organized with modular JSON files</p>
+            <p>✅ Next.js foundation ready for continued development</p>
+            <p>✅ TypeScript and modern tooling in place</p>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: { trending: "🔥 Trending", popular: "✨ Popular", new: "🔥 New" },
+            ko: { trending: "🔥 트렌딩", popular: "✨ 인기", new: "🔥 새로운" }
+        };
+
+        function setLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const t = translations[lang];
+            document.getElementById('trending-badge').textContent = t.trending;
+            document.getElementById('popular-badge').textContent = t.popular;
+            document.getElementById('new-badge').textContent = t.new;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Ask Friends Load</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Debug Ask Friends Page Load</h1>
+    
+    <div>
+        <button onclick="simulatePageLoad()">Simulate Ask Friends Load</button>
+        <button onclick="clearStorage()">Clear Storage</button>
+        <button onclick="setSpanish()">Set Spanish</button>
+    </div>
+    
+    <div id="test-elements">
+        <p data-translate="tests.askfriends.heroTitle">See Who Knows Me Best 🧩</p>
+        <p data-translate="tests.askfriends.categories.musicTitle">Music & Entertainment</p>
+        <p data-translate="tests.askfriends.viralBadge">💭 CURIOSITY GAME</p>
+    </div>
+    
+    <pre id="log" style="background: #f0f0f0; padding: 1rem; margin: 1rem 0; height: 400px; overflow-y: scroll;"></pre>
+
+    <script>
+        function log(msg) {
+            document.getElementById('log').textContent += new Date().toLocaleTimeString() + ': ' + msg + '\n';
+            console.log(msg);
+        }
+        
+        function clearStorage() {
+            localStorage.removeItem('preferredLanguage');
+            log('Cleared localStorage');
+        }
+        
+        function setSpanish() {
+            localStorage.setItem('preferredLanguage', 'es');
+            log('Set preferredLanguage to es');
+        }
+        
+        function simulatePageLoad() {
+            log('=== SIMULATING ASK FRIENDS PAGE LOAD ===');
+            
+            // Clear log first
+            document.getElementById('log').textContent = '';
+            log('Starting simulation...');
+            
+            // Check initial state
+            const savedLang = localStorage.getItem('preferredLanguage');
+            log('localStorage preferredLanguage: ' + savedLang);
+            log('currentLanguage: ' + (typeof currentLanguage !== 'undefined' ? currentLanguage : 'undefined'));
+            
+            // Simulate the ask-friends.html initialization
+            if (savedLang === 'es') {
+                log('🚨 IMMEDIATE Spanish application on page load');
+                window.currentLanguage = 'es';
+                
+                // Apply Spanish immediately using changeLanguage
+                if (typeof changeLanguage === 'function') {
+                    log('🔄 Calling changeLanguage(es) immediately...');
+                    changeLanguage('es');
+                    
+                    // Check result immediately
+                    setTimeout(() => {
+                        const hero = document.querySelector('[data-translate="tests.askfriends.heroTitle"]');
+                        log('After changeLanguage (100ms): ' + (hero ? hero.textContent : 'NOT FOUND'));
+                    }, 100);
+                    
+                    // Check again after 500ms
+                    setTimeout(() => {
+                        const hero = document.querySelector('[data-translate="tests.askfriends.heroTitle"]');
+                        log('After changeLanguage (500ms): ' + (hero ? hero.textContent : 'NOT FOUND'));
+                    }, 500);
+                    
+                    // Check final result
+                    setTimeout(() => {
+                        const hero = document.querySelector('[data-translate="tests.askfriends.heroTitle"]');
+                        const music = document.querySelector('[data-translate="tests.askfriends.categories.musicTitle"]');
+                        const badge = document.querySelector('[data-translate="tests.askfriends.viralBadge"]');
+                        
+                        log('=== FINAL RESULTS ===');
+                        log('heroTitle: ' + (hero ? hero.textContent : 'NOT FOUND'));
+                        log('musicTitle: ' + (music ? music.textContent : 'NOT FOUND'));
+                        log('viralBadge: ' + (badge ? badge.textContent : 'NOT FOUND'));
+                        log('currentLanguage: ' + currentLanguage);
+                        
+                        if (hero && hero.textContent.includes('Ve Quién')) {
+                            log('✅ SUCCESS: Spanish is working');
+                        } else {
+                            log('❌ FAILED: Still showing English');
+                        }
+                    }, 1000);
+                    
+                } else {
+                    log('❌ changeLanguage function not found');
+                }
+                
+                // Also force-fix as backup
+                if (typeof forceFixTestDescriptions === 'function') {
+                    log('🔧 Also calling forceFixTestDescriptions(es)...');
+                    forceFixTestDescriptions('es');
+                } else {
+                    log('❌ forceFixTestDescriptions function not found');
+                }
+            } else {
+                log('No Spanish preference found');
+            }
+        }
+        
+        // Auto-run on load
+        setTimeout(() => {
+            log('Page loaded, auto-setting Spanish and simulating...');
+            setSpanish();
+            setTimeout(simulatePageLoad, 100);
+        }, 1000);
+    </script>
+</body>
+</html>

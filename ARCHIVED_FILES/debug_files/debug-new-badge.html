@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug NEW Badge Translation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Debug NEW Badge Translation Issue</h1>
+    <div id="status"></div>
+    
+    <!-- Test elements similar to the problematic one -->
+    <div class="test-section">
+        <h2>Test Elements:</h2>
+        <div class="test-badge trending" data-translate="tests.new">🔥 NEW</div>
+        <div class="test-badge" data-translate="tests.trending">🔥 TRENDING</div>  
+        <div class="test-badge" data-translate="tests.popular">✨ POPULAR</div>
+    </div>
+    
+    <div>
+        <button onclick="testTranslationSystem()">Test Translation System</button>
+        <button onclick="switchToKorean()">Switch to Korean</button>
+        <button onclick="debugBadgeElement()">Debug NEW Badge Element</button>
+    </div>
+    
+    <div id="debug-output"></div>
+    
+    <script src="script.js"></script>
+    <script>
+        function log(message) {
+            const output = document.getElementById('debug-output');
+            output.innerHTML += '<p>' + message + '</p>';
+            console.log(message);
+        }
+        
+        function testTranslationSystem() {
+            log('🔍 Testing translation system...');
+            log('changeLanguage function exists: ' + (typeof changeLanguage !== 'undefined'));
+            log('forceUpdateAllTranslations function exists: ' + (typeof forceUpdateAllTranslations !== 'undefined'));
+            log('translations object exists: ' + (typeof translations !== 'undefined'));
+            
+            if (typeof translations !== 'undefined' && translations.ko) {
+                log('Korean translations.ko exists: true');
+                log('Korean tests.new translation: "' + translations.ko['tests.new'] + '"');
+                log('Korean tests.trending translation: "' + translations.ko['tests.trending'] + '"');
+                log('Korean tests.popular translation: "' + translations.ko['tests.popular'] + '"');
+            }
+        }
+        
+        function switchToKorean() {
+            log('🇰🇷 Switching to Korean...');
+            if (typeof changeLanguage !== 'undefined') {
+                changeLanguage('ko');
+                setTimeout(() => {
+                    const newBadge = document.querySelector('[data-translate="tests.new"]');
+                    const trendingBadge = document.querySelector('[data-translate="tests.trending"]');
+                    const popularBadge = document.querySelector('[data-translate="tests.popular"]');
+                    
+                    log('After Korean switch:');
+                    log('NEW badge text: "' + (newBadge ? newBadge.textContent : 'NOT FOUND') + '"');
+                    log('TRENDING badge text: "' + (trendingBadge ? trendingBadge.textContent : 'NOT FOUND') + '"');
+                    log('POPULAR badge text: "' + (popularBadge ? popularBadge.textContent : 'NOT FOUND') + '"');
+                }, 2000);
+            } else {
+                log('❌ changeLanguage function not available');
+            }
+        }
+        
+        function debugBadgeElement() {
+            log('🔍 Debugging NEW badge element...');
+            const element = document.querySelector('[data-translate="tests.new"]');
+            if (element) {
+                log('Element found: true');
+                log('Element textContent: "' + element.textContent + '"');
+                log('Element innerHTML: "' + element.innerHTML + '"');
+                log('Element data-translate: "' + element.getAttribute('data-translate') + '"');
+                log('Element classList: ' + Array.from(element.classList).join(', '));
+                
+                // Try manual translation
+                if (typeof getNestedTranslation !== 'undefined' && typeof translations !== 'undefined' && translations.ko) {
+                    const translation = getNestedTranslation(translations.ko, 'tests.new');
+                    log('Manual getNestedTranslation result: "' + translation + '"');
+                    
+                    // Force update the element
+                    element.textContent = translation || '🔥 새로운';
+                    log('Manually updated element to: "' + element.textContent + '"');
+                }
+            } else {
+                log('❌ Element with data-translate="tests.new" not found');
+            }
+        }
+        
+        // Auto-run basic test on load
+        window.addEventListener('load', () => {
+            setTimeout(testTranslationSystem, 1000);
+        });
+    </script>
+</body>
+</html>

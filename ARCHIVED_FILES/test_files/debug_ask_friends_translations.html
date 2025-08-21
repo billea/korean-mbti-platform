@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Ask Friends Translations</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Translation Debug Test</h1>
+    
+    <div>
+        <button onclick="testLanguageSwitch()">Switch to Spanish</button>
+        <button onclick="testTranslations()">Test Translations</button>
+        <button onclick="debugTranslationKeys()">Debug Keys</button>
+    </div>
+    
+    <div id="test-elements">
+        <p data-translate="tests.askfriends.heroTitle">See Who Knows Me Best 🧩</p>
+        <p data-translate="tests.askfriends.categories.musicTitle">Music & Entertainment</p>
+        <p data-translate="tests.askfriends.viralBadge">💭 CURIOSITY GAME</p>
+    </div>
+    
+    <div id="debug-output" style="background: #f0f0f0; padding: 1rem; margin-top: 1rem;">
+        <h2>Debug Output:</h2>
+        <pre id="debug-text"></pre>
+    </div>
+
+    <script>
+        function log(message) {
+            const debugText = document.getElementById('debug-text');
+            debugText.textContent += message + '\n';
+            console.log(message);
+        }
+        
+        function testLanguageSwitch() {
+            log('=== Testing Language Switch ===');
+            log('Current language: ' + currentLanguage);
+            log('Translations available: ' + Object.keys(translations));
+            
+            // Try to switch to Spanish
+            if (typeof changeLanguage === 'function') {
+                log('Calling changeLanguage("es")...');
+                changeLanguage('es');
+                log('Language after switch: ' + currentLanguage);
+            } else {
+                log('ERROR: changeLanguage function not found!');
+            }
+        }
+        
+        function testTranslations() {
+            log('=== Testing Translations ===');
+            log('Current language: ' + currentLanguage);
+            
+            // Test if Spanish translations exist
+            const spanishTranslations = translations.es;
+            if (spanishTranslations) {
+                log('✅ Spanish translations found');
+                log('Has askfriends: ' + !!spanishTranslations.askfriends);
+                
+                if (spanishTranslations.askfriends) {
+                    log('Ask friends keys: ' + Object.keys(spanishTranslations.askfriends));
+                    log('Has categories: ' + !!spanishTranslations.askfriends.categories);
+                    
+                    if (spanishTranslations.askfriends.categories) {
+                        log('Category keys: ' + Object.keys(spanishTranslations.askfriends.categories));
+                    }
+                }
+            } else {
+                log('❌ Spanish translations not found!');
+            }
+        }
+        
+        function debugTranslationKeys() {
+            log('=== Debugging Translation Keys ===');
+            
+            const testKeys = [
+                'tests.askfriends.heroTitle',
+                'tests.askfriends.categories.musicTitle',
+                'tests.askfriends.viralBadge'
+            ];
+            
+            testKeys.forEach(key => {
+                const value = getNestedTranslation(translations.es, key);
+                log(`Key: ${key} = ${value}`);
+            });
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            log('=== Page Loaded ===');
+            log('Script.js loaded: ' + (typeof translations !== 'undefined'));
+            log('Current language: ' + (typeof currentLanguage !== 'undefined' ? currentLanguage : 'undefined'));
+            
+            // Test if initializeLanguage exists
+            if (typeof initializeLanguage === 'function') {
+                log('initializeLanguage function found');
+                initializeLanguage();
+            } else {
+                log('initializeLanguage function not found');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test [object Object] Fix</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .working { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .broken { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Test [object Object] Fix</h1>
+    
+    <div class="test">
+        <h2>Testing Problem Cards That Showed [object Object]</h2>
+        <button onclick="testProblemCards()">🇨🇳 Test Problem Cards Fix</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function testProblemCards() {
+            console.log('\\n=== TESTING [OBJECT OBJECT] FIX ===');
+            
+            // Set to Chinese
+            currentLanguage = 'zh';
+            console.log('Current language set to:', currentLanguage);
+            
+            const problemCards = [
+                { key: 'tests.adhd', expected: '注意力和能量风格' },
+                { key: 'tests.anxiety', expected: '压力管理风格' },
+                { key: 'tests.depression', expected: '情绪调节风格' },
+                { key: 'tests.strengths', expected: '性格优势 (VIA)' },
+                { key: 'tests.disc', expected: 'DISC人格测试' }
+            ];
+            
+            let results = '<h3>🔧 [object Object] Fix Results</h3><pre>';
+            let allFixed = true;
+            
+            problemCards.forEach(({ key, expected }) => {
+                const result = t(key);
+                const isString = typeof result === 'string';
+                const isCorrect = result === expected;
+                const isObject = typeof result === 'object';
+                
+                let status;
+                if (isObject) {
+                    status = '❌ STILL [OBJECT]';
+                    allFixed = false;
+                } else if (isCorrect) {
+                    status = '✅ FIXED';
+                } else if (isString) {
+                    status = '⚠️ STRING BUT WRONG';
+                } else {
+                    status = '❌ OTHER TYPE';
+                    allFixed = false;
+                }
+                
+                results += `${status} "${key}"\\n`;
+                results += `   Type:     ${typeof result}\\n`;
+                results += `   Expected: "${expected}"\\n`;
+                results += `   Got:      "${result}"\\n\\n`;
+                
+                console.log(`${status} ${key} - Type: ${typeof result}, Expected: "${expected}", Got: "${result}"`);
+            });
+            
+            // Test working cards for comparison
+            const workingCards = [
+                { key: 'tests.mbti.title', expected: '16种人格类型 (MBTI)' },
+                { key: 'tests.bigfive.title', expected: '大五人格测试' },
+                { key: 'tests.meta.socialApp', expected: '📱 社交' }
+            ];
+            
+            results += '\\nCONTROL GROUP (should still work):\\n';
+            workingCards.forEach(({ key, expected }) => {
+                const result = t(key);
+                const isCorrect = result === expected;
+                const status = isCorrect ? '✅ WORKING' : '❌ BROKEN';
+                results += `${status} "${key}" = "${result}"\\n`;
+            });
+            
+            results += '\\n=== SUMMARY ===\\n';
+            results += allFixed ? '🎉 ALL [OBJECT OBJECT] ISSUES FIXED!' : '⚠️ SOME ISSUES REMAIN';
+            results += '</pre>';
+            
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run test on load
+        setTimeout(() => testProblemCards(), 1000);
+    </script>
+</body>
+</html>

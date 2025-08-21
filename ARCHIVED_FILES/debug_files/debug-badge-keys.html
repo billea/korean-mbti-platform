@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge Key Structure Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-lang { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        .badge { padding: 8px 15px; margin: 5px; border-radius: 15px; display: inline-block; }
+        .key-path { font-family: monospace; background: #f5f5f5; padding: 2px 5px; border-radius: 3px; }
+        .actual { background: #e8f5e8; }
+        .expected { background: #fff3cd; }
+        button { padding: 8px 15px; margin: 5px; border: none; border-radius: 5px; cursor: pointer; background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Badge Key Structure Debug</h1>
+    
+    <div id="debug-info">Loading...</div>
+    
+    <button onclick="testLanguage('ko')">Test Korean</button>
+    <button onclick="testLanguage('es')">Test Spanish</button>
+    <button onclick="testLanguage('fr')">Test French</button>
+    <button onclick="testLanguage('en')">Test English</button>
+    
+    <div id="results"></div>
+
+    <script src="./translation-engine.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('debug-info').innerHTML = '✅ TranslationEngine loaded';
+                showInitialStructure();
+            }, 1000);
+        });
+        
+        function showInitialStructure() {
+            const info = document.getElementById('debug-info');
+            const currentLang = window.i18n ? window.i18n.currentLanguage : 'unknown';
+            const translations = window.i18n ? window.i18n.translations : {};
+            
+            info.innerHTML = `
+                <h3>Current State:</h3>
+                <p>Current Language: <strong>${currentLang}</strong></p>
+                <p>Loaded Languages: <strong>[${Object.keys(translations).join(', ')}]</strong></p>
+                <h4>Testing badge keys in current language (${currentLang}):</h4>
+                <div>
+                    <span class="key-path">tests.new</span> → "${window.i18n ? window.i18n.t('tests.new') : 'N/A'}"<br>
+                    <span class="key-path">tests.trending</span> → "${window.i18n ? window.i18n.t('tests.trending') : 'N/A'}"<br>
+                    <span class="key-path">tests.popular</span> → "${window.i18n ? window.i18n.t('tests.popular') : 'N/A'}"
+                </div>
+            `;
+        }
+        
+        function testLanguage(lang) {
+            if (!window.i18n) {
+                alert('TranslationEngine not loaded');
+                return;
+            }
+            
+            window.i18n.setLanguage(lang).then(() => {
+                const results = document.getElementById('results');
+                const translations = window.i18n.translations[lang];
+                
+                const newKey = window.i18n.t('tests.new');
+                const trendingKey = window.i18n.t('tests.trending');
+                const popularKey = window.i18n.t('tests.popular');
+                
+                // Check if the translations exist at the right path
+                const testsObj = translations?.tests;
+                const directNew = testsObj?.new;
+                const directTrending = testsObj?.trending;
+                const directPopular = testsObj?.popular;
+                
+                results.innerHTML = `
+                    <div class="test-lang">
+                        <h3>🌍 ${lang.toUpperCase()} Language Test Results</h3>
+                        
+                        <h4>Via TranslationEngine.t() method:</h4>
+                        <div class="actual">
+                            <div class="badge">tests.new → "${newKey}"</div>
+                            <div class="badge">tests.trending → "${trendingKey}"</div>
+                            <div class="badge">tests.popular → "${popularKey}"</div>
+                        </div>
+                        
+                        <h4>Direct object access:</h4>
+                        <div class="expected">
+                            <div class="badge">translations.${lang}.tests.new → "${directNew || 'MISSING'}"</div>
+                            <div class="badge">translations.${lang}.tests.trending → "${directTrending || 'MISSING'}"</div>
+                            <div class="badge">translations.${lang}.tests.popular → "${directPopular || 'MISSING'}"</div>
+                        </div>
+                        
+                        <h4>Status:</h4>
+                        <div>
+                            New: ${newKey !== 'tests.new' ? '✅ Translated' : '❌ Using fallback key'}<br>
+                            Trending: ${trendingKey !== 'tests.trending' ? '✅ Translated' : '❌ Using fallback key'}<br>
+                            Popular: ${popularKey !== 'tests.popular' ? '✅ Translated' : '❌ Using fallback key'}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Selector Test</title>
+    <script src="translation-loader.js"></script>
+</head>
+<body>
+    <h1>Language Selector Test</h1>
+    
+    <div>
+        <h2 data-translate="ui.welcome">Welcome</h2>
+        <p data-translate="ui.description">This is a test page</p>
+    </div>
+    
+    <div>
+        <button onclick="changeLanguage('ko')">Korean</button>
+        <button onclick="changeLanguage('es')">Spanish</button>
+        <button onclick="changeLanguage('en')">English</button>
+    </div>
+    
+    <div id="status"></div>
+    
+    <script>
+        let statusDiv = document.getElementById('status');
+        
+        function updateStatus(message) {
+            statusDiv.innerHTML += message + '<br>';
+            console.log(message);
+        }
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            updateStatus('🚀 Page loaded, checking translation system...');
+            
+            // Wait a bit for translation loader to initialize
+            setTimeout(async () => {
+                updateStatus(`TranslationLoader exists: ${typeof window.translationLoader !== 'undefined'}`);
+                updateStatus(`ChangeLanguage exists: ${typeof window.changeLanguage === 'function'}`);
+                updateStatus(`Current language: ${window.currentLanguage}`);
+                
+                if (window.translations) {
+                    updateStatus(`Available languages: ${Object.keys(window.translations)}`);
+                }
+                
+                // Test Korean language switch
+                if (typeof window.changeLanguage === 'function') {
+                    updateStatus('🇰🇷 Testing Korean switch...');
+                    await window.changeLanguage('ko');
+                    
+                    const welcomeText = document.querySelector('[data-translate="ui.welcome"]').textContent;
+                    updateStatus(`Welcome text after Korean: ${welcomeText}`);
+                    
+                    // Switch back to English
+                    updateStatus('🇺🇸 Testing English switch...');
+                    await window.changeLanguage('en');
+                    
+                    const englishText = document.querySelector('[data-translate="ui.welcome"]').textContent;
+                    updateStatus(`Welcome text after English: ${englishText}`);
+                } else {
+                    updateStatus('❌ changeLanguage function not available');
+                }
+                
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

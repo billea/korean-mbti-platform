@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="ui.pageTitle">PersonaTests - Free Personality Tests | MBTI, Big Five & More</title>
+    <meta name="description" content="Discover your personality with reliable tests! MBTI, Big Five, Love Language & more. Get detailed premium reports for $2.99. Check your vibe! ✨">
+    <meta name="keywords" content="personality test, MBTI test, Big Five test, love language test, free personality quiz, relationship compatibility, career test">
+    <meta property="og:title" content="PersonaTests - Free Personality Tests That Actually Slap">
+    <meta property="og:description" content="Discover your personality with PersonaTests! Free MBTI, Big Five, and trending tests. Check your vibe today! ✨">
+    <meta property="og:url" content="https://personatests.com">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://personatests.com/personatests-social.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PersonaTests - What's Your Personality?">
+    <meta name="twitter:description" content="Take scientifically-backed personality tests and discover your true self! ✨">
+    <meta name="twitter:image" content="https://personatests.com/personatests-social.png">
+    <link rel="canonical" href="https://personatests.com">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+    
+    <!-- Fix for form inputs -->
+    <style>
+        #registerPassword, #loginPassword, .form-input {
+            display: block !important;
+            width: 100% !important;
+            padding: 12px !important;
+            border: 2px solid #e2e8f0 !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            box-sizing: border-box !important;
+            background: white !important;
+            color: #1e293b !important;
+            font-family: inherit !important;
+            margin: 0 !important;
+            min-height: 48px !important;
+        }
+        
+        /* Language Selector Styles */
+        .language-selector {
+            position: relative;
+            display: flex !important;
+            align-items: center;
+        }
+        
+        .language-dropdown {
+            position: relative;
+        }
+        
+        .language-btn {
+            display: flex !important;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.2) !important;
+            border: 2px solid rgba(255, 255, 255, 0.4) !important;
+            border-radius: 8px;
+            color: white !important;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            min-width: 80px;
+            justify-content: center;
+            z-index: 999;
+            position: relative;
+        }
+        
+        .language-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .flag-icon {
+            font-size: 16px;
+        }
+        
+        .dropdown-arrow {
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .language-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            min-width: 180px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #1e293b;
+            font-size: 14px;
+        }
+        
+        .language-option:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .language-option:first-child {
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        
+        .language-option:last-child {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+        
+        /* Ensure language selector is visible in navigation */
+        .nav-menu .language-selector {
+            margin-left: 15px;
+        }
+        
+        /* MOBILE-FIRST NAVIGATION REDESIGN */
+        @media (max-width: 768px) {
+            /* NUCLEAR OPTION: Force hide ALL desktop language elements */
+            .desktop-language-flags,
+            .desktop-language-flags *,
+            div[style*="display: flex"],
+            div[style*="gap: 12px"] {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                position: absolute !important;
+                left: -99999px !important;
+                width: 0 !important;
+                height: 0 !important;
+                overflow: hidden !important;
+                pointer-events: none !important;
+            }
+            
+            /* Mobile Header - MINIMAL DESIGN */
+            .header {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 9999 !important;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.98), rgba(118, 75, 162, 0.98)) !important;
+                backdrop-filter: blur(25px) !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+                box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15) !important;
+                height: 56px !important;
+                min-height: 56px !important;
+                max-height: 56px !important;
+            }
+            
+            .nav {
+                height: 56px !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            
+            .nav-container {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 0 1rem !important;
+                height: 56px !important;
+                min-height: 56px !important;
+                max-height: 56px !important;
+                position: relative !important;
+            }
+            
+            /* Compact Logo */
+            .logo {
+                flex-shrink: 0 !important;
+            }
+            
+            .logo h1 {
+                font-size: 1.1rem !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-weight: 800 !important;
+                color: white !important;
+                line-height: 1.2 !important;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+            /* Modern Hamburger Menu */
+            .mobile-menu-toggle {
+                display: flex !important;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 32px !important;
+                height: 32px !important;
+                cursor: pointer;
+                background: rgba(255, 255, 255, 0.1) !important;
+                border-radius: 6px !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                transition: all 0.3s ease !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .mobile-menu-toggle:hover {
+                background: rgba(255, 255, 255, 0.2) !important;
+                transform: scale(1.05) !important;
+            }
+            
+            .mobile-menu-toggle span {
+                display: block !important;
+                width: 18px !important;
+                height: 2px !important;
+                background: white !important;
+                margin: 1.5px 0 !important;
+                border-radius: 1px !important;
+                transition: all 0.3s ease !important;
+            }
+            
+            .mobile-menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(4px, 4px) !important;
+            }
+            
+            .mobile-menu-toggle.active span:nth-child(2) {
+                opacity: 0 !important;
+            }
+            
+            .mobile-menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px) !important;
+            }
+            
+            /* HIDE DESKTOP MENU - SHOW ONLY HAMBURGER */
+            .nav-menu {
+                display: none !important;
+                position: fixed !important;
+                top: 56px !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                background: rgba(102, 126, 234, 0.98) !important;
+                backdrop-filter: blur(25px) !important;
+                flex-direction: column !important;
+                padding: 2rem 1rem !important;
+                margin: 0 !important;
+                z-index: 9998 !important;
+                overflow-y: auto !important;
+                transform: translateX(-100%) !important;
+                transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+            }
+            
+            .nav-menu.active {
+                display: flex !important;
+                transform: translateX(0) !important;
+            }
+            
+            .nav-menu li {
+                margin: 0 0 0.75rem 0 !important;
+                width: 100% !important;
+                list-style: none !important;
+            }
+            
+            .nav-menu a {
+                display: block !important;
+                padding: 1rem 1.25rem !important;
+                font-size: 1.1rem !important;
+                font-weight: 600 !important;
+                color: white !important;
+                text-decoration: none !important;
+                border-radius: 12px !important;
+                background: rgba(255, 255, 255, 0.08) !important;
+                border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                transition: all 0.3s ease !important;
+                text-align: left !important;
+            }
+            
+            .nav-menu a:hover,
+            .nav-menu a.active {
+                background: rgba(255, 255, 255, 0.2) !important;
+                transform: translateX(5px) !important;
+                border-color: rgba(255, 255, 255, 0.4) !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+            }
+            
+            /* Special Navigation Items - Consistent Styling */
+            .nav-special-item {
+                display: block !important;
+                padding: 1rem 1.25rem !important;
+                font-size: 1.1rem !important;
+                font-weight: 600 !important;
+                color: white !important;
+                text-decoration: none !important;
+                border-radius: 12px !important;
+                background: rgba(255, 255, 255, 0.08) !important;
+                border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                transition: all 0.3s ease !important;
+                text-align: left !important;
+                min-height: 56px !important;
+                box-sizing: border-box !important;
+            }
+            
+            .nav-special-item:hover {
+                background: rgba(255, 255, 255, 0.2) !important;
+                transform: translateX(5px) !important;
+                border-color: rgba(255, 255, 255, 0.4) !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+            }
+            
+            /* Specific styling for Ask Friends feature */
+            .nav-ask-friends {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3)) !important;
+                border-color: rgba(59, 130, 246, 0.4) !important;
+            }
+            
+            .nav-ask-friends:hover {
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(147, 51, 234, 0.5)) !important;
+                border-color: rgba(59, 130, 246, 0.6) !important;
+            }
+            
+            /* Specific styling for How Do People See Me feature */
+            .nav-360 {
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(34, 197, 94, 0.3)) !important;
+                border-color: rgba(16, 185, 129, 0.4) !important;
+            }
+            
+            .nav-360:hover {
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(34, 197, 94, 0.5)) !important;
+                border-color: rgba(16, 185, 129, 0.6) !important;
+            }
+            
+            /* Sleek Mobile Language Selector */
+            .mobile-language-selector {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 10000 !important;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95)) !important;
+                backdrop-filter: blur(25px) !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+                padding: 0.75rem 1rem !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 0.75rem !important;
+                box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.15) !important;
+            }
+            
+            .mobile-language-selector label {
+                font-size: 0.8rem !important;
+                font-weight: 600 !important;
+                color: rgba(255, 255, 255, 0.9) !important;
+                margin: 0 !important;
+                white-space: nowrap !important;
+            }
+            
+            .mobile-language-selector select {
+                background: rgba(255, 255, 255, 0.95) !important;
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;
+                border-radius: 20px !important;
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.85rem !important;
+                font-weight: 600 !important;
+                color: #1e293b !important;
+                cursor: pointer !important;
+                outline: none !important;
+                min-width: 120px !important;
+                max-width: 150px !important;
+                transition: all 0.3s ease !important;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+            }
+            
+            .mobile-language-selector select:focus {
+                border-color: rgba(255, 255, 255, 0.6) !important;
+                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2) !important;
+            }
+            
+            /* Optimized Body Padding */
+            body {
+                padding-top: 56px !important;
+                padding-bottom: 60px !important;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-language-selector {
+                display: none !important;
+            }
+            
+            .desktop-language-flags {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+                margin: 1rem auto 0 auto;
+                padding: 15px 20px;
+                background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+                border-radius: 25px;
+                backdrop-filter: blur(20px);
+                border: 2px solid rgba(255,255,255,0.3);
+                box-shadow: 0 10px 40px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.4);
+                position: relative;
+                overflow: hidden;
+                width: fit-content;
+                max-width: 800px;
+            }
+            
+            .mobile-menu-toggle {
+                display: none !important;
+            }
+            
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex !important;
+            }
+        }
+        
+        /* Dropdown Navigation Styles */
+        .nav-dropdown {
+            position: relative;
+        }
+        
+        .dropdown-arrow {
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            min-width: 250px;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        .nav-dropdown:hover .nav-submenu {
+            display: block;
+        }
+        
+        .nav-dropdown:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .submenu-category {
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .submenu-category a {
+            font-weight: 600;
+            color: #4f46e5;
+            padding: 0.75rem 1.5rem;
+            display: block;
+        }
+        
+        .nav-subsubmenu {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0 0;
+        }
+        
+        .nav-subsubmenu li a {
+            padding: 0.5rem 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+            display: block;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-subsubmenu li a:hover {
+            background: #f8fafc;
+            color: #4f46e5;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            /* NUCLEAR OPTION: Force hide ALL desktop language elements */
+            .desktop-language-flags,
+            .desktop-language-flags *,
+            div[style*="display: flex"],
+            div[style*="gap: 12px"] {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                position: absolute !important;
+                left: -99999px !important;
+                width: 0 !important;
+                height: 0 !important;
+                overflow: hidden !important;
+                pointer-events: none !important;
+            }
+            
+            /* Consistent 56px mobile header */
+            .header {
+                height: 56px !important;
+                min-height: 56px !important;
+                max-height: 56px !important;
+            }
+            
+            .nav {
+                height: 56px !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            
+            .nav-container {
+                height: 56px !important;
+                min-height: 56px !important;
+                max-height: 56px !important;
+                padding: 0 1rem !important;
+            }
+            
+            .logo h1 {
+                font-size: 1.1rem !important;
+                line-height: 1.2 !important;
+                font-weight: 800 !important;
+                color: white !important;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+            /* Show hamburger menu on mobile */
+            .mobile-menu-toggle {
+                display: flex !important;
+            }
+            
+            /* Hide desktop menu on mobile */
+            .nav-menu {
+                display: none !important;
+            }
+            
+            .nav-menu.active {
+                display: flex !important;
+            }
+            
+            /* Optimized body padding */
+            body {
+                padding-top: 56px !important;
+                padding-bottom: 60px !important;
+            }
+            
+            /* Mobile language selector at bottom */
+            .mobile-language-selector {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 10000 !important;
+                padding: 1rem !important;
+                backdrop-filter: blur(20px) !important;
+                background: rgba(102, 126, 234, 0.95) !important;
+            }
+            
+            /* Mobile dropdown adjustments */
+            .nav-submenu {
+                position: static !important;
+                display: none !important;
+                box-shadow: none !important;
+                border: none !important;
+                background: rgba(255, 255, 255, 0.1) !important;
+                border-radius: 8px !important;
+                margin: 0.5rem 0 !important;
+            }
+            
+            .nav-dropdown.active .nav-submenu {
+                display: block !important;
+            }
+            
+            .nav-subsubmenu li a {
+                color: rgba(255, 255, 255, 0.8) !important;
+                padding: 0.5rem 1rem !important;
+            }
+            
+            .nav-subsubmenu li a:hover {
+                background: rgba(255, 255, 255, 0.1) !important;
+                color: white !important;
+            }
+            
+            /* Mobile Category Navigation */
+            .category-nav {
+                margin: 1.5rem 0 2rem 0 !important;
+                gap: 0.75rem !important;
+                padding: 0 1rem !important;
+            }
+            
+            .category-btn {
+                padding: 0.75rem 1.5rem !important;
+                font-size: 1rem !important;
+                margin: 0 !important;
+                border-radius: 10px !important;
+            }
+        }
+        
+        /* Category Navigation Styles */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0 3rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            background: rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .category-header {
+            text-align: center;
+            margin: 2rem 0 3rem 0;
+        }
+        
+        .category-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 800;
+        }
+        
+        .category-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .category-section {
+            margin: 4rem 0;
+        }
+        
+        /* Add extra spacing for the couples section */
+        .couples-section {
+            margin-top: 6rem;
+            padding-top: 4rem;
+        }
+        
+        /* Footer Grid Responsive */
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+                text-align: center;
+            }
+            
+            .footer-grid > div:first-child {
+                text-align: center;
+            }
+            
+            .footer-grid > div:first-child p {
+                max-width: none !important;
+            }
+        }
+        
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 2rem !important;
+            }
+            
+            .footer-grid > div:first-child {
+                grid-column: 1 / -1;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* Modal System Organization */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: slideIn 0.3s ease;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .close {
+            color: white;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .close:hover {
+            color: #f093fb;
+            transform: scale(1.1);
+        }
+        
+        .modal-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn-home {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-home:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        /* Premium Modal Special Styling */
+        .premium-modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+        }
+        
+        .premium-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .premium-modal-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+        
+        .premium-modal-header {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .premium-modal-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .premium-modal-body {
+            background: white;
+            border-radius: 0 0 25px 25px;
+            padding: 2rem;
+        }
+        
+        /* Modal Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { 
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Modal Content Areas */
+        .auth-content,
+        .profile-content,
+        .couples-content,
+        .results-content,
+        .test-content {
+            padding: 2rem;
+        }
+        
+        /* Progress Container */
+        .progress-container {
+            padding: 1rem 2rem;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+        
+        /* Mobile Modal Optimization */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 1rem;
+                max-height: 95vh;
+            }
+            
+            .modal-header {
+                padding: 1rem 1.5rem;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .auth-content,
+            .profile-content,
+            .couples-content,
+            .results-content,
+            .test-content {
+                padding: 1.5rem;
+            }
+            
+            .modal-controls {
+                gap: 0.5rem;
+            }
+            
+            .btn-home {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Test Question Styles */
+        .question {
+            margin-bottom: 2rem;
+        }
+        
+        .question h3 {
+            color: #1e293b;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #f8fafc;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateY(-1px);
+        }
+        
+        .option.selected {
+            border-color: #667eea;
+            background: #eef2ff;
+        }
+        
+        .option input[type="radio"] {
+            margin: 0;
+            accent-color: #667eea;
+        }
+        
+        .option span {
+            color: #374151;
+            font-size: 1rem;
+            line-height: 1.5;
+            flex: 1;
+        }
+        
+        .test-navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+        
+        .nav-btn.prev {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        
+        .nav-btn.prev:hover:not(:disabled) {
+            background: #e2e8f0;
+            color: #475569;
+        }
+        
+        .nav-btn.next {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .nav-btn.next:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Mobile Question Styles */
+        @media (max-width: 768px) {
+            .question h3 {
+                font-size: 1.1rem;
+            }
+            
+            .option {
+                padding: 0.875rem;
+            }
+            
+            .option span {
+                font-size: 0.95rem;
+            }
+            
+            .test-navigation {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                padding: 1rem;
+            }
+        }
+    </style>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HHZDGS6XVX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HHZDGS6XVX');
+        
+        // Track test starts
+        function trackTestStart(testType) {
+            gtag('event', 'test_start', {
+                'test_type': testType,
+                'page_title': document.title
+            });
+        }
+        
+        // Track test completions
+        function trackTestComplete(testType, result) {
+            gtag('event', 'test_complete', {
+                'test_type': testType,
+                'result': result
+            });
+        }
+        
+        // Track premium report views
+        function trackPremiumView(testType) {
+            gtag('event', 'premium_view', {
+                'test_type': testType,
+                'currency': 'USD',
+                'value': 2.99
+            });
+        }
+    </script>
+    
+    <!-- Google AdSense Verification Code -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4191191359538611"
+         crossorigin="anonymous"></script>
+    
+    <!-- Stripe Payment Processing -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- Firebase Integration -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <!-- EmailJS for Premium Report Delivery -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1>✨ PersonaTests</h1>
+                </div>
+                
+                <!-- Mobile Menu Toggle Button (Hidden on Desktop) -->
+                <div class="mobile-menu-toggle" onclick="toggleMobileMenu()" style="display: block;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <ul class="nav-menu" id="mobileMenu">
+                    <li><a href="#home" onclick="scrollToTop()" data-translate="nav.home">Home</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#tests" data-translate="nav.tests">Tests <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-submenu">
+                            <li class="submenu-category">
+                                <a href="#tests" onclick="showCategory('know-yourself')" data-translate="nav.knowYourself">🧠 Know Yourself</a>
+                                <ul class="nav-subsubmenu">
+                                    <li><a href="#tests" onclick="startTest('mbti')" data-translate="tests.mbti">MBTI Test</a></li>
+                                    <li><a href="#tests" onclick="startTest('bigfive')" data-translate="tests.bigfive">Big Five Test</a></li>
+                                    <li><a href="#tests" onclick="startTest('eq')" data-translate="tests.eq">Emotional Intelligence</a></li>
+                                    <li><a href="#tests" onclick="startTest('iq')" data-translate="tests.iq">Brain Teaser Challenge</a></li>
+                                    <li><a href="#tests" onclick="startTest('disc')" data-translate="tests.disc">DISC Personality</a></li>
+                                    <li><a href="#tests" onclick="startTest('conflict')" data-translate="tests.conflict">Conflict Style</a></li>
+                                    <li><a href="#tests" onclick="startTest('via')" data-translate="tests.strengths">Character Strengths</a></li>
+                                    <li><a href="#tests" onclick="startTest('adhd')" data-translate="tests.adhd">Focus & Energy Style</a></li>
+                                    <li><a href="#tests" onclick="startTest('anxiety')" data-translate="tests.anxiety">Stress Management</a></li>
+                                    <li><a href="#tests" onclick="startTest('depression')" data-translate="tests.depression">Emotional Regulation</a></li>
+                                    <li><a href="#tests" onclick="startTest('lovelanguage')" data-translate="tests.love">Love Language Test</a></li>
+                                    <li><a href="#tests" onclick="startTest('petPersonality')" data-translate="tests.pet">Pet Personality Match</a></li>
+                                    <li><a href="#tests" onclick="startTest('careerPersonality')" data-translate="tests.career">Career Path Test</a></li>
+                                    <li><a href="#tests" onclick="startTest('relationshipStyle')" data-translate="tests.relationship">Relationship Style</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu-category">
+                                <a href="#tests" onclick="showCategory('others-see-me')" data-translate="nav.howOthersSeeMe">👥 How Others See Me</a>
+                                <ul class="nav-subsubmenu">
+                                    <li><a href="ask-friends.html" data-translate="tests.askfriends.title">🤝 See Who Knows Me Best</a></li>
+                                    <li><a href="360-assessment.html" data-translate="tests.360assessment.title">🎯 360 Perception About Me</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#couples" data-translate="nav.couples">Couples</a></li>
+                    <li><a href="about.html" data-translate="nav.about">About</a></li>
+                    <li><a href="#blog" data-translate="nav.blog">Blog</a></li>
+                    <li><a href="contact.html" data-translate="nav.contact">Contact</a></li>
+                    <li><a href="#" onclick="showProfile()" id="profileLink" style="display: block;" data-translate="nav.results">My Results</a></li>
+                    <li><a href="#" onclick="showLogin()" id="loginLink" data-translate="nav.login">Login ✨</a></li>
+                    <li><a href="#" onclick="logout()" id="logoutLink" style="display: block;" data-translate="nav.logout">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- Desktop Language Selector (COMPLETELY HIDDEN ON MOBILE) - Now Below Navigation -->
+        <div class="desktop-language-flags">
+                <!-- Subtle animated background -->
+                <div style="
+                    position: absolute;
+                    top: 0; left: 0; right: 0; bottom: 0;
+                    background: linear-gradient(45deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08), rgba(240,147,251,0.08));
+                    opacity: 0.5;
+                    pointer-events: none;
+                "></div>
+                        
+                        <!-- English (US) -->
+                        <div class="flag-wrapper" onclick="changeLanguage('en')" style="
+                            position: relative;
+                            cursor: pointer;
+                            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            transform-origin: center;
+                            z-index: 2;
+                        " 
+                        onmouseover="
+                            this.style.transform='scale(1.2) translateY(-2px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 4px 12px rgba(0,0,0,0.3)) brightness(1.1)';
+                        " 
+                        onmouseout="
+                            this.style.transform='scale(1) translateY(0px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1)';
+                        "
+                        title="English">
+                            <svg class="flag-svg" viewBox="0 0 24 18" width="28" height="21" style="
+                                border-radius: 4px;
+                                border: 1px solid rgba(255,255,255,0.4);
+                                background: white;
+                                transition: all 0.3s ease;
+                                filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1);
+                            ">
+                                <rect width="24" height="18" fill="#B22234"/>
+                                <rect width="24" height="1.38" y="1.38" fill="white"/>
+                                <rect width="24" height="1.38" y="4.15" fill="white"/>
+                                <rect width="24" height="1.38" y="6.92" fill="white"/>
+                                <rect width="24" height="1.38" y="9.69" fill="white"/>
+                                <rect width="24" height="1.38" y="12.46" fill="white"/>
+                                <rect width="24" height="1.38" y="15.23" fill="white"/>
+                                <rect width="10" height="9.69" fill="#3C3B6E"/>
+                                <g fill="white">
+                                    <circle cx="1.5" cy="1.2" r="0.3"/>
+                                    <circle cx="3" cy="1.2" r="0.3"/>
+                                    <circle cx="4.5" cy="1.2" r="0.3"/>
+                                    <circle cx="6" cy="1.2" r="0.3"/>
+                                    <circle cx="7.5" cy="1.2" r="0.3"/>
+                                    <circle cx="9" cy="1.2" r="0.3"/>
+                                    <circle cx="2.25" cy="2.4" r="0.3"/>
+                                    <circle cx="3.75" cy="2.4" r="0.3"/>
+                                    <circle cx="5.25" cy="2.4" r="0.3"/>
+                                    <circle cx="6.75" cy="2.4" r="0.3"/>
+                                    <circle cx="8.25" cy="2.4" r="0.3"/>
+                                    <circle cx="1.5" cy="3.6" r="0.3"/>
+                                    <circle cx="3" cy="3.6" r="0.3"/>
+                                    <circle cx="4.5" cy="3.6" r="0.3"/>
+                                    <circle cx="6" cy="3.6" r="0.3"/>
+                                    <circle cx="7.5" cy="3.6" r="0.3"/>
+                                    <circle cx="9" cy="3.6" r="0.3"/>
+                                    <circle cx="2.25" cy="4.8" r="0.3"/>
+                                    <circle cx="3.75" cy="4.8" r="0.3"/>
+                                    <circle cx="5.25" cy="4.8" r="0.3"/>
+                                    <circle cx="6.75" cy="4.8" r="0.3"/>
+                                    <circle cx="8.25" cy="4.8" r="0.3"/>
+                                    <circle cx="1.5" cy="6" r="0.3"/>
+                                    <circle cx="3" cy="6" r="0.3"/>
+                                    <circle cx="4.5" cy="6" r="0.3"/>
+                                    <circle cx="6" cy="6" r="0.3"/>
+                                    <circle cx="7.5" cy="6" r="0.3"/>
+                                    <circle cx="9" cy="6" r="0.3"/>
+                                    <circle cx="2.25" cy="7.2" r="0.3"/>
+                                    <circle cx="3.75" cy="7.2" r="0.3"/>
+                                    <circle cx="5.25" cy="7.2" r="0.3"/>
+                                    <circle cx="6.75" cy="7.2" r="0.3"/>
+                                    <circle cx="8.25" cy="7.2" r="0.3"/>
+                                    <circle cx="1.5" cy="8.4" r="0.3"/>
+                                    <circle cx="3" cy="8.4" r="0.3"/>
+                                    <circle cx="4.5" cy="8.4" r="0.3"/>
+                                    <circle cx="6" cy="8.4" r="0.3"/>
+                                    <circle cx="7.5" cy="8.4" r="0.3"/>
+                                    <circle cx="9" cy="8.4" r="0.3"/>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Spanish -->
+                        <div class="flag-wrapper" onclick="changeLanguage('es')" style="
+                            position: relative;
+                            cursor: pointer;
+                            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            transform-origin: center;
+                            z-index: 2;
+                        " 
+                        onmouseover="
+                            this.style.transform='scale(1.2) translateY(-2px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 4px 12px rgba(0,0,0,0.3)) brightness(1.1)';
+                        " 
+                        onmouseout="
+                            this.style.transform='scale(1) translateY(0px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1)';
+                        "
+                        title="Español">
+                            <svg class="flag-svg" viewBox="0 0 24 18" width="28" height="21" style="
+                                border-radius: 4px;
+                                border: 1px solid rgba(255,255,255,0.4);
+                                background: white;
+                                transition: all 0.3s ease;
+                                filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1);
+                            ">
+                                <rect width="24" height="18" fill="#AA151B"/>
+                                <rect width="24" height="9" y="4.5" fill="#F1BF00"/>
+                            </svg>
+                        </div>
+
+                        <!-- French -->
+                        <div class="flag-wrapper" onclick="changeLanguage('fr')" style="
+                            position: relative;
+                            cursor: pointer;
+                            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            transform-origin: center;
+                            z-index: 2;
+                        " 
+                        onmouseover="
+                            this.style.transform='scale(1.2) translateY(-2px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 4px 12px rgba(0,0,0,0.3)) brightness(1.1)';
+                        " 
+                        onmouseout="
+                            this.style.transform='scale(1) translateY(0px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1)';
+                        "
+                        title="Français">
+                            <svg class="flag-svg" viewBox="0 0 24 18" width="28" height="21" style="
+                                border-radius: 4px;
+                                border: 1px solid rgba(255,255,255,0.4);
+                                background: white;
+                                transition: all 0.3s ease;
+                                filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1);
+                            ">
+                                <rect width="8" height="18" fill="#002395"/>
+                                <rect width="8" height="18" x="8" fill="white"/>
+                                <rect width="8" height="18" x="16" fill="#ED2939"/>
+                            </svg>
+                        </div>
+
+                        <!-- German -->
+                        <div class="flag-wrapper" onclick="changeLanguage('de')" style="
+                            position: relative;
+                            cursor: pointer;
+                            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            transform-origin: center;
+                            z-index: 2;
+                        " 
+                        onmouseover="
+                            this.style.transform='scale(1.2) translateY(-2px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 4px 12px rgba(0,0,0,0.3)) brightness(1.1)';
+                        " 
+                        onmouseout="
+                            this.style.transform='scale(1) translateY(0px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1)';
+                        "
+                        title="Deutsch">
+                            <svg class="flag-svg" viewBox="0 0 24 18" width="28" height="21" style="
+                                border-radius: 4px;
+                                border: 1px solid rgba(255,255,255,0.4);
+                                background: white;
+                                transition: all 0.3s ease;
+                                filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1);
+                            ">
+                                <rect width="24" height="6" fill="#000"/>
+                                <rect width="24" height="6" y="6" fill="#DD0000"/>
+                                <rect width="24" height="6" y="12" fill="#FFCE00"/>
+                            </svg>
+                        </div>
+
+                        <!-- Italian -->
+                        <div class="flag-wrapper" onclick="changeLanguage('it')" style="
+                            position: relative;
+                            cursor: pointer;
+                            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            transform-origin: center;
+                            z-index: 2;
+                        " 
+                        onmouseover="
+                            this.style.transform='scale(1.2) translateY(-2px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 4px 12px rgba(0,0,0,0.3)) brightness(1.1)';
+                        " 
+                        onmouseout="
+                            this.style.transform='scale(1) translateY(0px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1)';
+                        "
+                        title="Italiano">
+                            <svg class="flag-svg" viewBox="0 0 24 18" width="28" height="21" style="
+                                border-radius: 4px;
+                                border: 1px solid rgba(255,255,255,0.4);
+                                background: white;
+                                transition: all 0.3s ease;
+                                filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1);
+                            ">
+                                <rect width="8" height="18" fill="#009246"/>
+                                <rect width="8" height="18" x="8" fill="white"/>
+                                <rect width="8" height="18" x="16" fill="#CE2B37"/>
+                            </svg>
+                        </div>
+
+                        <!-- Portuguese -->
+                        <div class="flag-wrapper" onclick="changeLanguage('pt')" style="
+                            position: relative;
+                            cursor: pointer;
+                            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            transform-origin: center;
+                            z-index: 2;
+                        " 
+                        onmouseover="
+                            this.style.transform='scale(1.2) translateY(-2px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 4px 12px rgba(0,0,0,0.3)) brightness(1.1)';
+                        " 
+                        onmouseout="
+                            this.style.transform='scale(1) translateY(0px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1)';
+                        "
+                        title="Português">
+                            <svg class="flag-svg" viewBox="0 0 24 18" width="28" height="21" style="
+                                border-radius: 4px;
+                                border: 1px solid rgba(255,255,255,0.4);
+                                background: white;
+                                transition: all 0.3s ease;
+                                filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1);
+                            ">
+                                <rect width="24" height="18" fill="#FF0000"/>
+                                <rect width="9.6" height="18" fill="#006600"/>
+                                <circle cx="9.6" cy="9" r="3" fill="#FFD700" stroke="#000" stroke-width="0.2"/>
+                                <circle cx="9.6" cy="9" r="2.2" fill="white"/>
+                                <rect width="1.5" height="1.5" x="8.85" y="8.25" fill="#FF0000"/>
+                            </svg>
+                        </div>
+
+                        <!-- Japanese -->
+                        <div class="flag-wrapper" onclick="changeLanguage('ja')" style="
+                            position: relative;
+                            cursor: pointer;
+                            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            transform-origin: center;
+                            z-index: 2;
+                        " 
+                        onmouseover="
+                            this.style.transform='scale(1.2) translateY(-2px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 4px 12px rgba(0,0,0,0.3)) brightness(1.1)';
+                        " 
+                        onmouseout="
+                            this.style.transform='scale(1) translateY(0px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1)';
+                        "
+                        title="日本語">
+                            <svg class="flag-svg" viewBox="0 0 24 18" width="28" height="21" style="
+                                border-radius: 4px;
+                                border: 1px solid rgba(255,255,255,0.4);
+                                background: white;
+                                transition: all 0.3s ease;
+                                filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1);
+                            ">
+                                <rect width="24" height="18" fill="white"/>
+                                <circle cx="12" cy="9" r="4.5" fill="#BC002D"/>
+                            </svg>
+                        </div>
+
+                        <!-- Korean -->
+                        <div class="flag-wrapper" onclick="changeLanguage('ko')" style="
+                            position: relative;
+                            cursor: pointer;
+                            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            transform-origin: center;
+                            z-index: 2;
+                        " 
+                        onmouseover="
+                            this.style.transform='scale(1.2) translateY(-2px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 4px 12px rgba(0,0,0,0.3)) brightness(1.1)';
+                        " 
+                        onmouseout="
+                            this.style.transform='scale(1) translateY(0px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1)';
+                        "
+                        title="한국어">
+                            <svg class="flag-svg" viewBox="0 0 24 18" width="28" height="21" style="
+                                border-radius: 4px;
+                                border: 1px solid rgba(255,255,255,0.4);
+                                background: white;
+                                transition: all 0.3s ease;
+                                filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1);
+                            ">
+                                <rect width="24" height="18" fill="white"/>
+                                <!-- Circle 20% bigger, rotated 180°, and flipped left-right -->
+                                <g transform="translate(12,9) rotate(180) scale(-1,1)">
+                                    <circle cx="0" cy="0" r="3.6" fill="#CD2E3A"/>
+                                    <path d="M 0 -3.6 A 3.6 3.6 0 0 0 0 3.6 A 1.8 1.8 0 0 1 0 0 A 1.8 1.8 0 0 0 0 -3.6" fill="#0047A0"/>
+                                </g>
+                                <g stroke="#000" stroke-width="0.6" fill="none">
+                                    <line x1="4.5" y1="3.5" x2="6.5" y2="3.5"/>
+                                    <line x1="4.5" y1="4.5" x2="6.5" y2="4.5"/>
+                                    <line x1="4.5" y1="5.5" x2="6.5" y2="5.5"/>
+                                    <line x1="17.5" y1="12.5" x2="18.5" y2="12.5"/>
+                                    <line x1="19.5" y1="12.5" x2="20.5" y2="12.5"/>
+                                    <line x1="17.5" y1="13.5" x2="18.5" y2="13.5"/>
+                                    <line x1="19.5" y1="13.5" x2="20.5" y2="13.5"/>
+                                    <line x1="17.5" y1="14.5" x2="18.5" y2="14.5"/>
+                                    <line x1="19.5" y1="14.5" x2="20.5" y2="14.5"/>
+                                    <line x1="17.5" y1="3.5" x2="18.5" y2="3.5"/>
+                                    <line x1="19.5" y1="3.5" x2="20.5" y2="3.5"/>
+                                    <line x1="17.5" y1="4.5" x2="20.5" y2="4.5"/>
+                                    <line x1="17.5" y1="5.5" x2="18.5" y2="5.5"/>
+                                    <line x1="19.5" y1="5.5" x2="20.5" y2="5.5"/>
+                                    <line x1="4.5" y1="12.5" x2="6.5" y2="12.5"/>
+                                    <line x1="4.5" y1="13.5" x2="5.5" y2="13.5"/>
+                                    <line x1="5.5" y1="13.5" x2="6.5" y2="13.5"/>
+                                    <line x1="4.5" y1="14.5" x2="6.5" y2="14.5"/>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Chinese -->
+                        <div class="flag-wrapper" onclick="changeLanguage('zh')" style="
+                            position: relative;
+                            cursor: pointer;
+                            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            transform-origin: center;
+                            z-index: 2;
+                        " 
+                        onmouseover="
+                            this.style.transform='scale(1.2) translateY(-2px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 4px 12px rgba(0,0,0,0.3)) brightness(1.1)';
+                        " 
+                        onmouseout="
+                            this.style.transform='scale(1) translateY(0px)'; 
+                            this.querySelector('.flag-svg').style.filter='drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1)';
+                        "
+                        title="中文">
+                            <svg class="flag-svg" viewBox="0 0 24 18" width="28" height="21" style="
+                                border-radius: 4px;
+                                border: 1px solid rgba(255,255,255,0.4);
+                                background: white;
+                                transition: all 0.3s ease;
+                                filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)) brightness(1);
+                            ">
+                                <rect width="24" height="18" fill="#DE2910"/>
+                                <g fill="#FFDE00">
+                                    <polygon points="4,3 4.6,4.8 6.8,4.8 5.1,6.1 5.7,7.9 4,6.6 2.3,7.9 2.9,6.1 1.2,4.8 3.4,4.8"/>
+                                    <polygon points="8,2 8.3,2.6 9,2.6 8.5,3 8.8,3.6 8,3.2 7.2,3.6 7.5,3 7,2.6 7.7,2.6"/>
+                                    <polygon points="9.5,4 9.8,4.6 10.5,4.6 10,5 10.3,5.6 9.5,5.2 8.7,5.6 9,5 8.5,4.6 9.2,4.6"/>
+                                    <polygon points="9.5,7 9.8,7.6 10.5,7.6 10,8 10.3,8.6 9.5,8.2 8.7,8.6 9,8 8.5,7.6 9.2,7.6"/>
+                                    <polygon points="8,9 8.3,9.6 9,9.6 8.5,10 8.8,10.6 8,10.2 7.2,10.6 7.5,10 7,9.6 7.7,9.6"/>
+                                </g>
+                            </svg>
+                        </div>
+        </div>
+        
+        <!-- Mobile Language Selector (Hidden on Desktop, Outside Nav Container) -->
+        <div class="mobile-language-selector" style="display: none; width: 100%; background: rgba(255, 255, 255, 0.1); border-top: 1px solid rgba(255, 255, 255, 0.2); padding: 1rem;">
+            <div style="text-align: center;">
+                <label style="display: block; color: white; font-size: 14px; margin-bottom: 0.5rem; font-weight: 500;">🌍 Choose Language</label>
+                <select onchange="changeLanguage(this.value)" style="background: rgba(255, 255, 255, 0.9); border: 2px solid rgba(255, 255, 255, 0.4); border-radius: 8px; color: #1e293b; padding: 12px 16px; font-size: 16px; font-weight: 500; cursor: pointer; outline: none; width: 100%; max-width: 300px;">
+                    <option value="en" style="background: white; color: #1e293b;">🇺🇸 English</option>
+                    <option value="es" style="background: white; color: #1e293b;">🇪🇸 Español</option>
+                    <option value="fr" style="background: white; color: #1e293b;">🇫🇷 Français</option>
+                    <option value="de" style="background: white; color: #1e293b;">🇩🇪 Deutsch</option>
+                    <option value="it" style="background: white; color: #1e293b;">🇮🇹 Italiano</option>
+                    <option value="pt" style="background: white; color: #1e293b;">🇵🇹 Português</option>
+                    <option value="ja" style="background: white; color: #1e293b;">🇯🇵 日本語</option>
+                    <option value="ko" style="background: white; color: #1e293b;">🇰🇷 한국어</option>
+                    <option value="zh" style="background: white; color: #1e293b;">🇨🇳 中文</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-background">
+                <div class="floating-elements">
+                    <div class="floating-icon" style="--delay: 0s; --x: 10%; --y: 20%;">🧠</div>
+                    <div class="floating-icon" style="--delay: 1s; --x: 85%; --y: 15%;">✨</div>
+                    <div class="floating-icon" style="--delay: 2s; --x: 15%; --y: 70%;">🎯</div>
+                    <div class="floating-icon" style="--delay: 1.5s; --x: 80%; --y: 65%;">💡</div>
+                    <div class="floating-icon" style="--delay: 0.5s; --x: 50%; --y: 85%;">🚀</div>
+                    <div class="floating-icon" style="--delay: 2.5s; --x: 90%; --y: 45%;">⭐</div>
+                </div>
+                <div class="hero-particles"></div>
+            </div>
+            
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="badge-icon">🔥</span>
+                        <span data-translate="hero.badge">Most Accurate Personality Tests</span>
+                    </div>
+                    
+                    <h1 class="hero-title" data-translate="hero.title">
+                        <span class="title-line-1">Discover Your</span>
+                        <span class="title-line-2">True Self</span>
+                        <span class="title-accent">✨</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle" data-translate="hero.subtitle">
+                        Uncover your personality, strengths, and potential with our <strong>scientifically-backed tests</strong> available in 9 languages worldwide.
+                    </p>
+                    
+                    <div class="hero-cta">
+                        <a href="#tests" class="cta-primary">
+                            <span data-translate="hero.startJourney">Start Your Journey</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label" data-translate="hero.stats.tests">Personality Tests</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">9</div>
+                            <div class="stat-label" data-translate="hero.stats.languages">Languages</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">Free</div>
+                            <div class="stat-label" data-translate="hero.stats.access">Always Free</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label" data-translate="hero.stats.private">Private</div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-features">
+                        <div class="feature-tag">
+                            <span class="feature-icon">🔬</span>
+                            <span data-translate="hero.features.scientific">Science-Based</span>
+                        </div>
+                        <div class="feature-tag">
+                            <span class="feature-icon">⚡</span>
+                            <span data-translate="hero.features.instant">Instant Results</span>
+                        </div>
+                        <div class="feature-tag">
+                            <span class="feature-icon">🎯</span>
+                            <span data-translate="hero.features.personalized">100% Personalized</span>
+                        </div>
+                        <div class="feature-tag">
+                            <span class="feature-icon">🔒</span>
+                            <span data-translate="hero.features.private">Completely Private</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section id="tests" class="tests-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title" data-translate="tests.sectionTitle">Discover Your Complete Picture ✨</h2>
+                    <div class="category-nav">
+                        <button class="category-btn active" onclick="showCategory('all')" data-translate="categories.all">All</button>
+                        <button class="category-btn" onclick="showCategory('know-yourself')" data-translate="categories.knowYourselfTitle">🧠 Know Yourself</button>
+                        <button class="category-btn" onclick="showCategory('others-see-me')" data-translate="categories.howOthersSeeTitle">👥 How Others See Me</button>
+                    </div>
+                </div>
+                
+                <!-- Know Yourself Tests -->
+                <div class="category-section" id="knowYourselfSection">
+                    <div class="category-header">
+                        <h3 class="category-title" data-translate="categories.knowYourselfTitle">🧠 Know Yourself</h3>
+                        <p class="category-subtitle" data-translate="categories.knowYourselfSubtitle">Discover your inner personality, strengths, and unique traits through scientifically-backed assessments</p>
+                    </div>
+                    <div class="tests-grid" id="testsContainer">
+                        <div class="test-card" data-test="mbti" data-category="know-yourself">
+                            <div class="test-badge trending" data-translate="tests.trending">🔥 Trending</div>
+                            <div class="test-icon">🧠</div>
+                            <h3 data-translate="tests.mbti.title">16 Personalities (MBTI)</h3>
+                            <p data-translate="tests.mbti.description">Discover your personality type with the most popular framework. Find out if you're an INFP, ENTP, or one of the other 14 types!</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration">⏱️ 8 min</span>
+                                <span data-translate="tests.meta.accurate">🎯 Highly Accurate</span>
+                                <span data-translate="tests.meta.scienceBased">🔬 Science-Based</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('mbti')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="bigfive" data-category="know-yourself">
+                            <div class="test-badge featured" data-translate="tests.popular">✨ Popular</div>
+                            <div class="test-icon">⭐</div>
+                            <h3 data-translate="tests.bigfive.title">Big Five Personality</h3>
+                            <p data-translate="tests.bigfive.description">The gold standard in personality psychology. Measure your openness, conscientiousness, extraversion, agreeableness, and neuroticism.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration10">⏱️ 10 min</span>
+                                <span data-translate="tests.meta.researchGrade">🎯 Research-Grade</span>
+                                <span data-translate="tests.meta.mostAccurate">🏆 Most Accurate</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('bigfive')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="lovelanguage" data-category="know-yourself">
+                            <div class="test-icon">💕</div>
+                            <h3 data-translate="tests.lovelanguage.title">Love Language Test</h3>
+                            <p data-translate="tests.lovelanguage.description">Discover how you prefer to give and receive love. Perfect for improving relationships and understanding your partner better.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration5">⏱️ 5 min</span>
+                                <span data-translate="tests.meta.relationship">💝 Relationship</span>
+                                <span data-translate="tests.meta.couplesFriendly">❤️ Couples Friendly</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('lovelanguage')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="iq" data-category="know-yourself">
+                            <div class="test-icon">🧩</div>
+                            <h3 data-translate="tests.iq.title">Brain Teaser Challenge</h3>
+                            <p data-translate="tests.iq.description">Fun brain puzzles and logic questions to test your cognitive abilities. Not a real IQ test - just for entertainment!</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration15">⏱️ 15 min</span>
+                                <span data-translate="tests.meta.funGame">🎮 Fun Game</span>
+                                <span data-translate="tests.meta.brainTraining">🧠 Brain Training</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('iq')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="emotionalintelligence" data-category="know-yourself">
+                            <div class="test-icon">🎭</div>
+                            <h3 data-translate="tests.ei.title">Emotional Intelligence</h3>
+                            <p data-translate="tests.ei.description">Measure your ability to understand and manage emotions - both your own and others'. Essential for success in life and work.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration12">⏱️ 12 min</span>
+                                <span data-translate="tests.meta.careerFocused">🎯 Career Focused</span>
+                                <span data-translate="tests.meta.leadership">💼 Leadership</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('eq')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="adhd" data-category="know-yourself">
+                            <div class="test-icon">⚡</div>
+                            <h3 data-translate="tests.adhd">ADHD Self-Assessment</h3>
+                            <p data-translate="tests.adhdDesc">A quick self-reflection tool to explore attention and focus patterns. For entertainment only - not a medical diagnosis.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration7">⏱️ 7 min</span>
+                                <span data-translate="tests.meta.selfReflection">🔍 Self-Reflection</span>
+                                <span data-translate="tests.meta.notMedical">⚠️ Not Medical</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('adhd')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="anxiety" data-category="know-yourself">
+                            <div class="test-icon">🌿</div>
+                            <h3 data-translate="tests.anxiety">Anxiety Self-Check</h3>
+                            <p data-translate="tests.anxietyDesc">Explore your stress and worry patterns with this self-reflection tool. Remember: this is for awareness, not diagnosis.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration6">⏱️ 6 min</span>
+                                <span data-translate="tests.meta.wellness">🧘 Wellness</span>
+                                <span data-translate="tests.meta.notMedical">⚠️ Not Medical</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('anxiety')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="depression" data-category="know-yourself">
+                            <div class="test-icon">🌻</div>
+                            <h3 data-translate="tests.depression">Mood Self-Reflection</h3>
+                            <p data-translate="tests.depressionDesc">A gentle self-check tool to reflect on your mood patterns. For personal insight only - not a substitute for professional help.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration8">⏱️ 8 min</span>
+                                <span data-translate="tests.meta.moodTracking">🌈 Mood Tracking</span>
+                                <span data-translate="tests.meta.notMedical">⚠️ Not Medical</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('depression')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="strengths" data-category="know-yourself">
+                            <div class="test-icon">💪</div>
+                            <h3 data-translate="tests.strengths">Character Strengths</h3>
+                            <p data-translate="tests.strengthsDesc">Discover your top character strengths and learn how to use them for personal growth and success in various life areas.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration10">⏱️ 10 min</span>
+                                <span data-translate="tests.meta.strengthsBased">🌟 Strengths-Based</span>
+                                <span data-translate="tests.meta.personalGrowth">🎯 Personal Growth</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('via')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="petpersonality" data-category="know-yourself">
+                            <div class="test-icon">🐾</div>
+                            <h3 data-translate="tests.pet">Pet Personality Match</h3>
+                            <p data-translate="tests.petDesc">Discover which pet matches your personality! Are you a loyal dog person, independent cat lover, or something more exotic? Find your perfect animal companion!</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration5">⏱️ 5 min</span>
+                                <span data-translate="tests.meta.fun">😄 Fun</span>
+                                <span data-translate="tests.meta.insights">💡 Insights</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('petPersonality')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="careerpath" data-category="know-yourself">
+                            <div class="test-icon">🚀</div>
+                            <h3 data-translate="tests.careerpath.title">Career Path Finder</h3>
+                            <p data-translate="tests.careerpath.description">Find career paths that match your personality, interests, and values. Get personalized recommendations for your next move.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration12">⏱️ 12 min</span>
+                                <span data-translate="tests.meta.careerFocus">💼 Career Focus</span>
+                                <span data-translate="tests.meta.personalized">🎯 Personalized</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('careerPersonality')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="relationshipstyle" data-category="know-yourself">
+                            <div class="test-icon">💑</div>
+                            <h3 data-translate="tests.relationshipstyle.title">Relationship Style</h3>
+                            <p data-translate="tests.relationshipstyle.description">Understand your attachment style and relationship patterns. Improve your connections with romantic partners and friends.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration8">⏱️ 8 min</span>
+                                <span data-translate="tests.meta.relationships">💕 Relationships</span>
+                                <span data-translate="tests.meta.connection">🤝 Connection</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('relationshipStyle')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                        
+                        <div class="test-card" data-test="disc" data-category="know-yourself">
+                            <div class="test-badge featured" data-translate="tests.popular">✨ Popular</div>
+                            <div class="test-icon">💼</div>
+                            <h3 data-translate="tests.disc">DISC Personality Assessment</h3>
+                            <p data-translate="tests.discDesc">Discover your communication style! Are you Dominant, Influential, Steady, or Conscientious? Perfect for understanding work and relationship dynamics! 💼</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.duration10">⏱️ 10 min</span>
+                                <span data-translate="tests.meta.careerFocused">🎯 Career Focused</span>
+                                <span data-translate="tests.meta.teamwork">🤝 Teamwork</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="startTest('disc')" data-translate="tests.takeTest">Take Test</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- How Others See Me Tests -->
+                <div class="category-section" id="othersSeeSection">
+                    <div class="category-header">
+                        <h3 class="category-title" data-translate="categories.howOthersSeeTitle">👥 How Others See Me</h3>
+                        <p class="category-subtitle" data-translate="categories.howOthersSubtitle">Get honest feedback and discover how friends, family, and colleagues really perceive you</p>
+                    </div>
+                    <div class="tests-grid">
+                        <div class="test-card" data-category="others-see-me">
+                            <div class="test-badge trending" data-translate="tests.new">🔥 NEW</div>
+                            <div class="test-icon">🤝</div>
+                            <h3 data-translate="tests.askfriends.title">See Who Knows Me Best</h3>
+                            <p data-translate="tests.askfriends.description">Create questions about yourself, provide YOUR answers, then see who knows you best! Friends will try to match your answers and get scored on how well they know you.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.setup5">⏱️ 5 min setup</span>
+                                <span data-translate="tests.meta.socialApp">📱 Social</span>
+                                <span data-translate="tests.meta.viral">🔥 Viral</span>
+                            </div>
+                            <a href="ask-friends.html" class="btn btn-primary" data-translate="tests.createQuestions">Create Questions</a>
+                        </div>
+                        
+                        <div class="test-card" data-category="others-see-me">
+                            <div class="test-badge featured" data-translate="tests.popular">🔥 POPULAR</div>
+                            <div class="test-icon">🔄</div>
+                            <h3 data-translate="tests.360assessment.title">360 Perception About Me</h3>
+                            <p data-translate="tests.360assessment.description">Serious, multi-perspective feedback for growth and understanding. Get honest insights from friends, family, and colleagues.</p>
+                            <div class="test-meta">
+                                <span data-translate="tests.meta.setup10">⏱️ 10 min setup</span>
+                                <span data-translate="tests.meta.socialPeople">👥 Social</span>
+                                <span data-translate="tests.meta.detailed">📊 Detailed</span>
+                            </div>
+                            <a href="360-assessment.html" class="btn btn-primary" data-translate="tests.startAssessment">Ask My People</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Couples Section -->
+        <section id="couples" class="couples-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="couples.title">Couple Compatibility ❤️</h2>
+                <p class="section-subtitle" data-translate="couples.subtitle">Take tests individually, then connect with your partner to discover your relationship dynamics and compatibility insights! 💕</p>
+                
+                <div class="tests-grid">
+                    <div class="test-card" data-category="couples">
+                        <div class="test-badge featured" data-translate="tests.connect">💝 CONNECT</div>
+                        <div class="test-icon">👫</div>
+                        <h3 data-translate="couples.shareResults">Share Your Results</h3>
+                        <p data-translate="couples.shareDesc">After taking any test, get a unique sharing ID to connect with your partner and compare your vibes!</p>
+                        <div class="test-meta">
+                            <span data-translate="tests.meta.couples">💕 Couples</span>
+                            <span data-translate="tests.meta.instant">⚡ Instant</span>
+                            <span data-translate="tests.meta.fun">😄 Fun</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="showShareResults()" data-translate="couples.shareButton">Connect With Partner</button>
+                    </div>
+                    
+                    <div class="test-card" data-category="couples">
+                        <div class="test-badge trending" data-translate="tests.popular">✨ Popular</div>
+                        <div class="test-icon">💖</div>
+                        <h3 data-translate="couples.compatibility">Compatibility Analysis</h3>
+                        <p data-translate="couples.compatibilityDesc">Get detailed insights into your relationship dynamics, communication styles, and areas of harmony or growth!</p>
+                        <div class="test-meta">
+                            <span data-translate="tests.meta.detailed">📊 Detailed</span>
+                            <span data-translate="tests.meta.insights">💡 Insights</span>
+                            <span data-translate="tests.meta.relationship">💝 Relationship</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="showCompatibilityAnalysis()" data-translate="couples.compatibilityButton">View Our Match</button>
+                    </div>
+                    
+                    <div class="test-card" data-category="couples">
+                        <div class="test-badge featured" data-translate="tests.growth">🌱 GROWTH</div>
+                        <div class="test-icon">🌟</div>
+                        <h3 data-translate="couples.growth">Relationship Growth</h3>
+                        <p data-translate="couples.growthDesc">Discover tips and strategies to strengthen your bond based on both of your personality types and results!</p>
+                        <div class="test-meta">
+                            <span data-translate="tests.meta.personalized">🎯 Personalized</span>
+                            <span data-translate="tests.meta.guidance">📝 Guidance</span>
+                            <span data-translate="tests.meta.improvement">📈 Improvement</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="showRelationshipGrowth()" data-translate="couples.growthButton">Grow Together</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AdSense Banner Ad - Removed temporarily for approval -->
+        <div class="ad-placeholder" style="text-align: center; margin: 3rem 0; background: #f8fafc; padding: 2rem; border: 2px dashed #e2e8f0; border-radius: 8px;">
+            <p style="color: #64748b; font-style: italic;">Ad space reserved - Will display after AdSense approval</p>
+        </div>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="whyChoose.title">Why Choose PersonaTests? ✨</h2>
+                <div class="tests-grid">
+                    <div class="test-card">
+                        <div class="test-badge featured" data-translate="whyChoose.scientific">🔬 SCIENTIFIC</div>
+                        <div class="test-icon">🔬</div>
+                        <h3 data-translate="whyChoose.scientific">Actually Scientific</h3>
+                        <p data-translate="whyChoose.scientificDesc">Our tests are based on real psychology research, not just random questions. We're not playing around! 🧠</p>
+                        <div class="test-meta">
+                            <span data-translate="whyChoose.researchBased">📚 Research-Based</span>
+                            <span data-translate="whyChoose.validatedMethods">🎯 Validated Methods</span>
+                            <span data-translate="whyChoose.psychologyDriven">🧠 Psychology-Driven</span>
+                        </div>
+                    </div>
+                    <div class="test-card">
+                        <div class="test-badge trending" data-translate="whyChoose.instant">⚡ INSTANT</div>
+                        <div class="test-icon">⚡</div>
+                        <h3 data-translate="whyChoose.instant">Instant Results</h3>
+                        <p data-translate="whyChoose.instantDesc">Get your personality breakdown immediately. No waiting, no delays, just pure instant gratification! ⚡</p>
+                        <div class="test-meta">
+                            <span data-translate="whyChoose.immediate">⚡ Immediate</span>
+                            <span data-translate="whyChoose.fastProcessing">🚀 Fast Processing</span>
+                            <span data-translate="whyChoose.realTimeAnalysis">📊 Real-Time Analysis</span>
+                        </div>
+                    </div>
+                    <div class="test-card">
+                        <div class="test-badge featured" data-translate="whyChoose.safe">🔒 SECURE</div>
+                        <div class="test-icon">🔒</div>
+                        <h3 data-translate="whyChoose.safe">Your Secrets Are Safe</h3>
+                        <p data-translate="whyChoose.safeDesc">We keep your answers private. No selling your data, no weird emails. Just you and your results! 🔒</p>
+                        <div class="test-meta">
+                            <span data-translate="whyChoose.privacyFirst">🔒 Privacy First</span>
+                            <span data-translate="whyChoose.dataProtection">🛡️ Data Protection</span>
+                            <span data-translate="whyChoose.noSpam">✨ No Spam</span>
+                        </div>
+                    </div>
+                    <div class="test-card">
+                        <div class="test-badge trending" data-translate="whyChoose.everywhere">📱 MOBILE</div>
+                        <div class="test-icon">📱</div>
+                        <h3 data-translate="whyChoose.everywhere">Works Everywhere</h3>
+                        <p data-translate="whyChoose.everywhereDesc">Take tests on your phone, laptop, tablet - literally anywhere you want to discover your personality! 📱</p>
+                        <div class="test-meta">
+                            <span data-translate="whyChoose.mobileFriendly">📱 Mobile Friendly</span>
+                            <span data-translate="whyChoose.crossPlatform">💻 Cross-Platform</span>
+                            <span data-translate="whyChoose.anyDevice">🌐 Any Device</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog/Resources Section -->
+        <section id="blog" class="blog-section" style="background: #f8fafc; padding: 4rem 0;">
+            <div class="container">
+                <h2 class="section-title" style="color: #1e293b;" data-translate="blog.title">Psychology Insights & Tips 📚</h2>
+                <p class="section-subtitle" style="color: #64748b;" data-translate="blog.subtitle">Learn about personality psychology, self-improvement, and relationship insights</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                    
+                    <article class="test-card">
+                        <div class="test-icon">🧠</div>
+                        <h3>Understanding Your MBTI Type</h3>
+                        <p>Discover how the 16 personality types framework can help you understand your preferences in how you perceive the world and make decisions. Learn about cognitive functions and type development.</p>
+                        <div class="test-meta">
+                            <span>Cognitive Functions</span>
+                            <span>Personality Development</span>
+                            <span>Type Dynamics</span>
+                        </div>
+                    </article>
+                    
+                    <article class="test-card">
+                        <div class="test-icon">💝</div>
+                        <h3>The Science of Emotional Intelligence</h3>
+                        <p>Explore how emotional intelligence impacts your relationships, career success, and overall well-being. Learn practical strategies to develop your EQ skills and emotional awareness.</p>
+                        <div class="test-meta">
+                            <span>Self-Awareness</span>
+                            <span>Empathy</span>
+                            <span>Social Skills</span>
+                        </div>
+                    </article>
+                    
+                    <article class="test-card">
+                        <div class="test-icon">🤝</div>
+                        <h3>Building Better Relationships</h3>
+                        <p>Learn how understanding personality differences can strengthen your relationships. Discover communication strategies, conflict resolution techniques, and compatibility insights.</p>
+                        <div class="test-meta">
+                            <span>Communication</span>
+                            <span>Compatibility</span>
+                            <span>Conflict Resolution</span>
+                        </div>
+                    </article>
+                    
+                    <article class="test-card">
+                        <div class="test-icon">💼</div>
+                        <h3>Career Alignment & Growth</h3>
+                        <p>Discover how your personality type influences your ideal work environment, leadership style, and career satisfaction. Find roles that align with your natural strengths and preferences.</p>
+                        <div class="test-meta">
+                            <span>Career Matching</span>
+                            <span>Leadership Styles</span>
+                            <span>Work Preferences</span>
+                        </div>
+                    </article>
+                    
+                    <article class="test-card">
+                        <div class="test-icon">🌱</div>
+                        <h3>Personal Development Journey</h3>
+                        <p>Use personality insights to guide your self-improvement efforts. Learn about growth areas, stress management, and how to leverage your unique strengths for personal success.</p>
+                        <div class="test-meta">
+                            <span>Self-Improvement</span>
+                            <span>Stress Management</span>
+                            <span>Strengths Development</span>
+                        </div>
+                    </article>
+                    
+                    <article class="test-card">
+                        <div class="test-icon">🧘</div>
+                        <h3>Mental Health & Personality</h3>
+                        <p>Understand the connection between personality and mental well-being. Learn about coping strategies, resilience building, and when personality insights can support (but never replace) professional help.</p>
+                        <div class="test-meta">
+                            <span>Well-being</span>
+                            <span>Coping Strategies</span>
+                            <span>Professional Support</span>
+                        </div>
+                    </article>
+                    
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <p style="color: #64748b; font-style: italic;" data-translate="blog.coming_soon">More psychology articles and insights coming soon! ✨</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Test Modal -->
+    <div id="testModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="testTitle">Personality Test</h2>
+                <div class="modal-controls">
+                    <button class="btn-home" onclick="exitToHome()" title="Exit to Home">🏠 Home</button>
+                    <span class="close" onclick="closeTest()" title="Exit Test">&times;</span>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <span id="progressText" class="progress-text">Question 1 of 60</span>
+            </div>
+            <div id="testContent" class="test-content">
+                <!-- Test questions will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content results-modal">
+            <div class="modal-header">
+                <h2>Your Test Results</h2>
+                <span class="close" onclick="closeResults()">&times;</span>
+            </div>
+            <div id="resultsContent" class="results-content">
+                <!-- Results will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Register Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="authTitle">Login to Save Your Results ✨</h2>
+                <span class="close" onclick="closeLogin()">&times;</span>
+            </div>
+            <div class="auth-content">
+                <div id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="loginEmail" style="font-weight: bold; color: #1e293b; margin-bottom: 8px; display: block; font-size: 14px;">📧 Email Address</label>
+                        <input type="email" id="loginEmail" name="loginEmail" placeholder="your@email.com" required style="padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 16px; display: block;">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" style="font-weight: bold; color: #1e293b; margin-bottom: 8px; display: block; font-size: 14px;">🔒 Password</label>
+                        <input type="password" id="loginPassword" name="loginPassword" placeholder="Enter your password" required style="padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 16px; display: block;">
+                    </div>
+                    <button class="btn btn-primary" onclick="login()">Login & Save My Results ✨</button>
+                    <p class="auth-switch">New here? <a href="#" onclick="switchToRegister()">Create an account</a></p>
+                </div>
+                
+                <div id="registerForm" class="auth-form" style="display: block;">
+                    <div class="form-group">
+                        <label for="registerName" style="font-weight: bold; color: #1e293b; margin-bottom: 8px; display: block; font-size: 14px;">👤 Full Name</label>
+                        <input type="text" id="registerName" name="registerName" placeholder="Enter your full name" required style="padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 16px; display: block;">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerAge" style="font-weight: bold; color: #1e293b; margin-bottom: 8px; display: block; font-size: 14px;">🎂 Age Group</label>
+                        <select id="registerAge" name="registerAge" required style="padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 16px; background: white; display: block;">
+                            <option value="">Select your age range</option>
+                            <option value="teen">13-17 (Teen)</option>
+                            <option value="young-adult">18-25 (Young Adult)</option>
+                            <option value="adult">26-35 (Adult)</option>
+                            <option value="mature">36-50 (Mature Adult)</option>
+                            <option value="senior">50+ (Senior)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail" style="font-weight: bold; color: #1e293b; margin-bottom: 8px; display: block; font-size: 14px;">📧 Email Address</label>
+                        <input type="email" id="registerEmail" name="registerEmail" placeholder="your@email.com" required style="padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 16px; display: block;">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword" style="font-weight: bold; color: #1e293b; margin-bottom: 8px; display: block; font-size: 14px;">🔒 Password</label>
+                        <input type="password" id="registerPassword" name="registerPassword" placeholder="Create a secure password" required class="form-input">
+                    </div>
+                    <button class="btn btn-primary" onclick="register()">Create Account ✨</button>
+                    <p class="auth-switch">Already have an account? <a href="#" onclick="switchToLogin()">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>My Personality Dashboard ✨</h2>
+                <span class="close" onclick="closeProfile()">&times;</span>
+            </div>
+            <div id="profileContent" class="profile-content">
+                <!-- Profile content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Couples Modal -->
+    <div id="couplesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Couple Compatibility ❤️</h2>
+                <span class="close" onclick="event.stopPropagation(); closeCouplesModal();">&times;</span>
+            </div>
+            <div id="couplesContent" class="couples-content">
+                <!-- Couples content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Report Purchase Modal -->
+    <div id="premiumModal" class="premium-modal">
+        <div class="premium-modal-content">
+            <div class="premium-modal-header">
+                <h2>💎 Get Your Premium Report</h2>
+                <span class="close" onclick="closePremiumModal()" style="position: absolute; top: 1rem; right: 1.5rem; font-size: 2rem; cursor: pointer; color: white;">&times;</span>
+            </div>
+            <div class="premium-modal-body">
+                <div id="premiumContent">
+                    <!-- Premium purchase content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer" style="background: #1e293b; padding: 3rem 0 1rem;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 2rem;" class="footer-grid">
+                <!-- Brand Section -->
+                <div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <span style="font-size: 1.5rem;">✨</span>
+                        <h3 style="color: #667eea; font-size: 1.5rem; font-weight: bold; margin: 0;">PersonaTests</h3>
+                    </div>
+                    <p style="color: #94a3b8; line-height: 1.6; margin: 0; max-width: 400px;" data-translate="footer.description">
+                        Discover your personality with scientifically-backed tests that get you.
+                    </p>
+                </div>
+                
+                <!-- Popular Tests Section -->
+                <div>
+                    <h4 style="color: white; font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;" data-translate="footer.popularTests">Popular Tests</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <a href="#" onclick="startTest('mbti')" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'" data-translate="footer.sixteenTypes">16 Personality Types</a>
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <a href="#" onclick="startTest('bigfive')" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'" data-translate="footer.bigFive">Big Five Test</a>
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <a href="#" onclick="startTest('iq')" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'" data-translate="footer.brainTeaser">Brain Teaser Challenge</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- More Info Section -->
+                <div>
+                    <h4 style="color: white; font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;" data-translate="footer.moreInfo">More Info</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <a href="about.html" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'" data-translate="footer.aboutUs">About Us</a>
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <a href="faq.html" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'" data-translate="footer.faq">FAQ</a>
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <a href="contact.html" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'" data-translate="footer.contact">Contact</a>
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <a href="#blog" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'" data-translate="footer.blog">Blog</a>
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <a href="privacy.html" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'" data-translate="footer.privacyPolicy">Privacy Policy</a>
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <a href="terms.html" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'" data-translate="footer.termsOfService">Terms of Service</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div style="border-top: 1px solid #374151; padding-top: 1.5rem; text-align: center;">
+                <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">
+                    © 2025 PersonaTests. All rights reserved. | 
+                    <a href="privacy.html" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">Privacy Policy</a> | 
+                    <a href="terms.html" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">Terms of Service</a> | 
+                    <a href="contact.html" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#94a3b8'">Contact Us</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Category Switching JavaScript -->
+    <script>
+        // Robust Modal Management System
+        let currentModal = null;
+        let modalDebugMode = true; // Enable for debugging
+        
+        function debugLog(message, data = null) {
+            if (modalDebugMode) {
+                console.log(`[MODAL DEBUG] ${message}`, data || '');
+            }
+        }
+        
+        function forceResetBodyScroll() {
+            document.body.style.overflow = '';
+            document.body.style.overflowY = '';
+            document.body.style.height = '';
+            document.documentElement.style.overflow = '';
+            debugLog('Force reset all body scroll styles');
+        }
+        
+        function openModal(modalId) {
+            debugLog('openModal called', modalId);
+            
+            // Close any currently open modal first
+            closeAllModals();
+            
+            const modal = document.getElementById(modalId);
+            if (!modal) {
+                debugLog('ERROR: Modal not found', modalId);
+                return;
+            }
+            
+            // Remove any lingering display: none styles and set modal as active
+            modal.style.display = '';
+            modal.classList.add('active');
+            currentModal = modalId;
+            
+            // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
+            
+            debugLog('Modal opened successfully', {
+                modalId: modalId,
+                currentModal: currentModal,
+                bodyOverflow: document.body.style.overflow
+            });
+        }
+        
+        function closeModal(modalId) {
+            debugLog('closeModal called', modalId);
+            
+            const modal = document.getElementById(modalId);
+            if (!modal) {
+                debugLog('ERROR: Modal not found for closing', modalId);
+                // Force cleanup anyway
+                currentModal = null;
+                forceResetBodyScroll();
+                return;
+            }
+            
+            // Remove active class
+            modal.classList.remove('active');
+            debugLog('Removed active class from modal', modalId);
+            
+            // Reset modal state
+            currentModal = null;
+            forceResetBodyScroll();
+            
+            debugLog('Modal closed successfully', {
+                modalId: modalId,
+                currentModal: currentModal,
+                bodyOverflow: document.body.style.overflow
+            });
+            
+            // Double-check after a brief delay
+            setTimeout(() => {
+                if (document.body.style.overflow === 'hidden') {
+                    debugLog('WARNING: Body still has overflow hidden, forcing reset');
+                    forceResetBodyScroll();
+                }
+            }, 100);
+        }
+        
+        function closeAllModals() {
+            debugLog('closeAllModals called');
+            
+            const modals = document.querySelectorAll('.modal, .premium-modal');
+            modals.forEach(modal => {
+                modal.classList.remove('active');
+            });
+            
+            currentModal = null;
+            forceResetBodyScroll();
+            
+            debugLog('All modals closed');
+        }
+        
+        // Enhanced modal functions
+        function showLogin() {
+            openModal('loginModal');
+        }
+        
+        function closeLogin() {
+            closeModal('loginModal');
+        }
+        
+        function showProfile() {
+            openModal('profileModal');
+        }
+        
+        function closeProfile() {
+            closeModal('profileModal');
+        }
+        
+        function showCouplesModal() {
+            openModal('couplesModal');
+        }
+        
+        function closeCouplesModal() {
+            debugLog('closeCouplesModal called');
+            closeModal('couplesModal');
+            
+            // AGGRESSIVE cleanup to ensure the modal is completely removed
+            setTimeout(() => {
+                const couplesModal = document.getElementById('couplesModal');
+                if (couplesModal) {
+                    // Force remove all classes and hide the modal
+                    couplesModal.classList.remove('active');
+                    couplesModal.style.display = 'none';
+                    debugLog('Force-hidden couplesModal with display: none');
+                }
+                
+                // Force reset body scroll properties
+                forceResetBodyScroll();
+                
+                // Extra safety: ensure no modal is marked as active
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.remove('active');
+                    if (modal.style.display !== 'none') {
+                        modal.style.display = 'none';
+                    }
+                });
+                
+                // Reset current modal state
+                currentModal = null;
+                
+                debugLog('AGGRESSIVE cleanup completed - page should be fully interactive');
+            }, 50);
+        }
+        
+        // Helper function to get translations for couples modals
+        async function getCouplesTranslation(key, fallback = '') {
+            try {
+                const lang = localStorage.getItem('preferredLanguage') || 'en';
+                if (lang === 'en') return fallback;
+                
+                const response = await fetch(`translations/${lang}.json`);
+                const translations = await response.json();
+                
+                // Navigate through nested object using dot notation
+                const keys = key.split('.');
+                let value = translations;
+                for (const k of keys) {
+                    value = value[k];
+                    if (!value) return fallback;
+                }
+                
+                return value || fallback;
+            } catch (error) {
+                console.log('Translation loading error:', error);
+                return fallback;
+            }
+        }
+        
+        async function showShareResults() {
+            debugLog('showShareResults called');
+            
+            // Ensure any existing modal is properly closed first
+            closeAllModals();
+            
+            // Get translations
+            const title = await getCouplesTranslation('couples.modals.shareResults.title', 'Share Your Results');
+            const description = await getCouplesTranslation('couples.modals.shareResults.description', 'After taking any personality test, you can generate a unique sharing ID to connect with your partner and compare results!');
+            const howItWorks = await getCouplesTranslation('couples.modals.shareResults.howItWorks', '🔗 How it works:');
+            const steps = await getCouplesTranslation('couples.modals.shareResults.steps', [
+                'Take any personality test',
+                'Get your unique sharing ID',
+                'Share the ID with your partner',
+                'Compare and discuss your results together!'
+            ]);
+            const startButton = await getCouplesTranslation('couples.modals.shareResults.startButton', 'Start MBTI Test');
+            const laterButton = await getCouplesTranslation('couples.modals.shareResults.laterButton', 'Maybe Later');
+            
+            const content = `
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">👫</div>
+                    <h3 style="color: #1e293b; margin-bottom: 1rem;">${title}</h3>
+                    <p style="color: #64748b; margin-bottom: 2rem;">${description}</p>
+                    
+                    <div style="background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                        <h4 style="color: #4f46e5; margin-bottom: 1rem;">${howItWorks}</h4>
+                        <ol style="text-align: left; color: #64748b; line-height: 1.6;">
+                            ${steps.map(step => `<li>${step}</li>`).join('')}
+                        </ol>
+                    </div>
+                    
+                    <button onclick="startTest('mbti')" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-weight: bold; cursor: pointer; margin-right: 1rem;">
+                        ${startButton}
+                    </button>
+                    <button onclick="event.stopPropagation(); closeCouplesModal();" style="background: #f1f5f9; color: #64748b; border: none; padding: 1rem 2rem; border-radius: 25px; font-weight: bold; cursor: pointer;">
+                        ${laterButton}
+                    </button>
+                </div>
+            `;
+            
+            // Update content
+            document.getElementById('couplesContent').innerHTML = content;
+            
+            // Small delay to ensure DOM is updated and any transitions complete
+            setTimeout(() => {
+                openModal('couplesModal');
+                debugLog('showShareResults modal opened after content update');
+            }, 50);
+        }
+        
+        async function showCompatibilityAnalysis() {
+            debugLog('showCompatibilityAnalysis called');
+            
+            // Ensure any existing modal is properly closed first
+            closeAllModals();
+            
+            // Get translations
+            const title = await getCouplesTranslation('couples.modals.compatibility.title', 'Compatibility Analysis');
+            const description = await getCouplesTranslation('couples.modals.compatibility.description', 'Get detailed insights into your relationship dynamics, communication styles, and compatibility patterns!');
+            const warningTitle = await getCouplesTranslation('couples.modals.compatibility.warningTitle', '⚠️ Both Partners Need Results');
+            const warningDesc = await getCouplesTranslation('couples.modals.compatibility.warningDesc', 'To generate your compatibility analysis, both you and your partner need to complete personality tests first. Once you both have results, we can compare your personality types and provide detailed insights!');
+            const whatYouDiscover = await getCouplesTranslation('couples.modals.compatibility.whatYouDiscover', '📊 What you\'ll discover:');
+            const insights = await getCouplesTranslation('couples.modals.compatibility.insights', [
+                'Communication compatibility',
+                'Shared values and differences',
+                'Conflict resolution styles',
+                'Growth opportunities together'
+            ]);
+            const testButton = await getCouplesTranslation('couples.modals.compatibility.testButton', 'Take Tests First');
+            const closeButton = await getCouplesTranslation('couples.modals.compatibility.closeButton', 'Close');
+            
+            const content = `
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">💖</div>
+                    <h3 style="color: #1e293b; margin-bottom: 1rem;">${title}</h3>
+                    <p style="color: #64748b; margin-bottom: 2rem;">${description}</p>
+                    
+                    <div style="background: #fef3f2; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border-left: 4px solid #ef4444;">
+                        <h4 style="color: #dc2626; margin-bottom: 1rem;">${warningTitle}</h4>
+                        <p style="color: #7f1d1d; text-align: left; line-height: 1.6;">
+                            ${warningDesc}
+                        </p>
+                    </div>
+                    
+                    <div style="background: #f0f9ff; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                        <h4 style="color: #0369a1; margin-bottom: 1rem;">${whatYouDiscover}</h4>
+                        <ul style="text-align: left; color: #0c4a6e; line-height: 1.8;">
+                            ${insights.map(insight => `<li>${insight}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <button onclick="startTest('mbti')" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-weight: bold; cursor: pointer; margin-right: 1rem;">
+                        ${testButton}
+                    </button>
+                    <button onclick="event.stopPropagation(); closeCouplesModal();" style="background: #f1f5f9; color: #64748b; border: none; padding: 1rem 2rem; border-radius: 25px; font-weight: bold; cursor: pointer;">
+                        ${closeButton}
+                    </button>
+                </div>
+            `;
+            
+            // Update content
+            document.getElementById('couplesContent').innerHTML = content;
+            
+            // Small delay to ensure DOM is updated and any transitions complete
+            setTimeout(() => {
+                openModal('couplesModal');
+                debugLog('showCompatibilityAnalysis modal opened after content update');
+            }, 50);
+        }
+        
+        async function showRelationshipGrowth() {
+            debugLog('showRelationshipGrowth called');
+            
+            // Ensure any existing modal is properly closed first
+            closeAllModals();
+            
+            // Get translations
+            const title = await getCouplesTranslation('couples.modals.growth.title', 'Relationship Growth');
+            const description = await getCouplesTranslation('couples.modals.growth.description', 'Discover personalized tips and strategies to strengthen your bond based on both of your personality types!');
+            const growthAreas = await getCouplesTranslation('couples.modals.growth.growthAreas', '🌱 Growth Areas We Cover:');
+            const areas = await getCouplesTranslation('couples.modals.growth.areas', {
+                communication: { title: '💬 Communication', desc: 'Improve how you talk and listen' },
+                conflict: { title: '🤝 Conflict Resolution', desc: 'Handle disagreements better' },
+                intimacy: { title: '💝 Intimacy', desc: 'Deepen your emotional connection' },
+                goals: { title: '🎯 Shared Goals', desc: 'Align your future plans' }
+            });
+            const comingSoon = await getCouplesTranslation('couples.modals.growth.comingSoon', '✨ Coming Soon!');
+            const comingSoonDesc = await getCouplesTranslation('couples.modals.growth.comingSoonDesc', 'We\'re developing personalized relationship growth plans based on personality compatibility. This feature will be available soon!');
+            const startButton = await getCouplesTranslation('couples.modals.growth.startButton', 'Start With Tests');
+            const closeButton = await getCouplesTranslation('couples.modals.growth.closeButton', 'Close');
+            
+            const content = `
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🌟</div>
+                    <h3 style="color: #1e293b; margin-bottom: 1rem;">${title}</h3>
+                    <p style="color: #64748b; margin-bottom: 2rem;">${description}</p>
+                    
+                    <div style="background: #f0fdf4; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                        <h4 style="color: #15803d; margin-bottom: 1rem;">${growthAreas}</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left;">
+                            <div>
+                                <p style="color: #166534; font-weight: bold; margin-bottom: 0.5rem;">${areas.communication.title}</p>
+                                <p style="color: #15803d; font-size: 0.9rem;">${areas.communication.desc}</p>
+                            </div>
+                            <div>
+                                <p style="color: #166534; font-weight: bold; margin-bottom: 0.5rem;">${areas.conflict.title}</p>
+                                <p style="color: #15803d; font-size: 0.9rem;">${areas.conflict.desc}</p>
+                            </div>
+                            <div>
+                                <p style="color: #166534; font-weight: bold; margin-bottom: 0.5rem;">${areas.intimacy.title}</p>
+                                <p style="color: #15803d; font-size: 0.9rem;">${areas.intimacy.desc}</p>
+                            </div>
+                            <div>
+                                <p style="color: #166534; font-weight: bold; margin-bottom: 0.5rem;">${areas.goals.title}</p>
+                                <p style="color: #15803d; font-size: 0.9rem;">${areas.goals.desc}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #fef3c7; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                        <h4 style="color: #92400e; margin-bottom: 1rem;">${comingSoon}</h4>
+                        <p style="color: #a16207;">${comingSoonDesc}</p>
+                    </div>
+                    
+                    <button onclick="startTest('mbti')" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; font-weight: bold; cursor: pointer; margin-right: 1rem;">
+                        ${startButton}
+                    </button>
+                    <button onclick="event.stopPropagation(); closeCouplesModal();" style="background: #f1f5f9; color: #64748b; border: none; padding: 1rem 2rem; border-radius: 25px; font-weight: bold; cursor: pointer;">
+                        ${closeButton}
+                    </button>
+                </div>
+            `;
+            
+            // Update content
+            document.getElementById('couplesContent').innerHTML = content;
+            
+            // Small delay to ensure DOM is updated and any transitions complete
+            setTimeout(() => {
+                openModal('couplesModal');
+                debugLog('showRelationshipGrowth modal opened after content update');
+            }, 50);
+        }
+        
+        function showPremiumModal() {
+            openModal('premiumModal');
+        }
+        
+        function closePremiumModal() {
+            closeModal('premiumModal');
+        }
+        
+        function closeTest() {
+            closeModal('testModal');
+        }
+        
+        function closeResults() {
+            closeModal('resultsModal');
+        }
+        
+        function exitToHome() {
+            closeAllModals();
+            // Optionally scroll to top or specific section
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Close modal when clicking outside of modal content
+        window.addEventListener('click', function(event) {
+            if (currentModal) {
+                const modal = document.getElementById(currentModal);
+                if (event.target === modal) {
+                    closeModal(currentModal);
+                }
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && currentModal) {
+                closeModal(currentModal);
+            }
+        });
+        
+        // Global safeguard function to ensure modals are properly closed
+        function ensureModalsClosed() {
+            debugLog('ensureModalsClosed called - performing emergency cleanup');
+            closeAllModals();
+        }
+        
+        // Emergency modal fix function (accessible from browser console)
+        window.emergencyFixModal = function() {
+            console.log('🚨 EMERGENCY MODAL FIX ACTIVATED');
+            
+            // Force hide ALL modals with extreme prejudice
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('active');
+                modal.style.display = 'none';
+                console.log('Force-hidden modal:', modal.id);
+            });
+            
+            // Force reset ALL body scroll properties
+            document.body.style.overflow = '';
+            document.body.style.overflowY = '';
+            document.body.style.height = '';
+            document.documentElement.style.overflow = '';
+            
+            // Reset modal state
+            currentModal = null;
+            
+            console.log('✅ NUCLEAR Emergency fix complete - page should be fully functional');
+        };
+        
+        // Add click listeners to all test buttons to ensure modals are closed
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all test buttons and add safeguard
+            const testButtons = document.querySelectorAll('button[onclick*="startTest"]');
+            testButtons.forEach(button => {
+                const originalOnClick = button.getAttribute('onclick');
+                button.setAttribute('onclick', `ensureModalsClosed(); ${originalOnClick}`);
+            });
+        });
+        
+        // Auth form switching functions
+        function switchToRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('authTitle').textContent = 'Create Your Account ✨';
+        }
+        
+        function switchToLogin() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('authTitle').textContent = 'Login to Save Your Results ✨';
+        }
+        
+        // Placeholder functions for auth actions
+        function login() {
+            // Placeholder for login functionality
+            alert('Login functionality will be implemented with Firebase Auth');
+            closeLogin();
+        }
+        
+        function register() {
+            // Placeholder for register functionality
+            alert('Register functionality will be implemented with Firebase Auth');
+            closeLogin();
+        }
+        
+        // ENHANCEMENT 3: Breadcrumb Management
+        function updateBreadcrumb(category, testName = null) {
+            const breadcrumbContainer = document.getElementById('breadcrumbContainer');
+            const breadcrumbNav = document.getElementById('breadcrumbNav');
+            
+            if (!category) {
+                breadcrumbContainer.classList.remove('active');
+                return;
+            }
+            
+            let breadcrumbHTML = `
+                <div class="breadcrumb-item">
+                    <a href="#tests" onclick="showCategory('')">🏠 Home</a>
+                </div>
+                <span class="breadcrumb-separator">▶</span>
+                <div class="breadcrumb-item">
+                    <a href="#tests">Tests</a>
+                </div>
+                <span class="breadcrumb-separator">▶</span>
+            `;
+            
+            if (category === 'know-yourself') {
+                breadcrumbHTML += `
+                    <div class="breadcrumb-item ${testName ? '' : 'active'}">
+                        ${testName ? `<a href="#tests" onclick="showCategory('know-yourself')">🧠 Know Yourself</a>` : '🧠 Know Yourself'}
+                    </div>
+                `;
+            } else if (category === 'others-see-me') {
+                breadcrumbHTML += `
+                    <div class="breadcrumb-item ${testName ? '' : 'active'}">
+                        ${testName ? `<a href="#tests" onclick="showCategory('others-see-me')">👥 How Others See Me</a>` : '👥 How Others See Me'}
+                    </div>
+                `;
+            }
+            
+            if (testName) {
+                breadcrumbHTML += `
+                    <span class="breadcrumb-separator">▶</span>
+                    <div class="breadcrumb-item active">${testName}</div>
+                `;
+            }
+            
+            breadcrumbNav.innerHTML = breadcrumbHTML;
+            breadcrumbContainer.classList.add('active');
+        }
+
+        function showCategory(categoryId) {
+            // Remove active class from all category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Get category sections
+            const knowYourselfSection = document.getElementById('knowYourselfSection');
+            const othersSeeSection = document.getElementById('othersSeeSection');
+            
+            if (categoryId === 'know-yourself') {
+                // Show only Know Yourself section
+                if (knowYourselfSection) knowYourselfSection.style.display = 'block';
+                if (othersSeeSection) othersSeeSection.style.display = 'none';
+                
+                // Find and activate the "Know Yourself" button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    if (btn.getAttribute('data-translate') === 'categories.knowYourselfTitle' || 
+                        btn.onclick && btn.onclick.toString().includes("'know-yourself'")) {
+                        btn.classList.add('active');
+                    }
+                });
+                updateBreadcrumb('know-yourself');
+                
+                // CRITICAL FIX: Reapply translations for newly visible content
+                setTimeout(() => {
+                    console.log('🔍 DEBUG: Know Yourself section shown, triggering translation refresh');
+                    
+                    // Get current language from localStorage as fallback
+                    const langFromStorage = localStorage.getItem('preferredLanguage') || 'en';
+                    console.log('🔍 Language from storage:', langFromStorage);
+                    
+                    // Multiple strategies to ensure translations are applied
+                    let translationAttempted = false;
+                    
+                    // Strategy 1: Direct changeLanguage call (most reliable)
+                    if (typeof changeLanguage === 'function') {
+                        console.log('✅ Using changeLanguage function to refresh translations');
+                        changeLanguage(langFromStorage);
+                        translationAttempted = true;
+                    }
+                    
+                    // Strategy 2: Manual translation for specific Korean test cards
+                    if (langFromStorage === 'ko') {
+                        console.log('🔍 Korean detected, applying manual translations to test cards');
+                        
+                        const testTranslations = {
+                            'tests.mbti.title': '16가지 성격 유형',
+                            'tests.bigfive.title': '빅파이브 성격 검사',
+                            'tests.lovelanguage.title': '사랑의 언어 테스트',
+                            'tests.iq.title': '두뇌 테스트',
+                            'tests.ei.title': '감성지능',
+                            'tests.adhd.title': '집중력과 에너지 스타일',
+                            'tests.anxiety.title': '스트레스 관리 스타일',
+                            'tests.depression.title': '감정 조절 스타일',
+                            'tests.strengths.title': '캐릭터 강점 (VIA)',
+                            'tests.careerpath.title': '진로 탐색기',
+                            'tests.relationshipstyle.title': '연애 스타일'
+                        };
+                        
+                        Object.entries(testTranslations).forEach(([key, koreanText]) => {
+                            const element = document.querySelector(`[data-translate="${key}"]`);
+                            if (element) {
+                                element.textContent = koreanText;
+                                console.log(`✅ Manually updated ${key}`);
+                            }
+                        });
+                        
+                        translationAttempted = true;
+                    }
+                    
+                    if (translationAttempted) {
+                        console.log('✅ Translation refresh completed for Know Yourself section');
+                        
+                        // Verify after a brief delay
+                        setTimeout(() => {
+                            const mbtiTitle = document.querySelector('[data-translate="tests.mbti.title"]');
+                            if (mbtiTitle) {
+                                console.log('🔍 Final MBTI title check:', mbtiTitle.textContent);
+                                if (mbtiTitle.textContent.includes('16가지')) {
+                                    console.log('🎉 SUCCESS: Korean translations are now visible!');
+                                }
+                            }
+                        }, 100);
+                    } else {
+                        console.warn('❌ No translation method was successful');
+                    }
+                }, 200);
+            } else if (categoryId === 'others-see-me') {
+                // Show only How Others See Me section
+                if (knowYourselfSection) knowYourselfSection.style.display = 'none';
+                if (othersSeeSection) othersSeeSection.style.display = 'block';
+                
+                // Find and activate the "How Others See Me" button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    if (btn.getAttribute('data-translate') === 'categories.howOthersSeeTitle' || 
+                        btn.onclick && btn.onclick.toString().includes("'others-see-me'")) {
+                        btn.classList.add('active');
+                    }
+                });
+                updateBreadcrumb('others-see-me');
+                
+                // CRITICAL FIX: Reapply translations for newly visible content
+                setTimeout(() => {
+                    if (typeof forceUpdateAllTranslations === 'function' && typeof translations !== 'undefined' && currentLanguage) {
+                        forceUpdateAllTranslations(translations[currentLanguage]);
+                        console.log('🔄 Reapplied translations for How Others See Me section in language:', currentLanguage);
+                    }
+                }, 100);
+            } else if (categoryId === 'all') {
+                // Show all sections
+                if (knowYourselfSection) knowYourselfSection.style.display = 'block';
+                if (othersSeeSection) othersSeeSection.style.display = 'block';
+                
+                // Find and activate the "All" button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    if (btn.getAttribute('data-translate') === 'categories.all' || 
+                        btn.onclick && btn.onclick.toString().includes("'all'")) {
+                        btn.classList.add('active');
+                    }
+                });
+                updateBreadcrumb(null);
+                
+                // CRITICAL FIX: Reapply translations for newly visible content
+                setTimeout(() => {
+                    if (typeof forceUpdateAllTranslations === 'function' && typeof translations !== 'undefined' && currentLanguage) {
+                        forceUpdateAllTranslations(translations[currentLanguage]);
+                        console.log('🔄 Reapplied translations for All sections in language:', currentLanguage);
+                    }
+                }, 100);
+            } else {
+                // Default to showing all sections
+                if (knowYourselfSection) knowYourselfSection.style.display = 'block';
+                if (othersSeeSection) othersSeeSection.style.display = 'block';
+                updateBreadcrumb(null);
+            }
+            
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            if (mobileMenu && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                if (menuToggle) {
+                    menuToggle.classList.remove('active');
+                }
+            }
+            
+            // Smooth scroll to category section
+            setTimeout(() => {
+                document.getElementById('tests').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 100);
+        }
+        
+        // Mobile dropdown toggle
+        function toggleDropdown(event) {
+            if (window.innerWidth <= 768) {
+                event.preventDefault();
+                const dropdown = event.target.closest('.nav-dropdown');
+                dropdown.classList.toggle('active');
+            }
+        }
+        
+        // Add click handlers for mobile dropdown
+        document.addEventListener('DOMContentLoaded', function() {
+            showCategory('all');
+            
+            // Add dropdown toggle for mobile
+            const dropdownLink = document.querySelector('.nav-dropdown > a');
+            if (dropdownLink) {
+                dropdownLink.addEventListener('click', toggleDropdown);
+            }
+        });
+    </script>
+
+    <!-- EmailJS Configuration -->
+    <!-- New Translation System -->
+    <script src="translation-loader.js"></script>
+    
+    <script src="email-config.js"></script>
+    <script src="firebase-social.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Translation System Integration -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 Initializing unified translation system...');
+            
+            try {
+                // Wait for translation loader to be ready
+                if (typeof window.translationLoader !== 'undefined') {
+                    console.log('✅ TranslationLoader found');
+                    
+                    // Ensure it's initialized
+                    await window.translationLoader.initialize();
+                    
+                    // Update legacy global objects for backward compatibility
+                    window.translations = window.translationLoader.translations;
+                    window.currentLanguage = window.translationLoader.currentLanguage;
+                    
+                    console.log('✅ Legacy compatibility updated');
+                    console.log(`🌐 Current language set to: ${window.currentLanguage}`);
+                    console.log('📦 Available translations:', Object.keys(window.translations));
+                    
+                    // Enhance the existing changeLanguage function without breaking it
+                    const originalChangeLanguage = window.changeLanguage;
+                    
+                    // Only enhance if TranslationLoader is working AND we have a backup
+                    if (originalChangeLanguage) {
+                        window.changeLanguage = async function(langCode) {
+                            console.log(`🌍 Enhanced language change requested: ${langCode}`);
+                            
+                            try {
+                                // First: Update new system for backward compatibility
+                                if (window.translationLoader && window.translationLoader.translations[langCode]) {
+                                    window.translations = window.translationLoader.translations;
+                                    console.log('✅ New system data updated');
+                                }
+                                
+                                // Second: Call the ORIGINAL function with ALL its logic intact
+                                console.log('🔄 Calling original changeLanguage with full functionality...');
+                                await originalChangeLanguage(langCode);
+                                
+                                console.log(`✅ Enhanced language change to ${langCode} completed successfully`);
+                                
+                            } catch (error) {
+                                console.error(`❌ Error in enhanced language change to ${langCode}:`, error);
+                                
+                                // Pure fallback to original function
+                                console.log('🔄 Pure fallback to original function...');
+                                await originalChangeLanguage(langCode);
+                            }
+                        };
+                    } else {
+                        console.error('❌ Original changeLanguage not found, cannot enhance safely');
+                    }
+                    
+                    // Apply saved language preference
+                    const savedLang = localStorage.getItem('preferredLanguage') || 
+                                    localStorage.getItem('selectedLanguage') || 'en';
+                    
+                    if (savedLang && savedLang !== 'en') {
+                        console.log(`🔄 Applying saved language: ${savedLang}`);
+                        await window.changeLanguage(savedLang);
+                    }
+                    
+                    console.log('🎉 Translation system integration complete!');
+                    
+                } else {
+                    console.error('❌ TranslationLoader not found, language switching may not work');
+                }
+                
+            } catch (error) {
+                console.error('❌ Error initializing translation system:', error);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Remaining Tests</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test-section { margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .working { background: #d4edda; }
+        .broken { background: #f8d7da; }
+        pre { background: #f0f0f0; padding: 10px; font-size: 11px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Remaining Tests</h1>
+    <p>Investigating why ADHD, Anxiety, Depression still show English despite bridge system fixes</p>
+    
+    <button onclick="debugRemainingTests()">🧪 Debug Remaining Tests</button>
+    
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>
+        function debugRemainingTests() {
+            console.clear();
+            console.log('=== DEBUGGING REMAINING BROKEN TESTS ===');
+            
+            // Force Spanish
+            currentLanguage = 'es';
+            
+            let results = '<h3>🔍 Debugging Remaining Tests</h3>';
+            
+            // Focus on the tests that should work but don't
+            const brokenTests = ['adhd', 'anxiety', 'depression'];
+            
+            brokenTests.forEach(testId => {
+                results += `<div class="test-section">`;
+                results += `<h4>${testId.toUpperCase()} Debug</h4><pre>`;
+                
+                try {
+                    // Step 1: Check if English base exists (should be true now)
+                    const englishBase = tests && tests[testId] && tests[testId].questions;
+                    results += `English base questions exist: ${englishBase ? '✅ YES (' + tests[testId].questions.length + ')' : '❌ NO'}\\n`;
+                    
+                    if (englishBase) {
+                        results += `English first Q: "${tests[testId].questions[0].text.substring(0, 50)}..."\\n`;
+                    }
+                    
+                    // Step 2: Check Spanish individual translations
+                    const spanishExists = translations && translations.es && translations.es.tests && 
+                        translations.es.tests[testId] && translations.es.tests[testId].questions;
+                    results += `Spanish individual translations exist: ${spanishExists ? '✅ YES' : '❌ NO'}\\n`;
+                    
+                    if (spanishExists) {
+                        const spanishQuestions = translations.es.tests[testId].questions;
+                        results += `Spanish questions: ${spanishQuestions.length}\\n`;
+                        results += `Spanish first Q: "${spanishQuestions[0].text.substring(0, 50)}..."\\n`;
+                        
+                        // Check if Spanish text is actually Spanish
+                        const isSpanish = /[ñáéíóúü¿]/.test(spanishQuestions[0].text);
+                        results += `Is actually Spanish: ${isSpanish ? '✅ YES' : '❌ NO'}\\n`;
+                    }
+                    
+                    // Step 3: Simulate bridge system logic
+                    results += `\\n--- BRIDGE SYSTEM SIMULATION ---\\n`;
+                    
+                    // Check testDefinitions first (should be false)
+                    const inTestDefs = testDefinitions && testDefinitions[testId] && testDefinitions[testId].es;
+                    results += `testDefinitions[${testId}].es: ${inTestDefs ? '✅ FOUND' : '❌ NOT FOUND'}\\n`;
+                    
+                    if (!inTestDefs) {
+                        results += `Loading from tests[${testId}]...\\n`;
+                        let testData = tests[testId];
+                        results += `Base testData loaded: ${!!testData}\\n`;
+                        
+                        // Apply bridge logic
+                        if (currentLanguage !== 'en' && translations && translations[currentLanguage]) {
+                            const langTranslations = translations[currentLanguage];
+                            
+                            if (langTranslations.tests && langTranslations.tests[testId] && langTranslations.tests[testId].questions) {
+                                results += `🌉 BRIDGE ACTIVATED\\n`;
+                                
+                                const mergedData = {
+                                    ...testData,
+                                    title: langTranslations.tests[testId].title || testData.title,
+                                    questions: langTranslations.tests[testId].questions
+                                };
+                                
+                                results += `Bridge merged questions: ${mergedData.questions.length}\\n`;
+                                results += `Bridge title: "${mergedData.title}"\\n`;
+                                results += `Bridge first Q: "${mergedData.questions[0].text.substring(0, 50)}..."\\n`;
+                                
+                                const isSpanish = /[ñáéíóúü¿]/.test(mergedData.questions[0].text);
+                                results += `Final result is Spanish: ${isSpanish ? '✅ YES' : '❌ NO'}\\n`;
+                                
+                                if (isSpanish) {
+                                    results += `\\n✅ BRIDGE SHOULD WORK FOR ${testId.toUpperCase()}!\\n`;
+                                } else {
+                                    results += `\\n❌ BRIDGE FAILED FOR ${testId.toUpperCase()}\\n`;
+                                }
+                            } else {
+                                results += `❌ Bridge conditions not met\\n`;
+                                results += `  langTranslations.tests: ${!!langTranslations.tests}\\n`;
+                                results += `  langTranslations.tests[${testId}]: ${!!(langTranslations.tests && langTranslations.tests[testId])}\\n`;
+                                results += `  questions: ${!!(langTranslations.tests && langTranslations.tests[testId] && langTranslations.tests[testId].questions)}\\n`;
+                            }
+                        } else {
+                            results += `❌ Bridge system conditions failed\\n`;
+                        }
+                    }
+                    
+                } catch (error) {
+                    results += `❌ ERROR: ${error.message}\\n`;
+                    console.error(`Error debugging ${testId}:`, error);
+                }
+                
+                results += '</pre></div>';
+            });
+            
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run
+        setTimeout(() => debugRemainingTests(), 500);
+    </script>
+</body>
+</html>

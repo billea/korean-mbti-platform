@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Spanish Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .question { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        button { margin: 5px; padding: 8px 15px; }
+        pre { background: #f0f0f0; padding: 10px; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <h1>🇪🇸 Manual Spanish Test</h1>
+    <p>Direct test to see exactly what loads when Spanish is selected</p>
+    
+    <button onclick="testSpanishMBTI()">🧠 Test MBTI</button>
+    <button onclick="testSpanishDISC()">💼 Test DISC</button>
+    <button onclick="testSpanishLoveLanguage()">💕 Test Love Language</button>
+    <button onclick="testSpanishADHD()">⚡ Test ADHD</button>
+    
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Force Spanish from start
+        currentLanguage = 'es';
+        updateLanguage('es');
+        
+        function testSpanishMBTI() {
+            console.log('Testing Spanish MBTI...');
+            let result = '<div class="question"><h3>🧠 MBTI Test Result</h3><pre>';
+            
+            try {
+                // Try to load MBTI
+                if (testDefinitions.mbti && testDefinitions.mbti.es) {
+                    result += 'Source: testDefinitions.mbti.es\\n';
+                    result += `Title: "${testDefinitions.mbti.es.title}"\\n`;
+                    result += `Questions: ${testDefinitions.mbti.es.questions.length}\\n`;
+                    result += `First: "${testDefinitions.mbti.es.questions[0].text}"\\n`;
+                    result += 'Status: ✅ SHOULD WORK';
+                } else if (translations.es && translations.es.tests && translations.es.tests.mbti) {
+                    result += 'Source: translations.es.tests.mbti\\n';
+                    result += `Title: "${translations.es.tests.mbti.title || 'No title'}"\\n`;
+                    result += `Questions: ${translations.es.tests.mbti.questions.length}\\n`;
+                    result += `First: "${translations.es.tests.mbti.questions[0].text}"\\n`;
+                    result += 'Status: ✅ SHOULD WORK (bridge)';
+                } else {
+                    result += 'Status: ❌ NO SPANISH FOUND';
+                }
+            } catch (error) {
+                result += `Error: ${error.message}`;
+            }
+            
+            result += '</pre></div>';
+            document.getElementById('results').innerHTML = result;
+        }
+        
+        function testSpanishDISC() {
+            console.log('Testing Spanish DISC...');
+            let result = '<div class="question"><h3>💼 DISC Test Result</h3><pre>';
+            
+            try {
+                if (testDefinitions.disc && testDefinitions.disc.es) {
+                    result += 'Source: testDefinitions.disc.es\\n';
+                    result += `Title: "${testDefinitions.disc.es.title}"\\n`;
+                    result += `Questions: ${testDefinitions.disc.es.questions.length}\\n`;
+                    result += `First: "${testDefinitions.disc.es.questions[0].text}"\\n`;
+                    result += 'Status: ✅ SHOULD WORK FROM testDefinitions';
+                } else if (translations.es && translations.es.tests && translations.es.tests.disc) {
+                    result += 'Source: translations.es.tests.disc\\n';
+                    result += `Title: "${translations.es.tests.disc.title || 'No title'}"\\n`;
+                    result += `Questions: ${translations.es.tests.disc.questions.length}\\n`;
+                    result += `First: "${translations.es.tests.disc.questions[0].text}"\\n`;
+                    result += 'Status: ✅ SHOULD WORK FROM BRIDGE';
+                } else {
+                    result += 'Status: ❌ NO SPANISH FOUND';
+                }
+            } catch (error) {
+                result += `Error: ${error.message}`;
+            }
+            
+            result += '</pre></div>';
+            document.getElementById('results').innerHTML = result;
+        }
+        
+        function testSpanishLoveLanguage() {
+            console.log('Testing Spanish Love Language...');
+            let result = '<div class="question"><h3>💕 Love Language Test Result</h3><pre>';
+            
+            try {
+                if (testDefinitions.lovelanguage && testDefinitions.lovelanguage.es) {
+                    result += 'Source: testDefinitions.lovelanguage.es\\n';
+                    result += `Title: "${testDefinitions.lovelanguage.es.title}"\\n`;
+                    result += `Questions: ${testDefinitions.lovelanguage.es.questions.length}\\n`;
+                    result += `First: "${testDefinitions.lovelanguage.es.questions[0].text.substring(0, 60)}..."\\n`;
+                    result += 'Status: ✅ SHOULD WORK FROM testDefinitions';
+                } else if (translations.es && translations.es.tests && translations.es.tests.lovelanguage) {
+                    result += 'Source: translations.es.tests.lovelanguage\\n';
+                    result += `Title: "${translations.es.tests.lovelanguage.title || 'No title'}"\\n`;
+                    result += `Questions: ${translations.es.tests.lovelanguage.questions.length}\\n`;
+                    result += `First: "${translations.es.tests.lovelanguage.questions[0].text.substring(0, 60)}..."\\n`;
+                    result += 'Status: ✅ SHOULD WORK FROM BRIDGE';
+                } else {
+                    result += 'Status: ❌ NO SPANISH FOUND';
+                }
+            } catch (error) {
+                result += `Error: ${error.message}`;
+            }
+            
+            result += '</pre></div>';
+            document.getElementById('results').innerHTML = result;
+        }
+        
+        function testSpanishADHD() {
+            console.log('Testing Spanish ADHD...');
+            let result = '<div class="question"><h3>⚡ ADHD Test Result</h3><pre>';
+            
+            try {
+                if (testDefinitions.adhd && testDefinitions.adhd.es) {
+                    result += 'Source: testDefinitions.adhd.es\\n';
+                    result += 'Status: ✅ FOUND IN testDefinitions';
+                } else if (translations.es && translations.es.tests && translations.es.tests.adhd) {
+                    result += 'Source: translations.es.tests.adhd\\n';
+                    result += `Title: "${translations.es.tests.adhd.title || 'No title'}"\\n`;
+                    result += `Questions: ${translations.es.tests.adhd.questions.length}\\n`;
+                    result += `First: "${translations.es.tests.adhd.questions[0].text.substring(0, 60)}..."\\n`;
+                    result += 'Status: ✅ SHOULD WORK FROM BRIDGE';
+                } else {
+                    result += 'Status: ❌ NO SPANISH FOUND';
+                }
+            } catch (error) {
+                result += `Error: ${error.message}`;
+            }
+            
+            result += '</pre></div>';
+            document.getElementById('results').innerHTML = result;
+        }
+        
+        // Auto-test DISC on load
+        setTimeout(() => testSpanishDISC(), 500);
+    </script>
+</body>
+</html>

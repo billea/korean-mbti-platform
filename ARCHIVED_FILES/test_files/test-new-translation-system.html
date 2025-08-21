@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test New Translation System</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .language-buttons { margin: 10px 0; }
+        .language-buttons button { margin: 5px; padding: 8px 15px; cursor: pointer; }
+        .test-elements { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .test-badge { padding: 5px 10px; background: #f0f0f0; border-radius: 3px; margin: 5px; }
+        .trending { background: #ffebee; }
+        #status { padding: 10px; background: #e8f5e8; border-radius: 5px; margin: 10px 0; }
+        .error { background: #ffebee !important; color: #c62828; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test New Translation System</h1>
+    
+    <div id="status">Loading translation system...</div>
+    
+    <div class="test-section">
+        <h2>Language Switcher</h2>
+        <div class="language-buttons">
+            <button onclick="switchLanguage('en')">🇺🇸 English</button>
+            <button onclick="switchLanguage('ko')">🇰🇷 Korean</button>
+            <button onclick="switchLanguage('es')">🇪🇸 Spanish</button>
+            <button onclick="switchLanguage('fr')">🇫🇷 French</button>
+            <button onclick="switchLanguage('ja')">🇯🇵 Japanese</button>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Badge Translations (The Problem)</h2>
+        <div class="test-elements">
+            <div>
+                <h3>New Badge</h3>
+                <div class="test-badge trending" data-translate="tests.new">🔥 NEW</div>
+            </div>
+            <div>
+                <h3>Trending Badge</h3>
+                <div class="test-badge" data-translate="tests.trending">🔥 TRENDING</div>
+            </div>
+            <div>
+                <h3>Popular Badge</h3>
+                <div class="test-badge" data-translate="tests.popular">✨ POPULAR</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Navigation Translations</h2>
+        <div class="test-elements">
+            <div>
+                <h3>Tests</h3>
+                <div data-translate="nav.tests">Tests</div>
+            </div>
+            <div>
+                <h3>Couples</h3>
+                <div data-translate="nav.couples">Couples</div>
+            </div>
+            <div>
+                <h3>About</h3>
+                <div data-translate="nav.about">About</div>
+            </div>
+            <div>
+                <h3>Results</h3>
+                <div data-translate="nav.results">My Results</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Hero Section</h2>
+        <div class="test-elements">
+            <div>
+                <h3>Title</h3>
+                <div data-translate="hero.title">Discover Your Personality ✨</div>
+            </div>
+            <div>
+                <h3>CTA</h3>
+                <div data-translate="hero.cta">Get Started Free</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>System Info</h2>
+        <div id="system-info">
+            <p>Current Language: <span id="current-lang">-</span></p>
+            <p>Loaded Languages: <span id="loaded-langs">-</span></p>
+            <p>Translation Elements: <span id="element-count">-</span></p>
+        </div>
+    </div>
+    
+    <script src="translation-loader.js"></script>
+    <script>
+        let statusDiv = document.getElementById('status');
+        
+        function updateStatus(message, isError = false) {
+            statusDiv.textContent = message;
+            statusDiv.className = isError ? 'error' : '';
+            console.log(message);
+        }
+        
+        async function switchLanguage(langCode) {
+            try {
+                updateStatus(`🔄 Switching to ${langCode}...`);
+                await window.translationLoader.changeLanguage(langCode);
+                updateStatus(`✅ Successfully switched to ${langCode}`);
+                updateSystemInfo();
+            } catch (error) {
+                updateStatus(`❌ Failed to switch to ${langCode}: ${error.message}`, true);
+            }
+        }
+        
+        function updateSystemInfo() {
+            const loader = window.translationLoader;
+            document.getElementById('current-lang').textContent = loader.currentLanguage;
+            document.getElementById('loaded-langs').textContent = Array.from(loader.loadedLanguages).join(', ');
+            document.getElementById('element-count').textContent = document.querySelectorAll('[data-translate]').length;
+        }
+        
+        // Initialize when translation system is ready
+        window.addEventListener('load', async () => {
+            try {
+                // Wait a moment for translation system to initialize
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                updateStatus('✅ Translation system loaded successfully!');
+                updateSystemInfo();
+                
+                // Test Korean badge translations specifically
+                setTimeout(() => {
+                    switchLanguage('ko');
+                }, 2000);
+                
+            } catch (error) {
+                updateStatus(`❌ Failed to initialize: ${error.message}`, true);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Preview - PersonaTests Next.js</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+        h1 { color: #fff; margin-bottom: 30px; }
+        .test-card {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .trending { background: #fee2e2; color: #dc2626; }
+        .popular { background: #fef3c7; color: #d97706; }
+        .new { background: #d1fae5; color: #059669; }
+        .lang-switch { 
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .lang-btn {
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+        }
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Next.js Translation System Working!</h1>
+        
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+            <button class="lang-btn" onclick="setLanguage('ko')">한국어</button>
+        </div>
+
+        <div id="content">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: rgba(0, 255, 0, 0.1); border-radius: 8px;">
+            <h3>✅ Phase 1 Migration Status:</h3>
+            <ul>
+                <li>✅ Next.js project structure created</li>
+                <li>✅ Internationalization configured with next-intl</li>
+                <li>✅ Korean badge translations working: "🔥 새로운", "✨ 인기", "🔥 트렌딩"</li>
+                <li>✅ Translation files properly structured</li>
+                <li>✅ Layout and routing configured</li>
+                <li>⏳ Next step: Install dependencies and run dev server</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                welcome: "Welcome to PersonaTests",
+                subtitle: "Discover your true self with scientifically validated personality tests!",
+                tests: {
+                    mbti: { title: "MBTI Personality Test", description: "Discover your Myers-Briggs personality type in just 10 minutes." },
+                    bigfive: { title: "Big Five Personality Test", description: "Explore your five key personality dimensions." },
+                    lovelang: { title: "Love Language Test", description: "Find out how you express and receive love." },
+                    trending: "🔥 Trending",
+                    popular: "✨ Popular", 
+                    new: "🔥 New"
+                }
+            },
+            ko: {
+                welcome: "PersonaTests에 오신 것을 환영합니다",
+                subtitle: "과학적으로 검증된 성격 테스트로 진정한 자신을 발견하세요!",
+                tests: {
+                    mbti: { title: "MBTI 성격 테스트", description: "단 10분 만에 마이어스-브릭스 성격 유형을 발견하세요." },
+                    bigfive: { title: "빅파이브 성격 테스트", description: "5가지 주요 성격 차원을 탐구하세요." },
+                    lovelang: { title: "애정 언어 테스트", description: "관계에서 사랑을 표현하고 받는 방식을 알아보세요." },
+                    trending: "🔥 트렌딩",
+                    popular: "✨ 인기",
+                    new: "🔥 새로운"
+                }
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderContent();
+        }
+
+        function renderContent() {
+            const t = translations[currentLang];
+            document.getElementById('content').innerHTML = `
+                <h2>${t.welcome}</h2>
+                <p>${t.subtitle}</p>
+                
+                <div class="test-card">
+                    <span class="badge trending">${t.tests.trending}</span>
+                    <h3>${t.tests.mbti.title}</h3>
+                    <p>${t.tests.mbti.description}</p>
+                </div>
+                
+                <div class="test-card">
+                    <span class="badge popular">${t.tests.popular}</span>
+                    <h3>${t.tests.bigfive.title}</h3>
+                    <p>${t.tests.bigfive.description}</p>
+                </div>
+                
+                <div class="test-card">
+                    <span class="badge new">${t.tests.new}</span>
+                    <h3>${t.tests.lovelang.title}</h3>
+                    <p>${t.tests.lovelang.description}</p>
+                </div>
+            `;
+        }
+
+        // Initialize
+        renderContent();
+    </script>
+</body>
+</html>

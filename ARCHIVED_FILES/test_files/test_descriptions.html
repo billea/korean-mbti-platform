@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Korean Descriptions</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Testing Korean Description Translations</h1>
+    
+    <div id="test-results"></div>
+    
+    <script src="script.js"></script>
+    <script>
+        // Wait for script to load
+        setTimeout(() => {
+            const results = document.getElementById('test-results');
+            
+            // Test 1: Check if Korean translations exist
+            results.innerHTML += '<h2>1. Korean Translation Object Check</h2>';
+            if (window.translations && window.translations.ko) {
+                results.innerHTML += '<p>✅ Korean translations object exists</p>';
+                
+                // Check specific description translations
+                const testDescriptions = [
+                    'tests.mbti.description',
+                    'tests.bigfive.description', 
+                    'tests.lovelanguage.description',
+                    'tests.iq.description'
+                ];
+                
+                testDescriptions.forEach(key => {
+                    const translation = getNestedTranslation(translations.ko, key);
+                    if (translation) {
+                        results.innerHTML += `<p>✅ ${key}: "${translation}"</p>`;
+                    } else {
+                        results.innerHTML += `<p>❌ ${key}: NOT FOUND</p>`;
+                    }
+                });
+            } else {
+                results.innerHTML += '<p>❌ Korean translations object missing</p>';
+            }
+            
+            // Test 2: Test description translation function
+            results.innerHTML += '<h2>2. Korean Translation Function Test</h2>';
+            
+            // Create test elements
+            const testDiv = document.createElement('div');
+            testDiv.innerHTML = `
+                <div data-translate="tests.mbti.description">Original English Description</div>
+                <div data-translate="tests.bigfive.description">Original English Description</div>
+            `;
+            document.body.appendChild(testDiv);
+            
+            // Try changing language to Korean
+            if (typeof changeLanguage === 'function') {
+                results.innerHTML += '<p>✅ changeLanguage function exists</p>';
+                changeLanguage('ko');
+                
+                setTimeout(() => {
+                    const elements = testDiv.querySelectorAll('[data-translate]');
+                    elements.forEach(el => {
+                        const key = el.getAttribute('data-translate');
+                        const text = el.textContent;
+                        const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+                        
+                        if (hasKorean) {
+                            results.innerHTML += `<p>✅ ${key}: "${text}" (Korean detected)</p>`;
+                        } else {
+                            results.innerHTML += `<p>❌ ${key}: "${text}" (Still English)</p>`;
+                        }
+                    });
+                    
+                    // Final assessment
+                    results.innerHTML += '<h2>3. Final Assessment</h2>';
+                    const koreanElements = Array.from(elements).filter(el => 
+                        /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(el.textContent)
+                    );
+                    
+                    if (koreanElements.length === elements.length) {
+                        results.innerHTML += '<p style="color: green; font-weight: bold;">✅ ALL DESCRIPTIONS TRANSLATED TO KOREAN!</p>';
+                    } else {
+                        results.innerHTML += `<p style="color: red; font-weight: bold;">❌ Only ${koreanElements.length}/${elements.length} descriptions translated</p>`;
+                    }
+                }, 1000);
+                
+            } else {
+                results.innerHTML += '<p>❌ changeLanguage function missing</p>';
+            }
+        }, 500);
+    </script>
+</body>
+</html>

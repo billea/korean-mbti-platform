@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="contact.pageTitle">Contact Us - PersonaTests</title>
+    <meta name="description" content="Get in touch with PersonaTests for support, questions, or feedback about our personality tests and assessments.">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google AdSense Verification Code -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4191191359538611"
+         crossorigin="anonymous"></script>
+    
+    <style>
+        /* Contact Page Mobile Optimizations */
+        .contact-main {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+        }
+        
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            /* NUCLEAR OPTION: Force hide ALL desktop language elements */
+            .desktop-language-flags,
+            .desktop-language-flags *,
+            div[style*="display: flex"],
+            div[style*="gap: 12px"] {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                position: absolute !important;
+                left: -99999px !important;
+                width: 0 !important;
+                height: 0 !important;
+                overflow: hidden !important;
+                pointer-events: none !important;
+            }
+            
+            /* Consistent 56px mobile header */
+            .header {
+                height: 56px !important;
+                min-height: 56px !important;
+                max-height: 56px !important;
+            }
+            
+            .nav {
+                height: 56px !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            
+            .nav-container {
+                height: 56px !important;
+                min-height: 56px !important;
+                max-height: 56px !important;
+                padding: 0 1rem !important;
+            }
+            
+            .logo h1 {
+                font-size: 1.1rem !important;
+                line-height: 1.2 !important;
+                font-weight: 800 !important;
+                color: white !important;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+            /* Show hamburger menu on mobile */
+            .mobile-menu-toggle {
+                display: flex !important;
+            }
+            
+            /* Hide desktop menu on mobile */
+            .nav-menu {
+                display: none !important;
+            }
+            
+            .nav-menu.active {
+                display: flex !important;
+            }
+            
+            /* Optimized body padding */
+            body {
+                padding-top: 56px !important;
+                padding-bottom: 60px !important;
+            }
+            
+            /* Mobile language selector at bottom */
+            .mobile-language-selector {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 10000 !important;
+                padding: 1rem !important;
+                backdrop-filter: blur(20px) !important;
+                background: rgba(102, 126, 234, 0.95) !important;
+            }
+            
+            .contact-main {
+                padding: 2rem 0 !important;
+                min-height: calc(100vh - 140px) !important;
+            }
+            
+            .contact-container {
+                padding: 1rem !important;
+                max-width: 100% !important;
+            }
+            
+            /* Contact Hero Mobile */
+            .contact-hero {
+                text-align: center !important;
+                margin-bottom: 2rem !important;
+                color: white !important;
+            }
+            
+            .contact-hero h1 {
+                font-size: 2rem !important;
+                margin-bottom: 1rem !important;
+                font-weight: bold !important;
+            }
+            
+            .contact-hero p {
+                font-size: 1rem !important;
+                opacity: 0.9 !important;
+            }
+            
+            /* Contact Form Container Mobile */
+            .contact-form-container {
+                background: rgba(255, 255, 255, 0.95) !important;
+                border-radius: 20px !important;
+                padding: 2rem 1.5rem !important;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1) !important;
+                margin-bottom: 2rem !important;
+            }
+            
+            /* Form Grid Mobile */
+            .form-grid {
+                display: block !important;
+                gap: 1rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .form-grid > div {
+                margin-bottom: 1rem !important;
+            }
+            
+            /* Form Inputs Mobile */
+            .form-input, .contact-form input, .contact-form select, .contact-form textarea {
+                width: 100% !important;
+                padding: 1rem !important;
+                border: 2px solid #e2e8f0 !important;
+                border-radius: 12px !important;
+                font-size: 16px !important;
+                box-sizing: border-box !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            /* Button Mobile */
+            .contact-form button {
+                width: 100% !important;
+                padding: 1rem 2rem !important;
+                font-size: 1rem !important;
+                border-radius: 25px !important;
+                margin-top: 1rem !important;
+            }
+            
+            /* Response Times Mobile */
+            .response-times {
+                background: #f1f5f9 !important;
+                padding: 1.5rem 1rem !important;
+                border-radius: 12px !important;
+                margin-bottom: 2rem !important;
+            }
+            
+            .response-grid {
+                display: block !important;
+                gap: 1rem !important;
+            }
+            
+            .response-grid > div {
+                text-align: center !important;
+                margin-bottom: 1rem !important;
+                padding: 1rem !important;
+                background: white !important;
+                border-radius: 8px !important;
+            }
+            
+            /* FAQ Mobile */
+            .faq-item {
+                margin-bottom: 1.5rem !important;
+            }
+            
+            .faq-item h4 {
+                font-size: 1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            .faq-item p {
+                font-size: 0.9rem !important;
+                line-height: 1.5 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <h1><a href="index.html" style="color: white; text-decoration: none;">✨ PersonaTests</a></h1>
+                </div>
+                
+                <!-- Mobile Menu Toggle Button (Hidden on Desktop) -->
+                <div class="mobile-menu-toggle" onclick="toggleMobileMenu()" style="display: none;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <ul class="nav-menu" id="mobileMenu">
+                    <li><a href="index.html" data-translate="nav.home">Home</a></li>
+                    <li><a href="index.html#tests" data-translate="nav.tests">Tests</a></li>
+                    <li><a href="about.html" data-translate="nav.about">About</a></li>
+                    <li><a href="contact.html" class="active" data-translate="nav.contact">Contact</a></li>
+                    <li><a href="privacy.html" data-translate="nav.privacy">Privacy</a></li>
+                    <li><a href="terms.html" data-translate="nav.terms">Terms</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- Mobile Language Selector (Hidden on Desktop, Outside Nav Container) -->
+        <div class="mobile-language-selector" style="display: none; width: 100%; background: rgba(255, 255, 255, 0.1); border-top: 1px solid rgba(255, 255, 255, 0.2); padding: 1rem;">
+            <div style="text-align: center;">
+                <label style="display: block; color: white; font-size: 14px; margin-bottom: 0.5rem; font-weight: 500;">🌍 Choose Language</label>
+                <select onchange="changeLanguage(this.value)" style="background: rgba(255, 255, 255, 0.9); border: 2px solid rgba(255, 255, 255, 0.4); border-radius: 8px; color: #1e293b; padding: 12px 16px; font-size: 16px; font-weight: 500; cursor: pointer; outline: none; width: 100%; max-width: 300px;">
+                    <option value="en" style="background: white; color: #1e293b;">🇺🇸 English</option>
+                    <option value="es" style="background: white; color: #1e293b;">🇪🇸 Español</option>
+                    <option value="fr" style="background: white; color: #1e293b;">🇫🇷 Français</option>
+                    <option value="de" style="background: white; color: #1e293b;">🇩🇪 Deutsch</option>
+                    <option value="it" style="background: white; color: #1e293b;">🇮🇹 Italiano</option>
+                    <option value="pt" style="background: white; color: #1e293b;">🇵🇹 Português</option>
+                    <option value="ja" style="background: white; color: #1e293b;">🇯🇵 日本語</option>
+                    <option value="ko" style="background: white; color: #1e293b;">🇰🇷 한국어</option>
+                    <option value="zh" style="background: white; color: #1e293b;">🇨🇳 中文</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="contact-main">
+        <div class="contact-container">
+            
+            <!-- Contact Hero -->
+            <div class="contact-hero">
+                <h1 data-translate="contact.hero.title">Contact Us 💬</h1>
+                <p data-translate="contact.hero.subtitle">We'd love to hear from you! Get support, share feedback, or ask questions.</p>
+            </div>
+
+            <!-- Contact Methods -->
+            <div class="contact-form-container">
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                    
+                    <!-- Contact Form -->
+                    <div style="grid-column: 1 / -1; background: #f8fafc; border-radius: 12px; padding: 2rem; border-left: 4px solid #4f46e5;">
+                        <h3 style="color: #1e293b; margin-bottom: 1.5rem; text-align: center;" data-translate="contact.form.title">📝 Send Us a Message</h3>
+                        
+                        <form id="contactForm" class="contact-form" style="max-width: 600px; margin: 0 auto;">
+                            <div class="form-grid">
+                                <div>
+                                    <label style="display: block; font-weight: bold; color: #1e293b; margin-bottom: 0.5rem;" data-translate="contact.form.name">Name *</label>
+                                    <input type="text" id="contactName" required style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                                </div>
+                                <div>
+                                    <label style="display: block; font-weight: bold; color: #1e293b; margin-bottom: 0.5rem;" data-translate="contact.form.email">Email *</label>
+                                    <input type="email" id="contactEmail" required style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: block; font-weight: bold; color: #1e293b; margin-bottom: 0.5rem;" data-translate="contact.form.subject">Subject *</label>
+                                <select id="contactSubject" required style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; background: white; box-sizing: border-box;">
+                                    <option value="" data-translate="contact.form.selectTopic">Select a topic...</option>
+                                    <option value="General Support">General Support</option>
+                                    <option value="Test Results Issue">Test Results Issue</option>
+                                    <option value="Premium Report Question">Premium Report Question</option>
+                                    <option value="Privacy or Data Request">Privacy or Data Request</option>
+                                    <option value="Technical Issue">Technical Issue</option>
+                                    <option value="Business Partnership Inquiry">Business/Partnership Inquiry</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div style="margin-bottom: 1.5rem;">
+                                <label style="display: block; font-weight: bold; color: #1e293b; margin-bottom: 0.5rem;" data-translate="contact.form.message">Message *</label>
+                                <textarea id="contactMessage" required rows="5" style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; resize: vertical; box-sizing: border-box;" data-translate-placeholder="contact.form.messagePlaceholder" placeholder="Please describe your question or issue in detail..."></textarea>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <button type="submit" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.75rem 2rem; border: none; border-radius: 25px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'" data-translate="contact.form.sendButton">Send Message 📤</button>
+                            </div>
+                            
+                            <div id="formMessage" style="margin-top: 1rem; text-align: center; display: none;"></div>
+                        </form>
+                        
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 8px; padding: 1rem; margin-top: 2rem; text-align: center;">
+                            <p style="color: #059669; margin: 0; font-size: 0.9rem;" data-translate="contact.responseTime">💚 We typically respond within 24-48 hours. For urgent issues, please check our FAQ page first!</p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 2rem; background: #fffbeb; border-radius: 12px; border-left: 4px solid #f59e0b;">
+                        <div style="font-size: 2.5rem; margin-bottom: 1rem;">⚡</div>
+                        <h3 style="color: #1e293b; margin-bottom: 1rem;" data-translate="contact.quickSupport.title">Quick Support</h3>
+                        <p style="color: #64748b; margin-bottom: 1rem;" data-translate="contact.quickSupport.description">Check our FAQ page for immediate answers to common questions</p>
+                        <a href="faq.html" style="color: #f59e0b; font-weight: bold; text-decoration: none;" data-translate="contact.quickSupport.link">Visit FAQ Page →</a>
+                    </div>
+                </div>
+
+                <!-- Company Information Section -->
+                <div style="background: #f8fafc; border-radius: 12px; padding: 2rem; margin-bottom: 3rem; text-align: center;">
+                    <h2 style="color: #1e293b; margin-bottom: 1rem;" data-translate="contact.company.title">PersonaTests</h2>
+                    <p style="color: #64748b; margin-bottom: 0.5rem;" data-translate="contact.company.subtitle">Digital Personality Assessment Platform</p>
+                    <p style="color: #64748b; margin-bottom: 0.5rem;" data-translate="contact.company.purpose">Created for entertainment and self-discovery</p>
+                    <p style="color: #64748b;" data-translate="contact.company.operating">Operating since 2025</p>
+                </div>
+
+                <!-- Response Times Section -->
+                <div style="background: #f1f5f9; border-radius: 12px; padding: 2rem; margin-bottom: 3rem;">
+                    <h3 style="color: #1e293b; margin-bottom: 1.5rem; text-align: center;" data-translate="contact.responseTimes.title">📅 Response Times</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="text-align: center; padding: 1rem;">
+                            <h4 style="color: #4f46e5; margin-bottom: 0.5rem;" data-translate="contact.responseTimes.general">General Support</h4>
+                            <p style="color: #64748b;" data-translate="contact.responseTimes.generalTime">24-48 hours</p>
+                        </div>
+                        <div style="text-align: center; padding: 1rem;">
+                            <h4 style="color: #4f46e5; margin-bottom: 0.5rem;" data-translate="contact.responseTimes.privacy">Privacy Requests</h4>
+                            <p style="color: #64748b;" data-translate="contact.responseTimes.privacyTime">48-72 hours</p>
+                        </div>
+                        <div style="text-align: center; padding: 1rem;">
+                            <h4 style="color: #4f46e5; margin-bottom: 0.5rem;" data-translate="contact.responseTimes.business">Business Inquiries</h4>
+                            <p style="color: #64748b;" data-translate="contact.responseTimes.businessTime">3-5 business days</p>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <!-- Website Information -->
+                <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem;">PersonaTests</h3>
+                    <p style="opacity: 0.9; margin-bottom: 0.5rem;">Digital Personality Assessment Platform</p>
+                    <p style="opacity: 0.9; margin-bottom: 0.5rem;">Created for entertainment and self-discovery</p>
+                    <p style="opacity: 0.9; font-size: 0.9rem;">Operating since 2025</p>
+                </div>
+
+                <!-- Response Times -->
+                <div style="background: #f1f5f9; padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                    <h3 style="color: #1e293b; margin-bottom: 1rem; text-align: center;">📅 Response Times</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="text-align: center;">
+                            <div style="font-weight: bold; color: #4f46e5;">General Support</div>
+                            <div style="color: #64748b;">24-48 hours</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-weight: bold; color: #10b981;">Privacy Requests</div>
+                            <div style="color: #64748b;">48-72 hours</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-weight: bold; color: #f59e0b;">Business Inquiries</div>
+                            <div style="color: #64748b;">3-5 business days</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div style="background: #f8fafc; border-radius: 12px; padding: 2rem; margin-bottom: 3rem;">
+                    <h3 style="color: #1e293b; margin-bottom: 1.5rem; text-align: center;" data-translate="contact.faq.title">Frequently Asked Questions 🤔</h3>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: #4f46e5; margin-bottom: 0.5rem;" data-translate="contact.faq.delete.question">How do I delete my account and data?</h4>
+                        <p style="color: #64748b; line-height: 1.6;" data-translate="contact.faq.delete.answer">Email privacy@personatests.com with your account email address. We'll delete all your data within 30 days as required by GDPR and CCPA.</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: #4f46e5; margin-bottom: 0.5rem;" data-translate="contact.faq.accurate.question">Are your personality tests accurate?</h4>
+                        <p style="color: #64748b; line-height: 1.6;" data-translate="contact.faq.accurate.answer">Our tests are based on established psychological frameworks but are for entertainment and self-reflection only. They're not professional psychological assessments.</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: #4f46e5; margin-bottom: 0.5rem;" data-translate="contact.faq.employment.question">Can I use test results for employment decisions?</h4>
+                        <p style="color: #64748b; line-height: 1.6;" data-translate="contact.faq.employment.answer">No. Our tests are for entertainment only and should never be used for medical, employment, or legal decisions. Only licensed professionals can provide such assessments.</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: #4f46e5; margin-bottom: 0.5rem;" data-translate="contact.faq.premium.question">How do premium reports work?</h4>
+                        <p style="color: #64748b; line-height: 1.6;" data-translate="contact.faq.premium.answer">Premium reports ($2.99) provide detailed insights and are delivered via email within 24 hours. All payments are securely processed through Stripe.</p>
+                    </div>
+                    
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="index.html" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'" data-translate="contact.backToTests">Back to Tests</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="background: #1e293b; color: white; padding: 2rem 0;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; text-align: center;">
+            <p>&copy; 2025 PersonaTests. All rights reserved. | <a href="privacy.html" style="color: #94a3b8;">Privacy Policy</a> | <a href="terms.html" style="color: #94a3b8;">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <!-- EmailJS Configuration -->
+    <script src="email-config.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        // Enhanced contact form handler with new EmailJS configuration
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formMessage = document.getElementById('formMessage');
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            
+            // Show loading state
+            submitButton.innerHTML = 'Sending... ⏳';
+            submitButton.disabled = true;
+            formMessage.style.display = 'none';
+            
+            try {
+                // Get form data
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const subject = document.getElementById('contactSubject').value;
+                const message = document.getElementById('contactMessage').value;
+                
+                // Determine contact type for routing
+                let contactType = 'general';
+                if (subject.includes('Privacy') || subject.includes('Data')) contactType = 'privacy';
+                else if (subject.includes('Business') || subject.includes('Partnership')) contactType = 'business';
+                else if (subject.includes('Premium') || subject.includes('Report')) contactType = 'business';
+                
+                // Wait for EmailService to be ready
+                if (!window.emailService) {
+                    throw new Error('Email service not initialized');
+                }
+                
+                // Send contact form using our new EmailService
+                await window.emailService.sendContactForm(name, email, subject, message, contactType);
+                
+                // Success - show success message
+                formMessage.style.display = 'block';
+                formMessage.innerHTML = `
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                        <h4 style="color: #059669; margin: 0 0 0.5rem 0;">✅ Message Sent Successfully!</h4>
+                        <p style="margin: 0; font-size: 0.9rem; color: #065f46;">
+                            Thank you, <strong>${name}</strong>! Your message about "<em>${subject}</em>" has been sent successfully. 
+                            We'll respond to <strong>${email}</strong> within 24-48 hours.
+                        </p>
+                        <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: #047857;">
+                            <strong>What happens next:</strong> We'll review your message and send a personalized response to your email address.
+                        </p>
+                        <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: #047857;">
+                            <strong>Routed to:</strong> ${contactType === 'privacy' ? 'Privacy Team' : contactType === 'business' ? 'Business Team' : 'Support Team'}
+                        </p>
+                    </div>
+                `;
+                
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Reset button state
+                submitButton.innerHTML = 'Send Another Message 📤';
+                submitButton.disabled = false;
+                
+            } catch (error) {
+                // Error - show error message with debug info
+                console.error('❌ Contact form error:', error);
+                formMessage.style.display = 'block';
+                formMessage.innerHTML = `
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #fca5a5; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                        <h4 style="color: #dc2626; margin: 0 0 0.5rem 0;">❌ Message Failed to Send</h4>
+                        <p style="margin: 0; font-size: 0.9rem; color: #991b1b;">
+                            Sorry, there was an error sending your message. Please try again or contact us directly at support@personatests.com
+                        </p>
+                        <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: #991b1b;">
+                            <strong>Error:</strong> ${error.message || 'Unknown error'}
+                        </p>
+                        <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.7); border-radius: 6px;">
+                            <p style="margin: 0; font-size: 0.8rem; color: #374151;">
+                                <strong>Alternative contact methods:</strong><br>
+                                • Email: support@personatests.com<br>
+                                • Business: business@personatests.com<br>
+                                • Privacy: privacy@personatests.com
+                            </p>
+                        </div>
+                    </div>
+                `;
+                
+                // Reset button state
+                submitButton.innerHTML = 'Try Again 📤';
+                submitButton.disabled = false;
+                });
+        });
+    </script>
+    
+    <!-- Translation System -->
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadAllTranslations();
+            initializeLanguage();
+        });
+    </script>
+</body>
+</html>

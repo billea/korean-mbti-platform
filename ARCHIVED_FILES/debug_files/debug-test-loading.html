@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test Loading</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-size: 12px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Debug Test Loading System</h1>
+    
+    <div class="test">
+        <h2>Simulate Test Loading Logic</h2>
+        <button onclick="simulateSpanishDISC()">Test Spanish DISC Loading</button>
+        <button onclick="simulateSpanishLoveLanguage()">Test Spanish Love Language Loading</button>
+        
+        <div id="debug-results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function simulateSpanishDISC() {
+            const testType = 'disc';
+            currentLanguage = 'es';
+            
+            let debugLog = `=== SIMULATING SPANISH DISC LOADING ===\n`;
+            debugLog += `testType: ${testType}\n`;
+            debugLog += `currentLanguage: ${currentLanguage}\n\n`;
+            
+            // Step 1: Check testDefinitions
+            debugLog += `STEP 1: Check testDefinitions\n`;
+            const hasTestDefinitions = !!(testDefinitions[testType] && testDefinitions[testType][currentLanguage]);
+            debugLog += `testDefinitions['${testType}']['${currentLanguage}'] exists: ${hasTestDefinitions}\n`;
+            
+            if (hasTestDefinitions) {
+                const questionCount = testDefinitions[testType][currentLanguage].questions.length;
+                debugLog += `✅ CENTRALIZED: ${questionCount} questions found\n`;
+                debugLog += `First question: "${testDefinitions[testType][currentLanguage].questions[0].text}"\n\n`;
+            } else {
+                debugLog += `❌ Not found in testDefinitions\n\n`;
+                
+                // Step 2: Check bridge system
+                debugLog += `STEP 2: Check bridge system\n`;
+                debugLog += `translations object exists: ${!!translations}\n`;
+                debugLog += `translations['${currentLanguage}'] exists: ${!!translations[currentLanguage]}\n`;
+                debugLog += `translations['${currentLanguage}'].tests exists: ${!!(translations[currentLanguage] && translations[currentLanguage].tests)}\n`;
+                debugLog += `translations['${currentLanguage}'].tests['${testType}'] exists: ${!!(translations[currentLanguage] && translations[currentLanguage].tests && translations[currentLanguage].tests[testType])}\n`;
+                
+                const hasBridgeQuestions = !!(translations[currentLanguage] && 
+                    translations[currentLanguage].tests && 
+                    translations[currentLanguage].tests[testType] && 
+                    translations[currentLanguage].tests[testType].questions);
+                debugLog += `translations['${currentLanguage}'].tests['${testType}'].questions exists: ${hasBridgeQuestions}\n`;
+                
+                if (hasBridgeQuestions) {
+                    const questionCount = translations[currentLanguage].tests[testType].questions.length;
+                    const firstQuestion = translations[currentLanguage].tests[testType].questions[0].text;
+                    debugLog += `✅ BRIDGE: ${questionCount} questions found\n`;
+                    debugLog += `First question: "${firstQuestion}"\n`;
+                    debugLog += `Title: "${translations[currentLanguage].tests[testType].title}"\n`;
+                } else {
+                    debugLog += `❌ No bridge questions found\n`;
+                    debugLog += `⚠️ Would fall back to English\n`;
+                }
+            }
+            
+            document.getElementById('debug-results').innerHTML = `<pre>${debugLog}</pre>`;
+        }
+        
+        function simulateSpanishLoveLanguage() {
+            const testType = 'lovelanguage';
+            currentLanguage = 'es';
+            
+            let debugLog = `=== SIMULATING SPANISH LOVE LANGUAGE LOADING ===\n`;
+            debugLog += `testType: ${testType}\n`;
+            debugLog += `currentLanguage: ${currentLanguage}\n\n`;
+            
+            // Step 1: Check testDefinitions
+            debugLog += `STEP 1: Check testDefinitions\n`;
+            const hasTestDefinitions = !!(testDefinitions[testType] && testDefinitions[testType][currentLanguage]);
+            debugLog += `testDefinitions['${testType}']['${currentLanguage}'] exists: ${hasTestDefinitions}\n`;
+            
+            if (hasTestDefinitions) {
+                const questionCount = testDefinitions[testType][currentLanguage].questions.length;
+                debugLog += `✅ CENTRALIZED: ${questionCount} questions found\n`;
+                debugLog += `First question: "${testDefinitions[testType][currentLanguage].questions[0].text}"\n\n`;
+            } else {
+                debugLog += `❌ Not found in testDefinitions\n\n`;
+                
+                // Step 2: Check bridge system
+                debugLog += `STEP 2: Check bridge system\n`;
+                debugLog += `translations object exists: ${!!translations}\n`;
+                debugLog += `translations['${currentLanguage}'] exists: ${!!translations[currentLanguage]}\n`;
+                debugLog += `translations['${currentLanguage}'].tests exists: ${!!(translations[currentLanguage] && translations[currentLanguage].tests)}\n`;
+                debugLog += `translations['${currentLanguage}'].tests['${testType}'] exists: ${!!(translations[currentLanguage] && translations[currentLanguage].tests && translations[currentLanguage].tests[testType])}\n`;
+                
+                const hasBridgeQuestions = !!(translations[currentLanguage] && 
+                    translations[currentLanguage].tests && 
+                    translations[currentLanguage].tests[testType] && 
+                    translations[currentLanguage].tests[testType].questions);
+                debugLog += `translations['${currentLanguage}'].tests['${testType}'].questions exists: ${hasBridgeQuestions}\n`;
+                
+                if (hasBridgeQuestions) {
+                    const questionCount = translations[currentLanguage].tests[testType].questions.length;
+                    const firstQuestion = translations[currentLanguage].tests[testType].questions[0].text;
+                    debugLog += `✅ BRIDGE: ${questionCount} questions found\n`;
+                    debugLog += `First question: "${firstQuestion}"\n`;
+                    debugLog += `Title: "${translations[currentLanguage].tests[testType].title}"\n`;
+                } else {
+                    debugLog += `❌ No bridge questions found\n`;
+                    debugLog += `⚠️ Would fall back to English\n`;
+                }
+            }
+            
+            document.getElementById('debug-results').innerHTML = `<pre>${debugLog}</pre>`;
+        }
+        
+        // Auto-run test
+        setTimeout(() => simulateSpanishDISC(), 500);
+    </script>
+</body>
+</html>

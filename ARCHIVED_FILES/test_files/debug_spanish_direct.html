@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Spanish Direct</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Spanish Translation Debug</h1>
+    
+    <button onclick="testSpanish()">Test Spanish Now</button>
+    <button onclick="debugSystem()">Debug System</button>
+    
+    <div id="test-elements">
+        <p data-translate="tests.askfriends.heroTitle">See Who Knows Me Best 🧩</p>
+        <p data-translate="tests.askfriends.viralBadge">💭 CURIOSITY GAME</p>
+        <p data-translate="tests.askfriends.categories.musicTitle">Music & Entertainment</p>
+    </div>
+    
+    <div id="output" style="background: #f0f0f0; padding: 1rem; margin: 1rem 0;">
+        <h2>Debug Output:</h2>
+        <pre id="log"></pre>
+    </div>
+
+    <script>
+        function log(msg) {
+            document.getElementById('log').textContent += msg + '\n';
+            console.log(msg);
+        }
+        
+        function testSpanish() {
+            log('=== TESTING SPANISH ===');
+            
+            // Set localStorage
+            localStorage.setItem('preferredLanguage', 'es');
+            log('Set preferredLanguage to es');
+            
+            // Try changeLanguage
+            if (typeof changeLanguage === 'function') {
+                log('Calling changeLanguage(es)...');
+                changeLanguage('es');
+                log('currentLanguage is now: ' + currentLanguage);
+            } else {
+                log('ERROR: changeLanguage not found');
+            }
+            
+            // Try forceFixTestDescriptions
+            if (typeof forceFixTestDescriptions === 'function') {
+                log('Calling forceFixTestDescriptions(es)...');
+                forceFixTestDescriptions('es');
+            } else {
+                log('ERROR: forceFixTestDescriptions not found');
+            }
+            
+            // Check results
+            setTimeout(() => {
+                const heroTitle = document.querySelector('[data-translate="tests.askfriends.heroTitle"]');
+                log('After Spanish: heroTitle = ' + (heroTitle ? heroTitle.textContent : 'NOT FOUND'));
+                
+                if (heroTitle && heroTitle.textContent.includes('Ve Quién')) {
+                    log('✅ SUCCESS: Spanish working');
+                } else {
+                    log('❌ FAILED: Still English');
+                }
+            }, 1000);
+        }
+        
+        function debugSystem() {
+            log('=== SYSTEM DEBUG ===');
+            log('translations exists: ' + (typeof translations !== 'undefined'));
+            log('currentLanguage: ' + (typeof currentLanguage !== 'undefined' ? currentLanguage : 'undefined'));
+            log('changeLanguage exists: ' + (typeof changeLanguage === 'function'));
+            log('forceFixTestDescriptions exists: ' + (typeof forceFixTestDescriptions === 'function'));
+            
+            if (typeof translations !== 'undefined') {
+                log('translations.es exists: ' + !!translations.es);
+                if (translations.es && translations.es['tests.askfriends.heroTitle']) {
+                    log('Spanish heroTitle: ' + translations.es['tests.askfriends.heroTitle']);
+                } else {
+                    log('Spanish heroTitle: NOT FOUND in flat translations');
+                }
+            }
+        }
+        
+        // Auto-debug on load
+        setTimeout(debugSystem, 500);
+    </script>
+</body>
+</html>

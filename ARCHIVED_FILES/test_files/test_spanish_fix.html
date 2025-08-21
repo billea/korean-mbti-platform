@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Spanish Fix</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Spanish Translation Fix Test</h1>
+    
+    <div>
+        <button onclick="testSpanishTranslations()">Test Spanish Translations</button>
+        <button onclick="switchToSpanish()">Switch to Spanish</button>
+    </div>
+    
+    <h2>Test Elements:</h2>
+    <div id="test-elements">
+        <p data-translate="tests.askfriends.heroTitle">See Who Knows Me Best 🧩</p>
+        <p data-translate="tests.askfriends.viralBadge">💭 CURIOSITY GAME</p>
+        <p data-translate="tests.askfriends.categories.musicTitle">Music & Entertainment</p>
+        <p data-translate="tests.askfriends.categories.musicDesc">Songs, movies, shows you love</p>
+        <p data-translate="tests.360assessment.heroTitle">360 Perception About Me 🎯</p>
+    </div>
+    
+    <div id="debug-output" style="background: #f0f0f0; padding: 1rem; margin-top: 1rem;">
+        <h2>Debug Output:</h2>
+        <pre id="debug-text"></pre>
+    </div>
+
+    <script>
+        function log(message) {
+            const debugText = document.getElementById('debug-text');
+            debugText.textContent += message + '\n';
+            console.log(message);
+        }
+        
+        function switchToSpanish() {
+            log('🔄 Switching to Spanish...');
+            if (typeof changeLanguage === 'function') {
+                changeLanguage('es');
+                log('✅ Language switched to: ' + currentLanguage);
+                
+                // Wait a moment and check if elements were translated
+                setTimeout(() => {
+                    const heroTitle = document.querySelector('[data-translate="tests.askfriends.heroTitle"]');
+                    const viralBadge = document.querySelector('[data-translate="tests.askfriends.viralBadge"]');
+                    const musicTitle = document.querySelector('[data-translate="tests.askfriends.categories.musicTitle"]');
+                    
+                    log('=== TRANSLATION RESULTS ===');
+                    log('heroTitle: ' + (heroTitle ? heroTitle.textContent : 'NOT FOUND'));
+                    log('viralBadge: ' + (viralBadge ? viralBadge.textContent : 'NOT FOUND'));
+                    log('musicTitle: ' + (musicTitle ? musicTitle.textContent : 'NOT FOUND'));
+                    
+                    if (heroTitle && heroTitle.textContent.includes('Ve Quién Me Conoce Mejor')) {
+                        log('✅ SUCCESS: Spanish translations are working!');
+                    } else {
+                        log('❌ FAILED: Still showing English text');
+                    }
+                }, 1000);
+                
+            } else {
+                log('❌ changeLanguage function not found!');
+            }
+        }
+        
+        function testSpanishTranslations() {
+            log('=== Testing Spanish Translations ===');
+            
+            const testKeys = [
+                'tests.askfriends.heroTitle',
+                'tests.askfriends.viralBadge', 
+                'tests.askfriends.categories.musicTitle',
+                'tests.askfriends.categories.musicDesc',
+                'tests.360assessment.heroTitle'
+            ];
+            
+            if (typeof translations !== 'undefined' && translations.es) {
+                testKeys.forEach(key => {
+                    // Test flat translation system
+                    if (translations.es[key]) {
+                        log(`✅ FOUND: ${key} = "${translations.es[key]}"`);
+                    } else {
+                        log(`❌ MISSING: ${key}`);
+                    }
+                });
+                
+                // Test actual translation function
+                testKeys.forEach(key => {
+                    const result = getNestedTranslation(translations.es, key);
+                    log(`🔍 Translation function test: ${key} = "${result}"`);
+                });
+            } else {
+                log('❌ Spanish translations not found!');
+            }
+        }
+        
+        // Auto-initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            log('📄 Page loaded');
+            if (typeof initializeLanguage === 'function') {
+                initializeLanguage();
+                log('🌍 Language initialized: ' + currentLanguage);
+            }
+            
+            // Auto-test translations
+            setTimeout(testSpanishTranslations, 100);
+        });
+    </script>
+</body>
+</html>

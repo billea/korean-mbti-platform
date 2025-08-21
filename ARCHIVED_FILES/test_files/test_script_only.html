@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Test</title>
+</head>
+<body>
+    <h1>Testing script.js loading</h1>
+    <div data-translate="hero.title">Test Element</div>
+    <button class="flag-btn" onclick="switchLanguage('ko')">Korean</button>
+    
+    <script>
+        console.log('=== BEFORE SCRIPT.JS ===');
+        console.log('translations:', typeof translations);
+        console.log('tests:', typeof tests);
+        console.log('currentLanguage:', typeof currentLanguage);
+    </script>
+    
+    <!-- Load ONLY script.js without dependencies -->
+    <script src="script.js"></script>
+    
+    <script>
+        console.log('=== AFTER SCRIPT.JS ===');
+        console.log('translations:', typeof translations);
+        console.log('tests:', typeof tests);
+        console.log('currentLanguage:', typeof currentLanguage);
+        console.log('switchLanguage:', typeof switchLanguage);
+        
+        if (typeof tests !== 'undefined') {
+            console.log('✅ script.js loaded successfully!');
+            console.log('Available tests:', Object.keys(tests));
+        } else {
+            console.log('❌ script.js failed to load or execute');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Spanish Fixes Final</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test-result { margin: 15px 0; padding: 15px; border-radius: 5px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .partial { background: #fff3cd; border: 1px solid #ffeeba; color: #856404; }
+        .failure { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        pre { font-size: 11px; white-space: pre-wrap; margin: 10px 0; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🇪🇸 Test Spanish Fixes - Final Verification</h1>
+    <p>Testing all Spanish translations after fixes: Love Language naming + Mental Health English base</p>
+    
+    <button onclick="testAllSpanishFinal()">🧪 Test All Spanish Translations</button>
+    
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>
+        function testAllSpanishFinal() {
+            console.clear();
+            console.log('=== FINAL SPANISH TRANSLATION TEST ===');
+            
+            // Force Spanish
+            currentLanguage = 'es';
+            
+            let results = '<h3>🧪 Final Spanish Translation Test Results</h3>';
+            
+            const tests = [
+                { id: 'mbti', name: 'MBTI (16 Tipos)', expected: 'Working from testDefinitions' },
+                { id: 'bigfive', name: 'Big Five', expected: 'Working (user confirmed)' },
+                { id: 'disc', name: 'DISC', expected: 'Working from testDefinitions (user confirmed)' },
+                { id: 'lovelanguage', name: 'Love Language', expected: 'FIXED - naming + HTML button' },
+                { id: 'adhd', name: 'ADHD', expected: 'FIXED - added English base for bridge' },
+                { id: 'anxiety', name: 'Anxiety', expected: 'FIXED - added English base for bridge' },
+                { id: 'depression', name: 'Depression', expected: 'FIXED - added English base for bridge' }
+            ];
+            
+            tests.forEach(test => {
+                let resultClass = 'failure';
+                let statusText = '';
+                let source = '';
+                let details = '';
+                
+                try {
+                    // Simulate the actual loading logic from startTestNew
+                    let testData = null;
+                    
+                    // Step 1: Try testDefinitions
+                    if (testDefinitions[test.id] && testDefinitions[test.id].es) {
+                        testData = {
+                            ...tests[test.id], // Keep metadata
+                            title: testDefinitions[test.id].es.title,
+                            questions: testDefinitions[test.id].es.questions
+                        };
+                        source = 'testDefinitions (primary)';
+                    } else {
+                        // Step 2: Legacy loading
+                        testData = tests[test.id];
+                        source = 'tests object (legacy)';
+                        
+                        // Step 3: Bridge system
+                        if (currentLanguage !== 'en' && translations && translations[currentLanguage]) {
+                            const langTranslations = translations[currentLanguage];
+                            
+                            if (langTranslations.tests && langTranslations.tests[test.id] && langTranslations.tests[test.id].questions) {
+                                testData = {
+                                    ...testData, // Keep metadata from tests object
+                                    title: langTranslations.tests[test.id].title || testData.title,
+                                    questions: langTranslations.tests[test.id].questions
+                                };
+                                source = 'bridge system (fallback)';
+                            }
+                        }
+                    }
+                    
+                    // Analyze result
+                    if (testData && testData.questions && testData.questions.length > 0) {
+                        const firstQ = testData.questions[0].text;
+                        const isSpanish = /[ñáéíóúü¿]/.test(firstQ) || 
+                            firstQ.includes('equipos') || firstQ.includes('pareja') || 
+                            firstQ.includes('Tu ') || firstQ.includes('¿Con qué') ||
+                            firstQ.includes('últimas 2 semanas');
+                        
+                        if (isSpanish) {
+                            resultClass = 'success';
+                            statusText = `✅ SPANISH - ${testData.questions.length} questions`;
+                            details = `First: "${firstQ.substring(0, 60)}..."`;
+                        } else {
+                            resultClass = 'partial';
+                            statusText = `⚠️ ENGLISH - ${testData.questions.length} questions`;
+                            details = `First: "${firstQ.substring(0, 60)}..."`;
+                        }
+                    } else {
+                        resultClass = 'failure';
+                        statusText = '❌ NO QUESTIONS LOADED';
+                        details = 'Critical loading failure';
+                    }
+                } catch (error) {
+                    resultClass = 'failure';
+                    statusText = `❌ ERROR: ${error.message}`;
+                    details = 'JavaScript execution error';
+                }
+                
+                results += `
+                    <div class="test-result ${resultClass}">
+                        <h4>${test.name}</h4>
+                        <p><strong>Status:</strong> ${statusText}</p>
+                        <p><strong>Source:</strong> ${source}</p>
+                        <p><strong>Expected:</strong> ${test.expected}</p>
+                        <pre>${details}</pre>
+                    </div>
+                `;
+            });
+            
+            // Add summary
+            const successCount = (results.match(/class="test-result success"/g) || []).length;
+            const totalCount = tests.length;
+            
+            results += `
+                <div class="test-result ${successCount === totalCount ? 'success' : 'partial'}">
+                    <h3>📊 Summary</h3>
+                    <p><strong>Working in Spanish:</strong> ${successCount}/${totalCount} tests</p>
+                    <p><strong>Success Rate:</strong> ${Math.round((successCount / totalCount) * 100)}%</p>
+                    ${successCount === totalCount ? 
+                        '<p>🎉 <strong>ALL SPANISH TRANSLATIONS WORKING!</strong></p>' : 
+                        '<p>⚠️ Some tests still need fixes</p>'
+                    }
+                </div>
+            `;
+            
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run test
+        setTimeout(() => testAllSpanishFinal(), 500);
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test ADHD Fix</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .success { background: #d4edda; padding: 15px; border-radius: 5px; color: #155724; }
+        .failure { background: #f8d7da; padding: 15px; border-radius: 5px; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test ADHD Fix</h1>
+    <p>Testing if ADHD now loads Spanish questions from testDefinitions</p>
+    
+    <button onclick="testADHDFix()">Test ADHD Spanish</button>
+    
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>
+        function testADHDFix() {
+            // Force Spanish
+            currentLanguage = 'es';
+            
+            let results = '<h3>ADHD Test Results</h3>';
+            
+            try {
+                // Check if ADHD exists in testDefinitions
+                const hasADHD = !!(testDefinitions && testDefinitions.adhd && testDefinitions.adhd.es);
+                
+                if (hasADHD) {
+                    const adhdData = testDefinitions.adhd.es;
+                    const firstQ = adhdData.questions[0].text;
+                    const isSpanish = /[ñáéíóúü¿]/.test(firstQ);
+                    
+                    results += `<div class="${isSpanish ? 'success' : 'failure'}">`;
+                    results += `<p><strong>Status:</strong> ${isSpanish ? '✅ SUCCESS' : '❌ FAILED'}</p>`;
+                    results += `<p><strong>Title:</strong> "${adhdData.title}"</p>`;
+                    results += `<p><strong>Questions:</strong> ${adhdData.questions.length}</p>`;
+                    results += `<p><strong>First Question:</strong> "${firstQ}"</p>`;
+                    results += `<p><strong>Is Spanish:</strong> ${isSpanish ? 'YES' : 'NO'}</p>`;
+                    results += `</div>`;
+                    
+                    if (isSpanish) {
+                        results += `<p style="color: green; font-weight: bold;">🎉 ADHD should now work in Spanish!</p>`;
+                    }
+                } else {
+                    results += `<div class="failure">`;
+                    results += `<p>❌ ADHD not found in testDefinitions</p>`;
+                    results += `</div>`;
+                }
+            } catch (error) {
+                results += `<div class="failure">`;
+                results += `<p>❌ Error: ${error.message}</p>`;
+                results += `</div>`;
+            }
+            
+            document.getElementById('results').innerHTML = results;
+        }
+        
+        // Auto-run
+        setTimeout(() => testADHDFix(), 500);
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 2 Translation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .language-test { margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        button { margin: 5px; padding: 10px 15px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Phase 2 Translation Validation</h1>
+    
+    <div class="test-section">
+        <h2>Results Template Translation Test</h2>
+        <p>Testing core result template translations across all languages:</p>
+        
+        <div id="translation-tests"></div>
+        
+        <h3>Language Switching Test</h3>
+        <button onclick="testLanguage('en')">English</button>
+        <button onclick="testLanguage('es')">Español</button>
+        <button onclick="testLanguage('fr')">Français</button>
+        <button onclick="testLanguage('de')">Deutsch</button>
+        <button onclick="testLanguage('it')">Italiano</button>
+        <button onclick="testLanguage('pt')">Português</button>
+        <button onclick="testLanguage('ja')">日本語</button>
+        <button onclick="testLanguage('ko')">한국어</button>
+        <button onclick="testLanguage('zh')">中文</button>
+        
+        <div id="test-results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Test Phase 2 translations
+        function testLanguage(lang) {
+            // Set language
+            if (typeof setLanguage === 'function') {
+                setLanguage(lang);
+            } else {
+                currentLanguage = lang;
+            }
+            
+            const results = document.getElementById('test-results');
+            results.innerHTML = `
+                <div class="language-test">
+                    <h4>Testing ${lang.toUpperCase()} Translations:</h4>
+                    <p><strong>MBTI Traits:</strong><br>
+                    - Extraversion: ${t('results.mbtiTraits.extraversion')}<br>
+                    - Thinking: ${t('results.mbtiTraits.thinking')}<br>
+                    - Your Strengths: ${t('results.sections.yourStrengths')}</p>
+                    
+                    <p><strong>Big Five Traits:</strong><br>
+                    - Openness: ${t('results.bigFiveTraits.openness')}<br>
+                    - High: ${t('results.bigFiveTraits.high')}<br>
+                    - Personality Breakdown: ${t('results.sections.personalityBreakdown')}</p>
+                    
+                    <p><strong>IQ Results:</strong><br>
+                    - Highly Gifted: ${t('results.iqResults.categories.highlyGifted')}<br>
+                    - Above Average: ${t('results.iqResults.categories.aboveAverage')}<br>
+                    - 98th percentile: ${t('results.iqResults.percentiles.highly')}</p>
+                    
+                    <p><strong>General Labels:</strong><br>
+                    - Your Result: ${t('results.labels.yourResult')}<br>
+                    - Share Results: ${t('results.labels.shareYourResults')}</p>
+                </div>
+            `;
+        }
+        
+        // Initial test with English
+        setTimeout(() => testLanguage('en'), 1000);
+        
+        // Run automated validation
+        setTimeout(() => {
+            const testDiv = document.getElementById('translation-tests');
+            const languages = ['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'ko', 'zh'];
+            let allTestsPassed = true;
+            
+            languages.forEach(lang => {
+                if (typeof setLanguage === 'function') {
+                    setLanguage(lang);
+                } else {
+                    currentLanguage = lang;
+                }
+                
+                // Test key translations
+                const mbtiTest = t('results.mbtiTraits.extraversion');
+                const bigFiveTest = t('results.bigFiveTraits.openness');
+                const iqTest = t('results.iqResults.categories.highlyGifted');
+                const labelTest = t('results.labels.yourResult');
+                
+                const passed = mbtiTest && bigFiveTest && iqTest && labelTest && 
+                              !mbtiTest.includes('results.') && 
+                              !bigFiveTest.includes('results.') &&
+                              !iqTest.includes('results.') &&
+                              !labelTest.includes('results.');
+                
+                testDiv.innerHTML += `
+                    <div class="language-test ${passed ? 'success' : 'error'}">
+                        <strong>${lang.toUpperCase()}:</strong> ${passed ? '✅ PASS' : '❌ FAIL'}<br>
+                        MBTI: ${mbtiTest}<br>
+                        Big Five: ${bigFiveTest}<br>
+                        IQ: ${iqTest}<br>
+                        Label: ${labelTest}
+                    </div>
+                `;
+                
+                if (!passed) allTestsPassed = false;
+            });
+            
+            testDiv.innerHTML = `
+                <div class="test-section ${allTestsPassed ? 'success' : 'error'}">
+                    <h3>${allTestsPassed ? '✅ ALL TESTS PASSED' : '❌ SOME TESTS FAILED'}</h3>
+                    <p>Phase 2 Result Template Translations: ${allTestsPassed ? 'Working correctly!' : 'Need attention!'}</p>
+                </div>
+            ` + testDiv.innerHTML;
+        }, 2000);
+    </script>
+</body>
+</html>

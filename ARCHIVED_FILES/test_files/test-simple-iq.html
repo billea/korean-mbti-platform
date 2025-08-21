@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple IQ Translation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        button { margin: 5px; padding: 10px 15px; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Simple IQ Translation Test</h1>
+    
+    <div class="test">
+        <h3>Language Switch Test</h3>
+        <button onclick="testLanguage('en')">English</button>
+        <button onclick="testLanguage('es')">Spanish</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function testLanguage(lang) {
+            console.log(`\n=== TESTING ${lang.toUpperCase()} ===`);
+            
+            // Change language using the existing function
+            if (typeof changeLanguage === 'function') {
+                changeLanguage(lang);
+            } else {
+                currentLanguage = lang;
+            }
+            
+            console.log('Current language after change:', currentLanguage);
+            
+            // Test direct translation access
+            const directAccess = translations[lang] && translations[lang].results && translations[lang].results.iqQuestions;
+            console.log('Direct access to iqQuestions:', directAccess ? directAccess.length + ' questions' : 'FAILED');
+            
+            // Test t() function
+            const tResult = t('results.iqQuestions');
+            console.log('t("results.iqQuestions"):', tResult ? tResult.length + ' questions' : 'FAILED');
+            
+            // Test getQuestions
+            const iqTest = tests && tests.iq;
+            let getQuestionsResult = null;
+            if (iqTest && iqTest.getQuestions) {
+                getQuestionsResult = iqTest.getQuestions();
+                console.log('tests.iq.getQuestions():', getQuestionsResult ? getQuestionsResult.length + ' questions' : 'FAILED');
+            }
+            
+            // Display results
+            const resultsDiv = document.getElementById('results');
+            const sampleQuestion = getQuestionsResult && getQuestionsResult[0] ? getQuestionsResult[0].text : 'No question found';
+            
+            resultsDiv.innerHTML = `
+                <h4>Results for ${lang.toUpperCase()}</h4>
+                <pre>
+Language: ${currentLanguage}
+Direct Access: ${directAccess ? '✅ ' + directAccess.length + ' questions' : '❌ FAILED'}
+t() Function: ${tResult ? '✅ ' + tResult.length + ' questions' : '❌ FAILED'}
+getQuestions(): ${getQuestionsResult ? '✅ ' + getQuestionsResult.length + ' questions' : '❌ FAILED'}
+
+Sample Question: ${sampleQuestion}
+                </pre>
+            `;
+        }
+        
+        // Auto-test on load
+        setTimeout(() => testLanguage('en'), 1000);
+    </script>
+</body>
+</html>

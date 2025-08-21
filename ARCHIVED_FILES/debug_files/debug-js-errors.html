@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Error Debug</title>
+</head>
+<body>
+    <h1>JavaScript Error Debug</h1>
+    <div id="status">Loading...</div>
+    <div id="errors"></div>
+    
+    <script>
+        console.log('🔥 Starting JS error debug...');
+        
+        // Capture all JS errors
+        window.addEventListener('error', function(e) {
+            console.error('JS Error:', e.error);
+            document.getElementById('errors').innerHTML += `<p style="color:red">Error: ${e.message} at ${e.filename}:${e.lineno}</p>`;
+        });
+        
+        // Try loading the main script
+        const script = document.createElement('script');
+        script.src = './script.js';
+        script.onload = function() {
+            console.log('✅ script.js loaded successfully');
+            document.getElementById('status').innerHTML = '✅ script.js loaded successfully';
+            
+            // Test translation functions
+            setTimeout(() => {
+                console.log('🔍 Testing translation functions...');
+                console.log('changeLanguage exists:', typeof changeLanguage !== 'undefined');
+                console.log('forceUpdateAllTranslations exists:', typeof forceUpdateAllTranslations !== 'undefined');
+                console.log('translations exists:', typeof translations !== 'undefined');
+                
+                if (typeof translations !== 'undefined' && translations.ko) {
+                    console.log('Korean NEW badge translation:', translations.ko['tests.new']);
+                }
+            }, 1000);
+        };
+        script.onerror = function() {
+            console.error('❌ Failed to load script.js');
+            document.getElementById('status').innerHTML = '❌ Failed to load script.js';
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

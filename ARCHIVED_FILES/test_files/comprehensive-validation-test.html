@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0">
+    <title>Comprehensive Translation Validation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .failure { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .warning { background-color: #fff3cd; border-color: #ffeeba; color: #856404; }
+        button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap; font-size: 12px; }
+        .status-working { color: green; font-weight: bold; }
+        .status-broken { color: red; font-weight: bold; }
+        .status-english { color: orange; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Comprehensive Translation Validation Test</h1>
+    <p>This test verifies that all translation systems are working correctly after the bridge system implementation.</p>
+    
+    <div class="test">
+        <h2>Test Results</h2>
+        <button onclick="runFullValidation()">🧪 Run Full Validation Test</button>
+        <button onclick="testSpecificLanguage('es')">🇪🇸 Test Spanish</button>
+        <button onclick="testSpecificLanguage('zh')">🇨🇳 Test Chinese</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function runFullValidation() {
+            console.log('\n=== COMPREHENSIVE TRANSLATION VALIDATION ===');
+            
+            const languages = ['es', 'fr', 'de', 'it', 'pt', 'ja', 'ko', 'zh'];
+            const tests = ['mbti', 'disc', 'lovelanguage', 'adhd', 'anxiety', 'depression'];
+            
+            let results = '<h3>🧪 Translation System Validation Results</h3>';
+            let overallSuccess = true;
+            let summary = {};
+            
+            languages.forEach(lang => {
+                summary[lang] = { working: 0, english: 0, broken: 0 };
+                results += `<h4>🌍 ${lang.toUpperCase()}</h4><pre>`;
+                
+                tests.forEach(testType => {
+                    const originalLang = currentLanguage;
+                    currentLanguage = lang;
+                    
+                    try {
+                        // Test if we can load the test
+                        const testData = loadTestQuestions(testType);
+                        
+                        let status, statusClass;
+                        if (testData && testData.questions && testData.questions.length > 0) {
+                            const firstQuestion = testData.questions[0].text;
+                            
+                            // Check if it's actually translated (not just English)
+                            if (lang === 'es' && firstQuestion.includes('En equipos')) {
+                                status = '✅ WORKING';
+                                statusClass = 'status-working';
+                                summary[lang].working++;
+                            } else if (lang === 'zh' && /[\u4e00-\u9fa5]/.test(firstQuestion)) {
+                                status = '✅ WORKING';
+                                statusClass = 'status-working';
+                                summary[lang].working++;
+                            } else if (firstQuestion.includes('你') || firstQuestion.includes('我') || firstQuestion.includes('的')) {
+                                status = '✅ WORKING';
+                                statusClass = 'status-working';
+                                summary[lang].working++;
+                            } else if (/^[A-Za-z\s]+$/.test(firstQuestion)) {
+                                status = '⚠️ ENGLISH';
+                                statusClass = 'status-english';
+                                summary[lang].english++;
+                                overallSuccess = false;
+                            } else {
+                                status = '✅ WORKING';
+                                statusClass = 'status-working';
+                                summary[lang].working++;
+                            }
+                            
+                            results += `<span class="${statusClass}">${status}</span> ${testType} (${testData.questions.length} questions)\\n`;
+                            results += `   Title: "${testData.title}"\\n`;
+                            results += `   First Q: "${firstQuestion.substring(0, 60)}..."\\n\\n`;
+                        } else {
+                            status = '❌ BROKEN';
+                            statusClass = 'status-broken';
+                            summary[lang].broken++;
+                            overallSuccess = false;
+                            results += `<span class="${statusClass}">${status}</span> ${testType} - No questions loaded\\n\\n`;
+                        }
+                    } catch (error) {
+                        summary[lang].broken++;
+                        overallSuccess = false;
+                        results += `<span class="status-broken">❌ ERROR</span> ${testType} - ${error.message}\\n\\n`;
+                    }
+                    
+                    currentLanguage = originalLang;
+                });
+                
+                results += '</pre>';
+            });
+            
+            // Summary
+            results += '<h3>📊 Summary</h3><pre>';
+            languages.forEach(lang => {
+                const s = summary[lang];
+                const total = s.working + s.english + s.broken;
+                const successRate = Math.round((s.working / total) * 100);
+                results += `${lang.toUpperCase()}: ${s.working}/${total} working (${successRate}%) - ${s.english} English, ${s.broken} broken\\n`;
+            });
+            
+            results += `\\n${overallSuccess ? '🎉 ALL SYSTEMS WORKING!' : '⚠️ ISSUES FOUND - Some tests still show English or are broken'}`;
+            results += '</pre>';
+            
+            const resultDiv = document.getElementById('results');
+            resultDiv.innerHTML = results;
+            resultDiv.className = overallSuccess ? 'success' : 'warning';
+        }
+        
+        function testSpecificLanguage(lang) {
+            console.log(`\n=== TESTING ${lang.toUpperCase()} SPECIFICALLY ===`);
+            
+            const originalLang = currentLanguage;
+            currentLanguage = lang;
+            
+            const tests = ['mbti', 'disc', 'lovelanguage', 'adhd', 'anxiety', 'depression'];
+            let results = `<h3>🔍 ${lang.toUpperCase()} Detailed Test</h3><pre>`;
+            
+            tests.forEach(testType => {
+                try {
+                    console.log(`\n--- Testing ${testType} ---`);
+                    
+                    // Step 1: Check testDefinitions
+                    const hasTestDefinitions = !!(testDefinitions[testType] && testDefinitions[testType][lang]);
+                    console.log(`testDefinitions[${testType}][${lang}]:`, hasTestDefinitions);
+                    
+                    // Step 2: Check individual translations
+                    const hasIndividual = !!(translations[lang] && 
+                        translations[lang].tests && 
+                        translations[lang].tests[testType] && 
+                        translations[lang].tests[testType].questions);
+                    console.log(`translations[${lang}].tests[${testType}].questions:`, hasIndividual);
+                    
+                    // Step 3: Load via system
+                    const testData = loadTestQuestions(testType);
+                    
+                    results += `${testType.toUpperCase()}:\\n`;
+                    results += `  testDefinitions: ${hasTestDefinitions ? '✅' : '❌'}\\n`;
+                    results += `  individual object: ${hasIndividual ? '✅' : '❌'}\\n`;
+                    
+                    if (testData && testData.questions && testData.questions.length > 0) {
+                        results += `  loaded questions: ✅ ${testData.questions.length} questions\\n`;
+                        results += `  title: "${testData.title}"\\n`;
+                        results += `  first question: "${testData.questions[0].text.substring(0, 80)}..."\\n\\n`;
+                    } else {
+                        results += `  loaded questions: ❌ Failed to load\\n\\n`;
+                    }
+                } catch (error) {
+                    results += `${testType.toUpperCase()}: ❌ ERROR - ${error.message}\\n\\n`;
+                }
+            });
+            
+            results += '</pre>';
+            document.getElementById('results').innerHTML = results;
+            
+            currentLanguage = originalLang;
+        }
+        
+        // Auto-run validation on load
+        setTimeout(() => runFullValidation(), 1000);
+    </script>
+</body>
+</html>
