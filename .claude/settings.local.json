@@ -65,12 +65,14 @@
       "Bash(start http://localhost:3004/en)",
       "Bash(git rm:*)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:api.netlify.com)"
+      "WebFetch(domain:api.netlify.com)",
+      "Bash(cd:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",
     "additionalDirectories": [
-      "C:\\Users\\durha\\Project"
+      "C:\\Users\\durha\\Project",
+      "C:\\c\\Users\\durha\\Project\\Testing website_refactored"
     ]
   }
 }

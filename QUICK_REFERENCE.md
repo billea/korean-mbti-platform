@@ -17,6 +17,12 @@ rm -rf .next node_modules/.cache && npm run dev
 - [ ] All 60 MBTI questions display in Korean
 - [ ] Scoring algorithm produces meaningful results
 
+## 🔗 **Quick Links**
+- **Live Site**: https://korean-mbti-platform.netlify.app
+- **Couple Compatibility Test**: https://korean-mbti-platform.netlify.app/en/tests/couple-compatibility/
+- **GitHub Repo**: https://github.com/billea/korean-mbti-platform
+- **Netlify Dashboard**: https://app.netlify.com/sites/korean-mbti-platform
+
 ## 🔧 Common Fixes
 
 **Server Crashes**: 
@@ -46,6 +52,13 @@ rm -rf .next node_modules/.cache && npm run dev
 
 ## 🎯 Current Status
 ✅ Korean translations working  
+✅ **🚀 Couple Compatibility Test - PRODUCTION READY**
+✅ Authentication system working
+✅ Email invitations working  
+✅ Two-person workflow functional
+✅ All critical issues resolved
+✅ TypeScript build errors fixed
+✅ Translation system complete
 ✅ Purple gradient design consistent  
 ✅ 60-question MBTI test complete  
 ✅ Server stability improved  
