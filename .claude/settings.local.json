@@ -72,7 +72,10 @@
       "Bash(start https://app.netlify.com/sites/korean-mbti-platform)",
       "Bash(start https://korean-mbti-platform.netlify.app/en/auth)",
       "Bash(start https://korean-mbti-platform.netlify.app/ko/auth)",
-      "Bash(git submodule:*)"
+      "Bash(git submodule:*)",
+      "Bash(firebase --version)",
+      "Bash(firebase deploy:*)",
+      "Bash(firebase projects:list:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",
